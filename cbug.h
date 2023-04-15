@@ -6,19 +6,17 @@
 #include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
-// for print and malloc include it on another file and compile and link with it
-
-#define INT_MIN (-2147483648)
-#define INT_MAX (2147483647)
-
-#ifndef CBUG_H
-#define CBUG_H
 
 typedef struct Token Token;
 typedef struct Node Node;
 typedef struct Var Var;
 typedef struct Type Type;
 typedef struct Func Func;
+typedef struct Scope Scope;
+typedef struct Enum Enum;
+
+#define INT_MIN (-2147483648)
+#define INT_MAX (2147483647)
 
 enum Token_Type {
 	TOKEN_INTEGER = 256,
@@ -115,18 +113,28 @@ struct Node {
 	Type *t;
 	Func *func;
 	int member_idx;
-	union {
-		Node *args[100];
-		Node *params[100];
-	};
+
+	Node *args[100];
+	Node *params[100];
 	int arg_count;
 	int param_count;
 	int stack_size;
 };
 
+enum {
+	INT,
+	PTR,
+	VOID,
+	ARRAY,
+	SHORT,
+	CHAR,
+	LONG,
+	STRUCT
+};
+
 struct Type {
-	enum {INT, PTR, VOID, ARRAY, SHORT, CHAR, LONG, STRUCT} t;
-	struct Type *ptr_to;
+	int t;
+	Type *ptr_to;
 	int array_size;
 	int size;
 	int is_unsigned;
@@ -137,7 +145,6 @@ struct Type {
 	int  field_count;
 };
 
-typedef struct Scope Scope;
 struct Scope {
 	Scope *parent;
 	Scope *prev;
@@ -161,10 +168,10 @@ struct Func {
 	char *name;
 };
 
-typedef struct Enum {
+struct Enum {
 	char *name;
 	int value;
-} Enum;
+};
 
 Type *parse_type();
 Node *parse();
@@ -184,6 +191,3 @@ Node *cast();
 Node *unary();
 Node *postfix();
 Node *primary();
-
-
-#endif
