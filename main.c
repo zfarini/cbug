@@ -6,7 +6,7 @@
 /*   By: zfarini <zfarini@student.1337.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:57:56 by zfarini           #+#    #+#             */
-/*   Updated: 2023/04/14 07:02:48 by zfarini          ###   ########.fr       */
+/*   Updated: 2023/04/14 21:16:15 by zfarini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char *filename;
 char *program_str;
 FILE *f;
 
-static Type types[10000];
+Type types[10000];
 int type_count;
 
 char *strings_literal[10000];
@@ -158,14 +158,22 @@ int main(int argc, char **argv)
 		Node *decl = curr_scope->vars[i]->decl;
 		if (decl->left && decl->left->right->type != NODE_INT)
 			error_token(decl->left->tok, "todo: evaluate constant expressions\n");
-		out(".globl _%s", decl->var->name);
+		if (decl->var->type->t == ARRAY)
+		{
+			out(".comm _%s,%d,%d", decl->var->name, decl->var->type->array_size * decl->var->type->size,
+							(decl->var->type->size)); // TODO: check the alignement
+		}
+		else
+		{
+			out(".globl _%s", decl->var->name);
 
-		int	align = log2_int(decl->var->type->size); 
-		if (align)
-			out(".p2align %d", align); // todo: understand this
+			int	align = log2_int(decl->var->type->size); 
+			if (align)
+				out(".p2align %d", align); // todo: understand this
 
-		fprintf(f, "_%s:\n", curr_scope->vars[i]->name);
-		out(".%s %d\n", get_size_name(curr_scope->vars[i]->type->size), (!decl->left ? 0 : decl->left->right->tok->int_val));
+			fprintf(f, "_%s:\n", curr_scope->vars[i]->name);
+			out(".%s %d\n", get_size_name(curr_scope->vars[i]->type->size), (!decl->left ? 0 : decl->left->right->tok->int_val));
+		}
 	}
 	for (int i = 0; i < strings_literal_count; i++)
 	{

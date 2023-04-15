@@ -10,16 +10,13 @@ _f2:                                    ## @f2
 	.cfi_offset %rbp, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register %rbp
-	movl	$255, -4(%rbp)
-	movl	-4(%rbp), %eax
-	movb	%al, %cl
-	movsbl	%cl, %eax
+	movl	$28, -8(%rbp)
+	movl	-8(%rbp), %eax
+	cltd
+	movl	$2, %ecx
+	idivl	%ecx
 	movl	%eax, -8(%rbp)
 	movl	-4(%rbp), %eax
-	movb	%al, %cl
-	movzbl	%cl, %eax
-	movl	%eax, -12(%rbp)
-	movl	-12(%rbp), %eax
 	popq	%rbp
 	retq
 	.cfi_endproc

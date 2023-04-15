@@ -33,7 +33,7 @@ _error:
 _main:
 	pushq %rbp
 	movq %rsp, %rbp
-	subq $416, %rsp
+	subq $432, %rsp
 //begin block
 //ASSERT(3, { int a; a=3; a; });
 	movq $3, %rax
@@ -60,7 +60,7 @@ ASSERT_OK0:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK1
-	movq $15, %rdi
+	movq $14, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -82,7 +82,7 @@ ASSERT_OK1:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK2
-	movq $16, %rdi
+	movq $15, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -97,7 +97,7 @@ ASSERT_OK2:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK3
-	movq $17, %rdi
+	movq $16, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -119,7 +119,7 @@ ASSERT_OK3:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK4
-	movq $18, %rdi
+	movq $17, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -140,7 +140,7 @@ ASSERT_OK4:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK5
-	movq $19, %rdi
+	movq $18, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -155,7 +155,7 @@ ASSERT_OK5:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK6
-	movq $21, %rdi
+	movq $19, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -177,7 +177,7 @@ ASSERT_OK6:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK7
-	movq $22, %rdi
+	movq $20, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -196,7 +196,7 @@ ASSERT_OK7:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK8
-	movq $23, %rdi
+	movq $21, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -217,7 +217,7 @@ ASSERT_OK8:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK9
-	movq $24, %rdi
+	movq $22, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -236,7 +236,7 @@ ASSERT_OK9:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK10
-	movq $25, %rdi
+	movq $23, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -260,7 +260,7 @@ END_IF12:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK11
-	movq $26, %rdi
+	movq $24, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -289,7 +289,7 @@ END_IF14:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK13
-	movq $27, %rdi
+	movq $25, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -313,7 +313,7 @@ END_IF16:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK15
-	movq $28, %rdi
+	movq $26, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -342,7 +342,7 @@ END_IF18:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK17
-	movq $29, %rdi
+	movq $27, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -390,7 +390,7 @@ FOR_END20:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK19
-	movq $30, %rdi
+	movq $28, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -425,7 +425,7 @@ WHILE_END22:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK21
-	movq $31, %rdi
+	movq $29, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -442,7 +442,7 @@ ASSERT_OK21:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK23
-	movq $32, %rdi
+	movq $30, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -455,7 +455,7 @@ ASSERT_OK23:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK24
-	movq $33, %rdi
+	movq $31, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -490,7 +490,7 @@ WHILE_END26:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK25
-	movq $34, %rdi
+	movq $32, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -536,7 +536,7 @@ WHILE_END28:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK27
-	movq $35, %rdi
+	movq $33, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -549,7 +549,7 @@ ASSERT_OK27:
 	movq $3, %rax
 	cmpq %r12, %rax
 	je ASSERT_OK29
-	movq $36, %rdi
+	movq $34, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -595,7 +595,7 @@ FOR_END31:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK30
-	movq $37, %rdi
+	movq $35, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -643,7 +643,7 @@ FOR_END33:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK32
-	movq $38, %rdi
+	movq $36, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -662,7 +662,7 @@ ASSERT_OK32:
 AND_OR35:
 	cmpq %r12, %rax
 	je ASSERT_OK34
-	movq $39, %rdi
+	movq $37, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -694,7 +694,7 @@ AND_OR37:
 AND_OR38:
 	cmpq %r12, %rax
 	je ASSERT_OK36
-	movq $40, %rdi
+	movq $38, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -713,7 +713,7 @@ ASSERT_OK36:
 AND_OR40:
 	cmpq %r12, %rax
 	je ASSERT_OK39
-	movq $41, %rdi
+	movq $39, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -737,7 +737,7 @@ ASSERT_OK39:
 AND_OR42:
 	cmpq %r12, %rax
 	je ASSERT_OK41
-	movq $42, %rdi
+	movq $40, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -756,7 +756,7 @@ ASSERT_OK41:
 AND_OR44:
 	cmpq %r12, %rax
 	je ASSERT_OK43
-	movq $43, %rdi
+	movq $41, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -780,7 +780,7 @@ ASSERT_OK43:
 AND_OR46:
 	cmpq %r12, %rax
 	je ASSERT_OK45
-	movq $44, %rdi
+	movq $42, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -799,7 +799,7 @@ ASSERT_OK45:
 AND_OR48:
 	cmpq %r12, %rax
 	je ASSERT_OK47
-	movq $45, %rdi
+	movq $43, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -816,7 +816,7 @@ ASSERT_OK47:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK49
-	movq $47, %rdi
+	movq $44, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -839,7 +839,7 @@ ASSERT_OK49:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK50
-	movq $48, %rdi
+	movq $45, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -864,7 +864,7 @@ ASSERT_OK50:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK51
-	movq $49, %rdi
+	movq $46, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -889,7 +889,7 @@ ASSERT_OK51:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK52
-	movq $50, %rdi
+	movq $47, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -917,7 +917,7 @@ ASSERT_OK52:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK53
-	movq $51, %rdi
+	movq $48, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -940,7 +940,7 @@ ASSERT_OK53:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK54
-	movq $52, %rdi
+	movq $49, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -969,7 +969,7 @@ ASSERT_OK54:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK55
-	movq $53, %rdi
+	movq $50, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -1004,78 +1004,117 @@ ASSERT_OK55:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK56
-	movq $54, %rdi
+	movq $51, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
 ASSERT_OK56:
-//ASSERT(8, { int x, y; x=3; y=5; x+y; });
-	movq $8, %rax
+//ASSERT(5, { int x=3; (&x+2)-&x+3; });
+	movq $5, %rax
 	movq %rax, %r12
 //begin block
 	movq $3, %rax
 	movl %eax, -220(%rbp)
-	movq $5, %rax
-	movl %eax, -224(%rbp)
-	movslq -220(%rbp), %rax
+	movq %rbp, %rax
+	subq $220, %rax
 	pushq %rax
-	movslq -224(%rbp), %rax
+	movq $2, %rax
+	movq %rax, %r10
+	popq %rax
+	imulq $4, %r10
+	addq %r10, %rax
+	pushq %rax
+	movq %rbp, %rax
+	subq $220, %rax
+	movq %rax, %r10
+	popq %rax
+	subq %r10, %rax
+	movq $4, %r10
+	xorq %rdx, %rdx
+	divq %r10
+	pushq %rax
+	movq $3, %rax
 	movq %rax, %r10
 	popq %rax
 	addq %r10, %rax
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK57
-	movq $57, %rdi
+	movq $52, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
 ASSERT_OK57:
-//ASSERT(8, { int x=3, y=5; x+y; });
+//ASSERT(8, { int x, y; x=3; y=5; x+y; });
 	movq $8, %rax
 	movq %rax, %r12
 //begin block
 	movq $3, %rax
-	movl %eax, -228(%rbp)
+	movl %eax, -224(%rbp)
 	movq $5, %rax
-	movl %eax, -232(%rbp)
-	movslq -228(%rbp), %rax
+	movl %eax, -228(%rbp)
+	movslq -224(%rbp), %rax
 	pushq %rax
-	movslq -232(%rbp), %rax
+	movslq -228(%rbp), %rax
 	movq %rax, %r10
 	popq %rax
 	addq %r10, %rax
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK58
-	movq $58, %rdi
+	movq $53, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
 ASSERT_OK58:
+//ASSERT(8, { int x=3, y=5; x+y; });
+	movq $8, %rax
+	movq %rax, %r12
+//begin block
+	movq $3, %rax
+	movl %eax, -232(%rbp)
+	movq $5, %rax
+	movl %eax, -236(%rbp)
+	movslq -232(%rbp), %rax
+	pushq %rax
+	movslq -236(%rbp), %rax
+	movq %rax, %r10
+	popq %rax
+	addq %r10, %rax
+//end block
+	cmpq %r12, %rax
+	je ASSERT_OK59
+	movq $54, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK59:
 //ASSERT(3, { int x[2]; int *y=&x; *y=3; *x; });
 	movq $3, %rax
 	movq %rax, %r12
 //begin block
 	movq %rbp, %rax
-	subq $240, %rax
-	movq %rax, -248(%rbp)
+	subq $244, %rax
+	xorq %r10, %r10
+	movq %rax, %r10
+	movq %r10, %rax
+	movq %rax, -256(%rbp)
 	movq $3, %rax
 	pushq %rax
-	movq -248(%rbp), %rax
+	movq -256(%rbp), %rax
 	popq %r10
 	movl %r10d, (%rax)
 	movq %rbp, %rax
-	subq $240, %rax
+	subq $244, %rax
 	movslq (%rax), %rax
 //end block
 	cmpq %r12, %rax
-	je ASSERT_OK59
-	movq $60, %rdi
+	je ASSERT_OK60
+	movq $55, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK59:
+ASSERT_OK60:
 //ASSERT(3, { int x[3]; *x=3; *(x+1)=4; *(x+2)=5; *x; });
 	movq $3, %rax
 	movq %rax, %r12
@@ -1083,13 +1122,13 @@ ASSERT_OK59:
 	movq $3, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $260, %rax
+	subq $268, %rax
 	popq %r10
 	movl %r10d, (%rax)
 	movq $4, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $260, %rax
+	subq $268, %rax
 	pushq %rax
 	movq $1, %rax
 	movq %rax, %r10
@@ -1101,7 +1140,7 @@ ASSERT_OK59:
 	movq $5, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $260, %rax
+	subq $268, %rax
 	pushq %rax
 	movq $2, %rax
 	movq %rax, %r10
@@ -1111,16 +1150,16 @@ ASSERT_OK59:
 	popq %r10
 	movl %r10d, (%rax)
 	movq %rbp, %rax
-	subq $260, %rax
+	subq $268, %rax
 	movslq (%rax), %rax
 //end block
 	cmpq %r12, %rax
-	je ASSERT_OK60
-	movq $62, %rdi
+	je ASSERT_OK61
+	movq $56, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK60:
+ASSERT_OK61:
 //ASSERT(4, { int x[3]; *x=3; *(x+1)=4; *(x+2)=5; *(x+1); });
 	movq $4, %rax
 	movq %rax, %r12
@@ -1128,13 +1167,13 @@ ASSERT_OK60:
 	movq $3, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $272, %rax
+	subq $280, %rax
 	popq %r10
 	movl %r10d, (%rax)
 	movq $4, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $272, %rax
+	subq $280, %rax
 	pushq %rax
 	movq $1, %rax
 	movq %rax, %r10
@@ -1146,7 +1185,7 @@ ASSERT_OK60:
 	movq $5, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $272, %rax
+	subq $280, %rax
 	pushq %rax
 	movq $2, %rax
 	movq %rax, %r10
@@ -1156,60 +1195,9 @@ ASSERT_OK60:
 	popq %r10
 	movl %r10d, (%rax)
 	movq %rbp, %rax
-	subq $272, %rax
+	subq $280, %rax
 	pushq %rax
 	movq $1, %rax
-	movq %rax, %r10
-	popq %rax
-	imulq $4, %r10
-	addq %r10, %rax
-	movslq (%rax), %rax
-//end block
-	cmpq %r12, %rax
-	je ASSERT_OK61
-	movq $63, %rdi
-	movq %r12, %rsi
-	movq %rax, %rdx
-	callq _error
-ASSERT_OK61:
-//ASSERT(5, { int x[3]; *x=3; *(x+1)=4; *(x+2)=5; *(x+2); });
-	movq $5, %rax
-	movq %rax, %r12
-//begin block
-	movq $3, %rax
-	pushq %rax
-	movq %rbp, %rax
-	subq $284, %rax
-	popq %r10
-	movl %r10d, (%rax)
-	movq $4, %rax
-	pushq %rax
-	movq %rbp, %rax
-	subq $284, %rax
-	pushq %rax
-	movq $1, %rax
-	movq %rax, %r10
-	popq %rax
-	imulq $4, %r10
-	addq %r10, %rax
-	popq %r10
-	movl %r10d, (%rax)
-	movq $5, %rax
-	pushq %rax
-	movq %rbp, %rax
-	subq $284, %rax
-	pushq %rax
-	movq $2, %rax
-	movq %rax, %r10
-	popq %rax
-	imulq $4, %r10
-	addq %r10, %rax
-	popq %r10
-	movl %r10d, (%rax)
-	movq %rbp, %rax
-	subq $284, %rax
-	pushq %rax
-	movq $2, %rax
 	movq %rax, %r10
 	popq %rax
 	imulq $4, %r10
@@ -1218,11 +1206,62 @@ ASSERT_OK61:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK62
-	movq $64, %rdi
+	movq $57, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
 ASSERT_OK62:
+//ASSERT(5, { int x[3]; *x=3; *(x+1)=4; *(x+2)=5; *(x+2); });
+	movq $5, %rax
+	movq %rax, %r12
+//begin block
+	movq $3, %rax
+	pushq %rax
+	movq %rbp, %rax
+	subq $292, %rax
+	popq %r10
+	movl %r10d, (%rax)
+	movq $4, %rax
+	pushq %rax
+	movq %rbp, %rax
+	subq $292, %rax
+	pushq %rax
+	movq $1, %rax
+	movq %rax, %r10
+	popq %rax
+	imulq $4, %r10
+	addq %r10, %rax
+	popq %r10
+	movl %r10d, (%rax)
+	movq $5, %rax
+	pushq %rax
+	movq %rbp, %rax
+	subq $292, %rax
+	pushq %rax
+	movq $2, %rax
+	movq %rax, %r10
+	popq %rax
+	imulq $4, %r10
+	addq %r10, %rax
+	popq %r10
+	movl %r10d, (%rax)
+	movq %rbp, %rax
+	subq $292, %rax
+	pushq %rax
+	movq $2, %rax
+	movq %rax, %r10
+	popq %rax
+	imulq $4, %r10
+	addq %r10, %rax
+	movslq (%rax), %rax
+//end block
+	cmpq %r12, %rax
+	je ASSERT_OK63
+	movq $58, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK63:
 //ASSERT(3, { int x[3]; *x=3; x[1]=4; x[2]=5; *x; });
 	movq $3, %rax
 	movq %rax, %r12
@@ -1230,13 +1269,13 @@ ASSERT_OK62:
 	movq $3, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $296, %rax
+	subq $304, %rax
 	popq %r10
 	movl %r10d, (%rax)
 	movq $4, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $296, %rax
+	subq $304, %rax
 	pushq %rax
 	movq $1, %rax
 	movq %rax, %r10
@@ -1248,7 +1287,7 @@ ASSERT_OK62:
 	movq $5, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $296, %rax
+	subq $304, %rax
 	pushq %rax
 	movq $2, %rax
 	movq %rax, %r10
@@ -1258,16 +1297,16 @@ ASSERT_OK62:
 	popq %r10
 	movl %r10d, (%rax)
 	movq %rbp, %rax
-	subq $296, %rax
+	subq $304, %rax
 	movslq (%rax), %rax
 //end block
 	cmpq %r12, %rax
-	je ASSERT_OK63
-	movq $65, %rdi
+	je ASSERT_OK64
+	movq $59, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK63:
+ASSERT_OK64:
 //ASSERT(4, { int x[3]; *x=3; x[1]=4; x[2]=5; *(x+1); });
 	movq $4, %rax
 	movq %rax, %r12
@@ -1275,13 +1314,13 @@ ASSERT_OK63:
 	movq $3, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $308, %rax
+	subq $316, %rax
 	popq %r10
 	movl %r10d, (%rax)
 	movq $4, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $308, %rax
+	subq $316, %rax
 	pushq %rax
 	movq $1, %rax
 	movq %rax, %r10
@@ -1293,7 +1332,7 @@ ASSERT_OK63:
 	movq $5, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $308, %rax
+	subq $316, %rax
 	pushq %rax
 	movq $2, %rax
 	movq %rax, %r10
@@ -1303,60 +1342,9 @@ ASSERT_OK63:
 	popq %r10
 	movl %r10d, (%rax)
 	movq %rbp, %rax
-	subq $308, %rax
+	subq $316, %rax
 	pushq %rax
 	movq $1, %rax
-	movq %rax, %r10
-	popq %rax
-	imulq $4, %r10
-	addq %r10, %rax
-	movslq (%rax), %rax
-//end block
-	cmpq %r12, %rax
-	je ASSERT_OK64
-	movq $66, %rdi
-	movq %r12, %rsi
-	movq %rax, %rdx
-	callq _error
-ASSERT_OK64:
-//ASSERT(5, { int x[3]; *x=3; x[1]=4; x[2]=5; *(x+2); });
-	movq $5, %rax
-	movq %rax, %r12
-//begin block
-	movq $3, %rax
-	pushq %rax
-	movq %rbp, %rax
-	subq $320, %rax
-	popq %r10
-	movl %r10d, (%rax)
-	movq $4, %rax
-	pushq %rax
-	movq %rbp, %rax
-	subq $320, %rax
-	pushq %rax
-	movq $1, %rax
-	movq %rax, %r10
-	popq %rax
-	imulq $4, %r10
-	addq %r10, %rax
-	popq %r10
-	movl %r10d, (%rax)
-	movq $5, %rax
-	pushq %rax
-	movq %rbp, %rax
-	subq $320, %rax
-	pushq %rax
-	movq $2, %rax
-	movq %rax, %r10
-	popq %rax
-	imulq $4, %r10
-	addq %r10, %rax
-	popq %r10
-	movl %r10d, (%rax)
-	movq %rbp, %rax
-	subq $320, %rax
-	pushq %rax
-	movq $2, %rax
 	movq %rax, %r10
 	popq %rax
 	imulq $4, %r10
@@ -1365,7 +1353,7 @@ ASSERT_OK64:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK65
-	movq $67, %rdi
+	movq $60, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
@@ -1377,13 +1365,13 @@ ASSERT_OK65:
 	movq $3, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $332, %rax
+	subq $328, %rax
 	popq %r10
 	movl %r10d, (%rax)
 	movq $4, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $332, %rax
+	subq $328, %rax
 	pushq %rax
 	movq $1, %rax
 	movq %rax, %r10
@@ -1395,7 +1383,7 @@ ASSERT_OK65:
 	movq $5, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $332, %rax
+	subq $328, %rax
 	pushq %rax
 	movq $2, %rax
 	movq %rax, %r10
@@ -1405,7 +1393,7 @@ ASSERT_OK65:
 	popq %r10
 	movl %r10d, (%rax)
 	movq %rbp, %rax
-	subq $332, %rax
+	subq $328, %rax
 	pushq %rax
 	movq $2, %rax
 	movq %rax, %r10
@@ -1416,25 +1404,25 @@ ASSERT_OK65:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK66
-	movq $68, %rdi
+	movq $61, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
 ASSERT_OK66:
-//ASSERT(5, { int x[3]; *x=3; x[1]=4; 2[x]=5; *(x+2); });
+//ASSERT(5, { int x[3]; *x=3; x[1]=4; x[2]=5; *(x+2); });
 	movq $5, %rax
 	movq %rax, %r12
 //begin block
 	movq $3, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $344, %rax
+	subq $340, %rax
 	popq %r10
 	movl %r10d, (%rax)
 	movq $4, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $344, %rax
+	subq $340, %rax
 	pushq %rax
 	movq $1, %rax
 	movq %rax, %r10
@@ -1445,18 +1433,18 @@ ASSERT_OK66:
 	movl %r10d, (%rax)
 	movq $5, %rax
 	pushq %rax
-	movq $2, %rax
-	pushq %rax
 	movq %rbp, %rax
-	subq $344, %rax
+	subq $340, %rax
+	pushq %rax
+	movq $2, %rax
 	movq %rax, %r10
 	popq %rax
-	imulq $4, %rax
+	imulq $4, %r10
 	addq %r10, %rax
 	popq %r10
 	movl %r10d, (%rax)
 	movq %rbp, %rax
-	subq $344, %rax
+	subq $340, %rax
 	pushq %rax
 	movq $2, %rax
 	movq %rax, %r10
@@ -1467,22 +1455,73 @@ ASSERT_OK66:
 //end block
 	cmpq %r12, %rax
 	je ASSERT_OK67
-	movq $69, %rdi
+	movq $62, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
 ASSERT_OK67:
+//ASSERT(5, { int x[3]; *x=3; x[1]=4; 2[x]=5; *(x+2); });
+	movq $5, %rax
+	movq %rax, %r12
+//begin block
+	movq $3, %rax
+	pushq %rax
+	movq %rbp, %rax
+	subq $352, %rax
+	popq %r10
+	movl %r10d, (%rax)
+	movq $4, %rax
+	pushq %rax
+	movq %rbp, %rax
+	subq $352, %rax
+	pushq %rax
+	movq $1, %rax
+	movq %rax, %r10
+	popq %rax
+	imulq $4, %r10
+	addq %r10, %rax
+	popq %r10
+	movl %r10d, (%rax)
+	movq $5, %rax
+	pushq %rax
+	movq $2, %rax
+	pushq %rax
+	movq %rbp, %rax
+	subq $352, %rax
+	movq %rax, %r10
+	popq %rax
+	imulq $4, %rax
+	addq %r10, %rax
+	popq %r10
+	movl %r10d, (%rax)
+	movq %rbp, %rax
+	subq $352, %rax
+	pushq %rax
+	movq $2, %rax
+	movq %rax, %r10
+	popq %rax
+	imulq $4, %r10
+	addq %r10, %rax
+	movslq (%rax), %rax
+//end block
+	cmpq %r12, %rax
+	je ASSERT_OK68
+	movq $63, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK68:
 //ASSERT(5, { int i = 0;for (i = 1; i < 10; i++) if (i % 5 == 0) break; i; });
 	movq $5, %rax
 	movq %rax, %r12
 //begin block
 	movq $0, %rax
-	movl %eax, -348(%rbp)
+	movl %eax, -356(%rbp)
 //for init
 	movq $1, %rax
-	movl %eax, -348(%rbp)
-FOR69:
-	movslq -348(%rbp), %rax
+	movl %eax, -356(%rbp)
+FOR70:
+	movslq -356(%rbp), %rax
 	pushq %rax
 	movq $10, %rax
 	movq %rax, %r10
@@ -1491,9 +1530,9 @@ FOR69:
 	setl %al
 	movzbq %al, %rax
 	cmpq $0, %rax
-	je FOR_END69
+	je FOR_END70
 //if begin
-	movslq -348(%rbp), %rax
+	movslq -356(%rbp), %rax
 	pushq %rax
 	movq $5, %rax
 	movq %rax, %r10
@@ -1509,44 +1548,44 @@ FOR69:
 	sete %al
 	movzbq %al, %rax
 	cmpq $0, %rax
-	je ELSE70
-	jmp FOR_END69
-	jmp END_IF70
-ELSE70:
-END_IF70:
-FOR_INC69:
-	movslq -348(%rbp), %rax
+	je ELSE71
+	jmp FOR_END70
+	jmp END_IF71
+ELSE71:
+END_IF71:
+FOR_INC70:
+	movslq -356(%rbp), %rax
 	pushq %rax
-	movslq -348(%rbp), %rax
+	movslq -356(%rbp), %rax
 	pushq %rax
 	movq $1, %rax
 	movq %rax, %r10
 	popq %rax
 	addq %r10, %rax
-	movl %eax, -348(%rbp)
+	movl %eax, -356(%rbp)
 	popq %rax
-	jmp FOR69
-FOR_END69:
-	movslq -348(%rbp), %rax
+	jmp FOR70
+FOR_END70:
+	movslq -356(%rbp), %rax
 //end block
 	cmpq %r12, %rax
-	je ASSERT_OK68
-	movq $71, %rdi
+	je ASSERT_OK69
+	movq $64, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK68:
+ASSERT_OK69:
 //ASSERT(5, { 
 	movq $5, %rax
 	movq %rax, %r12
 //begin block
 	movq $0, %rax
-	movl %eax, -352(%rbp)
+	movl %eax, -360(%rbp)
 //for init
 	movq $0, %rax
-	movl %eax, -356(%rbp)
-FOR72:
-	movslq -356(%rbp), %rax
+	movl %eax, -364(%rbp)
+FOR73:
+	movslq -364(%rbp), %rax
 	pushq %rax
 	movq $10, %rax
 	movq %rax, %r10
@@ -1555,10 +1594,10 @@ FOR72:
 	setl %al
 	movzbq %al, %rax
 	cmpq $0, %rax
-	je FOR_END72
+	je FOR_END73
 //begin block
 //if begin
-	movslq -356(%rbp), %rax
+	movslq -364(%rbp), %rax
 	pushq %rax
 	movq $2, %rax
 	movq %rax, %r10
@@ -1567,44 +1606,44 @@ FOR72:
 	idivq %r10
 	movq %rdx, %rax
 	cmpq $0, %rax
-	je ELSE73
-	jmp FOR_INC72
-	jmp END_IF73
-ELSE73:
-END_IF73:
-	movslq -352(%rbp), %rax
+	je ELSE74
+	jmp FOR_INC73
+	jmp END_IF74
+ELSE74:
+END_IF74:
+	movslq -360(%rbp), %rax
 	pushq %rax
-	movslq -352(%rbp), %rax
+	movslq -360(%rbp), %rax
 	pushq %rax
 	movq $1, %rax
 	movq %rax, %r10
 	popq %rax
 	addq %r10, %rax
-	movl %eax, -352(%rbp)
+	movl %eax, -360(%rbp)
 	popq %rax
 //end block
-FOR_INC72:
-	movslq -356(%rbp), %rax
+FOR_INC73:
+	movslq -364(%rbp), %rax
 	pushq %rax
-	movslq -356(%rbp), %rax
+	movslq -364(%rbp), %rax
 	pushq %rax
 	movq $1, %rax
 	movq %rax, %r10
 	popq %rax
 	addq %r10, %rax
-	movl %eax, -356(%rbp)
+	movl %eax, -364(%rbp)
 	popq %rax
-	jmp FOR72
-FOR_END72:
-	movslq -352(%rbp), %rax
+	jmp FOR73
+FOR_END73:
+	movslq -360(%rbp), %rax
 //end block
 	cmpq %r12, %rax
-	je ASSERT_OK71
-	movq $73, %rdi
+	je ASSERT_OK72
+	movq $66, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK71:
+ASSERT_OK72:
 //ASSERT(-1, (char)255);
 	movq $1, %rax
 	xorq %r10, %r10
@@ -1612,39 +1651,41 @@ ASSERT_OK71:
 	movq %r10, %rax
 	movq %rax, %r12
 	movq $255, %rax
-	movb %al, %r10b
-	movsbq %r10b, %rax
+	movsbq %al, %r10
+	movq %r10, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK74
-	movq $84, %rdi
+	je ASSERT_OK75
+	movq $76, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK74:
+ASSERT_OK75:
 //ASSERT(513, { int x=512; *(char *)&x=1; x; });
 	movq $513, %rax
 	movq %rax, %r12
 //begin block
 	movq $512, %rax
-	movl %eax, -360(%rbp)
+	movl %eax, -368(%rbp)
 	movq $1, %rax
+	movsbq %al, %r10
+	movq %r10, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $360, %rax
+	subq $368, %rax
+	xorq %r10, %r10
 	movq %rax, %r10
-	xorq %rax, %rax
 	movq %r10, %rax
 	popq %r10
 	movb %r10b, (%rax)
-	movslq -360(%rbp), %rax
+	movslq -368(%rbp), %rax
 //end block
 	cmpq %r12, %rax
-	je ASSERT_OK75
-	movq $86, %rdi
+	je ASSERT_OK76
+	movq $77, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK75:
+ASSERT_OK76:
 //ASSERT(1, -1<1);
 	movq $1, %rax
 	movq %rax, %r12
@@ -1660,138 +1701,138 @@ ASSERT_OK75:
 	setl %al
 	movzbq %al, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK76
-	movq $88, %rdi
-	movq %r12, %rsi
-	movq %rax, %rdx
-	callq _error
-ASSERT_OK76:
-//ASSERT(254, (char)127+(char)127);
-	movq $254, %rax
-	movq %rax, %r12
-	movq $127, %rax
-	movb %al, %r10b
-	movsbq %r10b, %rax
-	pushq %rax
-	movq $127, %rax
-	movb %al, %r10b
-	movsbq %r10b, %rax
-	movq %rax, %r10
-	popq %rax
-	addq %r10, %rax
-	cmpq %r12, %rax
 	je ASSERT_OK77
-	movq $89, %rdi
+	movq $78, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
 ASSERT_OK77:
-//ASSERT(65534, (short)32767+(short)32767);
-	movq $65534, %rax
+//ASSERT(254, (char)127+(char)127);
+	movq $254, %rax
 	movq %rax, %r12
-	movq $32767, %rax
-	movw %ax, %r10w
-	movswq %r10w, %rax
+	movq $127, %rax
+	movsbq %al, %r10
+	movq %r10, %rax
 	pushq %rax
-	movq $32767, %rax
-	movw %ax, %r10w
-	movswq %r10w, %rax
+	movq $127, %rax
+	movsbq %al, %r10
+	movq %r10, %rax
 	movq %rax, %r10
 	popq %rax
 	addq %r10, %rax
 	cmpq %r12, %rax
 	je ASSERT_OK78
-	movq $90, %rdi
+	movq $79, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
 ASSERT_OK78:
+//ASSERT(65534, (short)32767+(short)32767);
+	movq $65534, %rax
+	movq %rax, %r12
+	movq $32767, %rax
+	movswq %ax, %r10
+	movq %r10, %rax
+	pushq %rax
+	movq $32767, %rax
+	movswq %ax, %r10
+	movq %r10, %rax
+	movq %rax, %r10
+	popq %rax
+	addq %r10, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK79
+	movq $80, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK79:
 //ASSERT(1, sizeof(char));
 	movq $1, %rax
 	movq %rax, %r12
 	movq $1, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK79
-	movq $92, %rdi
+	je ASSERT_OK80
+	movq $81, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK79:
+ASSERT_OK80:
 //ASSERT(2, sizeof(short));
 	movq $2, %rax
 	movq %rax, %r12
 	movq $2, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK80
-	movq $93, %rdi
+	je ASSERT_OK81
+	movq $82, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK80:
+ASSERT_OK81:
 //ASSERT(4, sizeof(int));
 	movq $4, %rax
 	movq %rax, %r12
 	movq $4, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK81
-	movq $94, %rdi
+	je ASSERT_OK82
+	movq $83, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK81:
+ASSERT_OK82:
 //ASSERT(1, sizeof((char)1));
 	movq $1, %rax
 	movq %rax, %r12
 	movq $1, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK82
-	movq $95, %rdi
+	je ASSERT_OK83
+	movq $84, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK82:
+ASSERT_OK83:
 //ASSERT(2, sizeof((short)1));
 	movq $2, %rax
 	movq %rax, %r12
 	movq $2, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK83
-	movq $96, %rdi
+	je ASSERT_OK84
+	movq $85, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK83:
+ASSERT_OK84:
 //ASSERT(4, sizeof((int)1));
 	movq $4, %rax
 	movq %rax, %r12
 	movq $4, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK84
-	movq $97, %rdi
+	je ASSERT_OK85
+	movq $86, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK84:
+ASSERT_OK85:
 //ASSERT(8, sizeof(int *));
 	movq $8, %rax
 	movq %rax, %r12
 	movq $8, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK85
-	movq $99, %rdi
+	je ASSERT_OK86
+	movq $87, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK85:
+ASSERT_OK86:
 //ASSERT(1, {int arr[2]; &arr == arr && arr == &arr[0];});
 	movq $1, %rax
 	movq %rax, %r12
 //begin block
 	movq %rbp, %rax
-	subq $368, %rax
+	subq $376, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $368, %rax
+	subq $376, %rax
 	movq %rax, %r10
 	popq %rax
 	cmpq %r10, %rax
@@ -1799,12 +1840,12 @@ ASSERT_OK85:
 	movzbq %al, %rax
 	cmpq $0, %rax
 	movq $0, %rax
-	je AND_OR87
+	je AND_OR88
 	movq %rbp, %rax
-	subq $368, %rax
+	subq $376, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $368, %rax
+	subq $376, %rax
 	pushq %rax
 	movq $0, %rax
 	movq %rax, %r10
@@ -1819,15 +1860,15 @@ ASSERT_OK85:
 	cmpq $0, %rax
 	setne %al
 	movzbq %al, %rax
-AND_OR87:
+AND_OR88:
 //end block
 	cmpq %r12, %rax
-	je ASSERT_OK86
-	movq $100, %rdi
+	je ASSERT_OK87
+	movq $88, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK86:
+ASSERT_OK87:
 //ASSERT(8, {int arr[2]; sizeof(arr);});
 	movq $8, %rax
 	movq %rax, %r12
@@ -1835,45 +1876,45 @@ ASSERT_OK86:
 	movq $8, %rax
 //end block
 	cmpq %r12, %rax
-	je ASSERT_OK88
-	movq $101, %rdi
+	je ASSERT_OK89
+	movq $89, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK88:
+ASSERT_OK89:
 //ASSERT(4, sizeof(int));
 	movq $4, %rax
 	movq %rax, %r12
 	movq $4, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK89
-	movq $103, %rdi
+	je ASSERT_OK90
+	movq $90, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK89:
+ASSERT_OK90:
 //ASSERT(4, sizeof((char)1 + (char)1));
 	movq $4, %rax
 	movq %rax, %r12
 	movq $4, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK90
-	movq $104, %rdi
+	je ASSERT_OK91
+	movq $91, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK90:
+ASSERT_OK91:
 //ASSERT(4, sizeof((short)1 + (short)1));
 	movq $4, %rax
 	movq %rax, %r12
 	movq $4, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK91
-	movq $105, %rdi
+	je ASSERT_OK92
+	movq $92, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK91:
+ASSERT_OK92:
 //ASSERT(1, { char i; sizeof(++i); });
 	movq $1, %rax
 	movq %rax, %r12
@@ -1881,12 +1922,12 @@ ASSERT_OK91:
 	movq $1, %rax
 //end block
 	cmpq %r12, %rax
-	je ASSERT_OK92
-	movq $107, %rdi
+	je ASSERT_OK93
+	movq $93, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK92:
+ASSERT_OK93:
 //ASSERT(1, { char i; sizeof(i++); });
 	movq $1, %rax
 	movq %rax, %r12
@@ -1894,12 +1935,12 @@ ASSERT_OK92:
 	movq $1, %rax
 //end block
 	cmpq %r12, %rax
-	je ASSERT_OK93
-	movq $108, %rdi
+	je ASSERT_OK94
+	movq $94, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK93:
+ASSERT_OK94:
 //ASSERT(8, { long x; sizeof(x); });
 	movq $8, %rax
 	movq %rax, %r12
@@ -1907,12 +1948,12 @@ ASSERT_OK93:
 	movq $8, %rax
 //end block
 	cmpq %r12, %rax
-	je ASSERT_OK94
-	movq $109, %rdi
+	je ASSERT_OK95
+	movq $95, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK94:
+ASSERT_OK95:
 //ASSERT(2, { short x; sizeof(x); });
 	movq $2, %rax
 	movq %rax, %r12
@@ -1920,220 +1961,632 @@ ASSERT_OK94:
 	movq $2, %rax
 //end block
 	cmpq %r12, %rax
-	je ASSERT_OK95
-	movq $110, %rdi
+	je ASSERT_OK96
+	movq $96, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK95:
+ASSERT_OK96:
 //ASSERT(8, sizeof(-10 + (long)5));
 	movq $8, %rax
 	movq %rax, %r12
 	movq $8, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK96
-	movq $112, %rdi
+	je ASSERT_OK97
+	movq $97, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK96:
+ASSERT_OK97:
 //ASSERT(8, sizeof(-10 - (long)5));
 	movq $8, %rax
 	movq %rax, %r12
 	movq $8, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK97
-	movq $113, %rdi
+	je ASSERT_OK98
+	movq $98, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK97:
+ASSERT_OK98:
 //ASSERT(8, sizeof(-10 * (long)5));
 	movq $8, %rax
 	movq %rax, %r12
 	movq $8, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK98
-	movq $114, %rdi
+	je ASSERT_OK99
+	movq $99, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK98:
+ASSERT_OK99:
 //ASSERT(8, sizeof(-10 / (long)5));
 	movq $8, %rax
 	movq %rax, %r12
 	movq $8, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK99
-	movq $115, %rdi
+	je ASSERT_OK100
+	movq $100, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK99:
+ASSERT_OK100:
 //ASSERT(8, sizeof((long)-10 + 5));
 	movq $8, %rax
 	movq %rax, %r12
 	movq $8, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK100
-	movq $116, %rdi
+	je ASSERT_OK101
+	movq $101, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK100:
+ASSERT_OK101:
 //ASSERT(8, sizeof((long)-10 - 5));
 	movq $8, %rax
 	movq %rax, %r12
 	movq $8, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK101
-	movq $117, %rdi
+	je ASSERT_OK102
+	movq $102, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK101:
+ASSERT_OK102:
 //ASSERT(8, sizeof((long)-10 * 5));
 	movq $8, %rax
 	movq %rax, %r12
 	movq $8, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK102
-	movq $118, %rdi
+	je ASSERT_OK103
+	movq $103, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK102:
+ASSERT_OK103:
 //ASSERT(8, sizeof((long)-10 / 5));
 	movq $8, %rax
 	movq %rax, %r12
 	movq $8, %rax
 	cmpq %r12, %rax
-	je ASSERT_OK103
-	movq $119, %rdi
-	movq %r12, %rsi
-	movq %rax, %rdx
-	callq _error
-ASSERT_OK103:
-//ASSERT(131585, (int)8590066177);
-	movq $131585, %rax
-	movq %rax, %r12
-	movabsq $8590066177, %rax
-	movl %eax, %r10d
-	xorq %rax, %rax
-	movl %r10d, %eax
-	cmpq %r12, %rax
 	je ASSERT_OK104
-	movq $121, %rdi
+	movq $104, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
 ASSERT_OK104:
-//ASSERT(513, (short)8590066177);
-	movq $513, %rax
+//ASSERT(131585, (int)8590066177);
+	movq $131585, %rax
 	movq %rax, %r12
 	movabsq $8590066177, %rax
-	movw %ax, %r10w
-	movswq %r10w, %rax
+	movslq %eax, %r10
+	movq %r10, %rax
 	cmpq %r12, %rax
 	je ASSERT_OK105
-	movq $122, %rdi
+	movq $105, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
 ASSERT_OK105:
-//ASSERT(1, (char)8590066177);
-	movq $1, %rax
+//ASSERT(513, (short)8590066177);
+	movq $513, %rax
 	movq %rax, %r12
 	movabsq $8590066177, %rax
-	movb %al, %r10b
-	movsbq %r10b, %rax
+	movswq %ax, %r10
+	movq %r10, %rax
 	cmpq %r12, %rax
 	je ASSERT_OK106
-	movq $123, %rdi
+	movq $106, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
 ASSERT_OK106:
-//ASSERT(1, (long)1);
+//ASSERT(1, (char)8590066177);
 	movq $1, %rax
 	movq %rax, %r12
-	movq $1, %rax
-	movl %eax, %r10d
-	xorq %rax, %rax
-	movl %r10d, %eax
+	movabsq $8590066177, %rax
+	movsbq %al, %r10
+	movq %r10, %rax
 	cmpq %r12, %rax
 	je ASSERT_OK107
-	movq $124, %rdi
+	movq $107, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
 ASSERT_OK107:
-//ASSERT(0, (long)&*(int *)0);
-	movq $0, %rax
+//ASSERT(-1, (char)255);
+	movq $1, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
 	movq %rax, %r12
-	movq $0, %rax
-	movl %eax, %r10d
-	xorq %rax, %rax
-	movl %r10d, %eax
-	movq %rax, %r10
-	xorq %rax, %rax
+	movq $255, %rax
+	movsbq %al, %r10
 	movq %r10, %rax
 	cmpq %r12, %rax
 	je ASSERT_OK108
-	movq $125, %rdi
+	movq $108, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
 ASSERT_OK108:
+//ASSERT(-1, (signed char)255);
+	movq $1, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	movq %rax, %r12
+	movq $255, %rax
+	movsbq %al, %r10
+	movq %r10, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK109
+	movq $109, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK109:
+//ASSERT(255, (unsigned char)255);
+	movq $255, %rax
+	movq %rax, %r12
+	movq $255, %rax
+	xorq %r10, %r10
+	movb %al, %r10b
+	movq %r10, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK110
+	movq $110, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK110:
+//ASSERT(-1, (short)65535);
+	movq $1, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	movq %rax, %r12
+	movq $65535, %rax
+	movswq %ax, %r10
+	movq %r10, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK111
+	movq $111, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK111:
+//ASSERT(65535, (unsigned short)65535);
+	movq $65535, %rax
+	movq %rax, %r12
+	movq $65535, %rax
+	xorq %r10, %r10
+	movw %ax, %r10w
+	movq %r10, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK112
+	movq $112, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK112:
+//ASSERT(1, (long)1);
+	movq $1, %rax
+	movq %rax, %r12
+	movq $1, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK113
+	movq $113, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK113:
+//ASSERT(0, (long)&*(int *)0);
+	movq $0, %rax
+	movq %rax, %r12
+	movq $0, %rax
+	xorq %r10, %r10
+	movq %rax, %r10
+	movq %r10, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK114
+	movq $114, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK114:
 //ASSERT(513, { int x=512; *(char *)&x=1; x; });
 	movq $513, %rax
 	movq %rax, %r12
 //begin block
 	movq $512, %rax
-	movl %eax, -400(%rbp)
+	movl %eax, -408(%rbp)
 	movq $1, %rax
+	movsbq %al, %r10
+	movq %r10, %rax
 	pushq %rax
 	movq %rbp, %rax
-	subq $400, %rax
+	subq $408, %rax
+	xorq %r10, %r10
 	movq %rax, %r10
-	xorq %rax, %rax
 	movq %r10, %rax
 	popq %r10
 	movb %r10b, (%rax)
-	movslq -400(%rbp), %rax
+	movslq -408(%rbp), %rax
 //end block
 	cmpq %r12, %rax
-	je ASSERT_OK109
-	movq $126, %rdi
+	je ASSERT_OK115
+	movq $115, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK109:
+ASSERT_OK115:
 //ASSERT(5, { int x=5; long y=(long)&x; *(int*)y; });
 	movq $5, %rax
 	movq %rax, %r12
 //begin block
 	movq $5, %rax
-	movl %eax, -404(%rbp)
+	movl %eax, -412(%rbp)
 	movq %rbp, %rax
-	subq $404, %rax
+	subq $412, %rax
+	movq %rax, -424(%rbp)
+	movq -424(%rbp), %rax
+	xorq %r10, %r10
 	movq %rax, %r10
-	xorq %rax, %rax
-	movq %r10, %rax
-	movq %rax, -416(%rbp)
-	movq -416(%rbp), %rax
-	movq %rax, %r10
-	xorq %rax, %rax
 	movq %r10, %rax
 	movslq (%rax), %rax
 //end block
 	cmpq %r12, %rax
-	je ASSERT_OK110
+	je ASSERT_OK116
+	movq $116, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK116:
+//ASSERT(1, -1<1);
+	movq $1, %rax
+	movq %rax, %r12
+	movq $1, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	pushq %rax
+	movq $1, %rax
+	movq %rax, %r10
+	popq %rax
+	cmpq %r10, %rax
+	setl %al
+	movzbq %al, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK117
+	movq $117, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK117:
+//ASSERT(0, -1<(unsigned)1);
+	movq $0, %rax
+	movq %rax, %r12
+	movq $1, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	xorq %r10, %r10
+	movl %eax, %r10d
+	movq %r10, %rax
+	pushq %rax
+	movq $1, %rax
+	xorq %r10, %r10
+	movl %eax, %r10d
+	movq %r10, %rax
+	movq %rax, %r10
+	popq %rax
+	cmpq %r10, %rax
+	setl %al
+	movzbq %al, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK118
+	movq $118, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK118:
+//ASSERT(254, (char)127+(char)127);
+	movq $254, %rax
+	movq %rax, %r12
+	movq $127, %rax
+	movsbq %al, %r10
+	movq %r10, %rax
+	pushq %rax
+	movq $127, %rax
+	movsbq %al, %r10
+	movq %r10, %rax
+	movq %rax, %r10
+	popq %rax
+	addq %r10, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK119
+	movq $119, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK119:
+//ASSERT(65534, (short)32767+(short)32767);
+	movq $65534, %rax
+	movq %rax, %r12
+	movq $32767, %rax
+	movswq %ax, %r10
+	movq %r10, %rax
+	pushq %rax
+	movq $32767, %rax
+	movswq %ax, %r10
+	movq %r10, %rax
+	movq %rax, %r10
+	popq %rax
+	addq %r10, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK120
+	movq $120, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK120:
+//ASSERT(-1, (unsigned long)-1);
+	movq $1, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	movq %rax, %r12
+	movq $1, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	xorq %r10, %r10
+	movq %rax, %r10
+	movq %r10, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK121
+	movq $121, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK121:
+//ASSERT(-50, (-100)/2);
+	movq $50, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	movq %rax, %r12
+	movq $100, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	pushq %rax
+	movq $2, %rax
+	movq %rax, %r10
+	popq %rax
+	cqto
+	idivq %r10
+	cmpq %r12, %rax
+	je ASSERT_OK122
+	movq $122, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK122:
+//ASSERT(2147483598, ((unsigned)-100)/2);
+	movq $2147483598, %rax
+	movq %rax, %r12
+	movq $100, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	xorq %r10, %r10
+	movl %eax, %r10d
+	movq %r10, %rax
+	pushq %rax
+	movq $2, %rax
+	xorq %r10, %r10
+	movl %eax, %r10d
+	movq %r10, %rax
+	movq %rax, %r10
+	popq %rax
+	xorq %rdx, %rdx
+	divq %r10
+	cmpq %r12, %rax
+	je ASSERT_OK123
+	movq $123, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK123:
+//ASSERT(9223372036854775758, ((unsigned long)-100)/2);
+	movabsq $9223372036854775758, %rax
+	movq %rax, %r12
+	movq $100, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	xorq %r10, %r10
+	movq %rax, %r10
+	movq %r10, %rax
+	pushq %rax
+	movq $2, %rax
+	xorq %r10, %r10
+	movq %rax, %r10
+	movq %r10, %rax
+	movq %rax, %r10
+	popq %rax
+	xorq %rdx, %rdx
+	divq %r10
+	cmpq %r12, %rax
+	je ASSERT_OK124
+	movq $124, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK124:
+//ASSERT(0, ((long)-1)/(unsigned)100);
+	movq $0, %rax
+	movq %rax, %r12
+	movq $1, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	pushq %rax
+	movq $100, %rax
+	xorq %r10, %r10
+	movl %eax, %r10d
+	movq %r10, %rax
+	movq %rax, %r10
+	popq %rax
+	cqto
+	idivq %r10
+	cmpq %r12, %rax
+	je ASSERT_OK125
+	movq $125, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK125:
+//ASSERT(-2, (-100)%7);
+	movq $2, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	movq %rax, %r12
+	movq $100, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	pushq %rax
+	movq $7, %rax
+	movq %rax, %r10
+	popq %rax
+	cqto
+	idivq %r10
+	movq %rdx, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK126
+	movq $126, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK126:
+//ASSERT(2, ((unsigned)-100)%7);
+	movq $2, %rax
+	movq %rax, %r12
+	movq $100, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	xorq %r10, %r10
+	movl %eax, %r10d
+	movq %r10, %rax
+	pushq %rax
+	movq $7, %rax
+	xorq %r10, %r10
+	movl %eax, %r10d
+	movq %r10, %rax
+	movq %rax, %r10
+	popq %rax
+	xorq %rdx, %rdx
+	divq %r10
+	movq %rdx, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK127
 	movq $127, %rdi
 	movq %r12, %rsi
 	movq %rax, %rdx
 	callq _error
-ASSERT_OK110:
+ASSERT_OK127:
+//ASSERT(6, ((unsigned long)-100)%9);
+	movq $6, %rax
+	movq %rax, %r12
+	movq $100, %rax
+	xorq %r10, %r10
+	subq %rax, %r10
+	movq %r10, %rax
+	xorq %r10, %r10
+	movq %rax, %r10
+	movq %r10, %rax
+	pushq %rax
+	movq $9, %rax
+	xorq %r10, %r10
+	movq %rax, %r10
+	movq %r10, %rax
+	movq %rax, %r10
+	popq %rax
+	xorq %rdx, %rdx
+	divq %r10
+	movq %rdx, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK128
+	movq $128, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK128:
+//ASSERT(65535, (int)(unsigned short)65535);
+	movq $65535, %rax
+	movq %rax, %r12
+	movq $65535, %rax
+	xorq %r10, %r10
+	movw %ax, %r10w
+	movq %r10, %rax
+	xorq %r10, %r10
+	movl %eax, %r10d
+	movslq %r10d, %rax
+	cmpq %r12, %rax
+	je ASSERT_OK129
+	movq $129, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK129:
+//ASSERT(65535, { unsigned short x = 65535; x; });
+	movq $65535, %rax
+	movq %rax, %r12
+//begin block
+	movq $65535, %rax
+	xorq %r10, %r10
+	movw %ax, %r10w
+	movq %r10, %rax
+	movw %ax, -426(%rbp)
+	movzwq -426(%rbp), %rax
+//end block
+	cmpq %r12, %rax
+	je ASSERT_OK130
+	movq $130, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK130:
+//ASSERT(65535, { unsigned short x = 65535; (int)x; });
+	movq $65535, %rax
+	movq %rax, %r12
+//begin block
+	movq $65535, %rax
+	xorq %r10, %r10
+	movw %ax, %r10w
+	movq %r10, %rax
+	movw %ax, -428(%rbp)
+	movzwq -428(%rbp), %rax
+	xorq %r10, %r10
+	movl %eax, %r10d
+	movslq %r10d, %rax
+//end block
+	cmpq %r12, %rax
+	je ASSERT_OK131
+	movq $131, %rdi
+	movq %r12, %rsi
+	movq %rax, %rdx
+	callq _error
+ASSERT_OK131:
+	leaq L_.str.1(%rip), %rax
+	pushq %rax
+	popq %rdi
+	callq _printf
 //end block
 	movq $0, %rax
 	movq %rbp, %rsp
@@ -2143,3 +2596,5 @@ ASSERT_OK110:
 	.section	__DATA,__data
 L_.str.0:
 	.asciz "line %d: assertion failed, expected %d, but found %d\n"
+L_.str.1:
+	.asciz "OK\n"

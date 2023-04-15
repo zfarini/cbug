@@ -20,6 +20,8 @@ Type *new_type(int t)
 {
 	Type *type = &types[type_count++];
 	type->t = t;
+	if (t == PTR || t == ARRAY)
+		type->is_unsigned = 1;
 	if (t == PTR || t == ARRAY || t == LONG)
 		type->size = 8;
 	else if (type->t == INT)
@@ -220,25 +222,34 @@ char *get_type_str(Type *type)
 	return res;
 }
 
-Type *find_type(Node *node);
+Type *add_type(Node *node);
 
-void implicit_cast(Node *node, Type *type)
+void implicit_cast(Node **node, Type *type)
 {
-	return ; // TODO:
-	Type *t = find_type(node);
-	if (types_are_equal(t, type))
+	if (types_are_equal(type, (*node)->t))
 		return ;
-	Node *tmp = new_node(0);
-	*tmp = *node;
-
-	memset(node, 0, sizeof(Node));
-	node->type = NODE_CAST;
-	node->t = type;
-	node->left = tmp;
-	node->tok = tmp->tok;
+	Node *cast = new_node(NODE_CAST);
+	cast->left = *node;
+	cast->t = type;
+	*node = cast;
 }
 
-Type *find_type(Node *node)
+Type *find_common_type(Type *t1, Type *t2)
+{
+	if (t1->ptr_to)
+		return t1;
+	if (t2->ptr_to)
+		return t2;
+	if (t1->size < 4)
+		t1 = type_int;
+	if (t2->size < 4)
+		t2 = type_int;
+	if (t1->size != t2->size)
+		return(t1->size < t2->size) ? t2 : t1;
+	return t2->is_unsigned ? t2 : t1;
+}
+
+Type *add_type(Node *node)
 {
 	Type *t = type_void;
 
@@ -247,12 +258,17 @@ Type *find_type(Node *node)
 	if (node->t)
 		t = node->t;
 	else if (node->type == NODE_INT)
-		t = type_int;
+	{
+		if (node->tok->int_val > INT_MAX || node->tok->int_val < INT_MIN)
+			t = type_long;
+		else
+			t = type_int;
+	}
 	else if (node->type == NODE_UNARY)
 	{
 		if (node->tok->type == TOKEN_INC || node->tok->type == TOKEN_DEC)
 		{
-			t = find_type(node->left);
+			t = add_type(node->left);
 			if (t->t == VOID)
 				error_token(node->tok, "invalid operand for '%s' operator", token_type_name(node->tok->type));
 		}
@@ -271,13 +287,13 @@ Type *find_type(Node *node)
 	else if (node->type == NODE_ADDR)
 	{
 		t = new_type(PTR);
-		t->ptr_to = find_type(node->left);
+		t->ptr_to = add_type(node->left);
 		if (t->ptr_to->t == VOID)
 			error_token(node->tok, "invalid operand for '&'");
 	}
 	else if (node->type == NODE_DEREF)
 	{
-		Type *tt = find_type(node->left);
+		Type *tt = add_type(node->left);
 		if (!tt->ptr_to)
 			error_token(node->tok, "derefrencing a non-pointer");
 		if (tt->ptr_to->t == VOID)
@@ -286,57 +302,63 @@ Type *find_type(Node *node)
 	}
 	else if (node->type == NODE_NEG)
 	{
-		t = find_type(node->left);
+		// this is wrong check chibicc
+		t = add_type(node->left);
 		if (t->t == VOID)
 			error_token(node->tok, "invalid operand for '-'");
 	}
 	else if (node->type == NODE_CAST)
 	{
 		t = node->cast_type;
-		find_type(node->left);
+		add_type(node->left);
 	}
 	else if (node->type == NODE_BINARY)
 	{
 		int tok = node->tok->type;
-		Type *t1 = find_type(node->left);
-		Type *t2 = find_type(node->right);
-		char *s1 = get_type_str(t1);
-		char *s2 = get_type_str(t2);
+		add_type(node->left);
+		add_type(node->right);
 
-		t = t1;
-		if (type_match(tok, '+', '-', '*', '/', '%', -1))
+		Type *t1 = node->left->t;
+		Type *t2 = node->right->t;
+		if (t1->t == VOID || t2->t == VOID)
+			assert(0);
+
+		if (t1->ptr_to || t2->ptr_to)
 		{
-			if (t1->t == VOID || t2->t == VOID)
-				error_token(node->tok, "void?");
-			if (((t1->ptr_to || t2->ptr_to) && (tok != '+' && tok != '-')) || 
-				(!t1->ptr_to && t2->ptr_to && tok == '-') ||
-				(t1->ptr_to && t2->ptr_to && !types_are_equal(t1, t2)))
-				error_token(node->tok, "invalid operands to binary expression ('%s' and '%s')", s1, s2);
-			if (!t1->ptr_to && t2->ptr_to)
+			if (type_match(tok, '*', '/', '%', -1) || (!t1->ptr_to && tok == '-') 
+				|| (t1->ptr_to && t2->ptr_to && tok == '+') 
+				|| (t1->ptr_to && t2->ptr_to && tok == '-' && !types_are_equal(t1, t2)))
+				error_token(node->tok, "invalid operands to binary expression ('%s' and '%s')", get_type_str(t1), get_type_str(t2));
+			if (t1->ptr_to && !t2->ptr_to && (tok == '+' || tok == '-'))
+				t = t1;
+			else if (t2->ptr_to && !t1->ptr_to && tok == '+')
 				t = t2;
-			if (!t1->ptr_to && !t2->ptr_to)
-			{
-				if (t2->size > t1->size)
-					t = t2;
-				if (t->size < 4)
-					t = type_int;
-				implicit_cast(node->left, t);
-				implicit_cast(node->right, t);
-			}
+			else
+				t = type_int;
 		}
 		else
-			t = type_int; // ?
+		{
+			Type *tt = find_common_type(node->left->t, node->right->t);
+			implicit_cast(&node->left, tt);
+			assert(types_are_equal(tt, node->left->t));
+			implicit_cast(&node->right, tt);
+			if (type_match(node->tok->type, '+', '-', '*', '/', '%', -1))
+				t = node->left->t;
+			else
+				t = type_int;
+		}
 	}
 	else if (node->type == NODE_ASSIGN)
 	{
-		t = find_type(node->left);
+		t = add_type(node->left);
 		assert(t->t != VOID);
-		find_type(node->right);
-		implicit_cast(node->right, t);
+		add_type(node->right);
+		implicit_cast(&node->right, t);
 	}
 	else
 		assert(0);
 	node->t = t;
+	add_type(node->next_in_comma);
 	return t;
 }
 
@@ -542,8 +564,88 @@ Node *decl()
 		curr->next_in_decl->var = var;
 		if (tokens[ct].type == '=')
 		{
-			ct--;
-			curr->next_in_decl->left = assign();
+			if (tokens[ct + 1].type == '{')
+			{
+				if (type->t != ARRAY) // this works: int x = {3}
+					error_token(var->token, "invalid initiliazer");
+
+				// convert int arr[4] = {3, 4, 5};
+				// to
+				//arr[0] = 3, arr[1] = 4, arr[2] = 5;
+				ct += 2;
+				int end = 0;
+				Node *init = 0;
+				Node *c = 0;
+				for (int i = 0;; i++)
+				{
+					if (tokens[ct].type == '}')
+						end = 1;
+					if (end && i >= type->array_size)
+						break ;
+					if (i >= type->array_size)
+					{
+						assign();
+						if (tokens[ct].type == ',')
+							ct++;
+						else if (tokens[ct].type != '}')
+							skip('}');
+						continue;
+					}
+					Node *value;
+					if (end)
+					{
+						value = new_node(NODE_INT);
+						value->tok = new_temp_token(TOKEN_INTEGER);
+						value->tok->int_val = 0;
+					}
+					else
+					{
+						value = assign();
+					}
+					// *(arr + i) = value
+					Node *add = new_node(NODE_BINARY);
+					add->tok = new_temp_token('+');
+					add->left = new_node(NODE_VAR);
+					add->left->var = var;
+					add->right = new_node(NODE_INT);
+					add->right->tok = new_temp_token(TOKEN_INT);
+					add->right->tok->int_val = i;
+
+					Node *deref = new_node(NODE_DEREF);
+					deref->tok = new_temp_token('*');
+					deref->left = add;
+
+					Node *a = new_node(NODE_ASSIGN);
+					a->tok = new_temp_token('=');
+					a->left = deref;
+					a->right = value;
+
+					
+					if (!c)
+					{
+						c = a;
+						init = a;
+					}
+					else
+					{
+						c->next_in_comma = a;
+						c = c->next_in_comma;
+					}
+					if (tokens[ct].type == ',')
+						ct++;
+					else if (tokens[ct].type != '}')
+						skip('}');
+				}
+				skip('}');
+				curr->next_in_decl->left = init;
+
+			}
+			else
+			{
+				ct--;
+				curr->next_in_decl->left = assign();
+			}
+			add_type(curr->next_in_decl->left);
 		}
 		if (tokens[ct].type != ',')
 			break ;
@@ -684,10 +786,10 @@ Node *assign()
 		ct++;
 		node->left = left;
 		node->right = assign();
-		find_type(node);
+		add_type(node);
 		return node;
 	}
-	find_type(left);
+	add_type(left);
 	return left;
 }
 
@@ -778,7 +880,7 @@ Node *unary()
 		else
 		{
 			Node *left = unary();
-			t = find_type(left);
+			t = add_type(left);
 		}
 		assert(t);
 		if (t->t == ARRAY)

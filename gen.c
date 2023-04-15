@@ -6,7 +6,7 @@
 /*   By: zfarini <zfarini@student.1337.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 02:52:30 by zfarini           #+#    #+#             */
-/*   Updated: 2023/04/14 07:47:21 by zfarini          ###   ########.fr       */
+/*   Updated: 2023/04/15 02:40:40 by zfarini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,9 +212,13 @@ void gen(Node *node)
 		out("cmpq $0, %%rax");
 		out("je WHILE_END%d", label);
 		loop_counter++;
+		int s1 = curr_loop_label;
+		int s2 = curr_loop_is_for;
 		curr_loop_label = label;
 		curr_loop_is_for = 0;
 		gen(node->body);
+		curr_loop_label = s1;
+		curr_loop_is_for = s2;
 		loop_counter--;
 		out("jmp WHILE%d", label);
 		fprintf(f, "WHILE_END%d:\n", label);
@@ -225,14 +229,21 @@ void gen(Node *node)
 		fprintf(f, "//for init\n");
 		gen(node->init);
 		fprintf(f, "FOR%d:\n", label);
-		gen(node->condition);
-		out("cmpq $0, %%rax");
-		out("je FOR_END%d", label);
+		if (node->condition)
+		{
+			gen(node->condition);
+			out("cmpq $0, %%rax");
+			out("je FOR_END%d", label);
+		}
 		loop_counter++;
+		int s1 = curr_loop_label;
+		int s2 = curr_loop_is_for;
 		curr_loop_label = label;
 		curr_loop_is_for = 1;
 		gen(node->body);
 		loop_counter--;
+		curr_loop_label = s1;
+		curr_loop_is_for = s2;
 		fprintf(f, "FOR_INC%d:\n", label);
 		gen(node->inc);
 		out("jmp FOR%d", label);
@@ -240,8 +251,7 @@ void gen(Node *node)
 	}
 	else if (node->type == NODE_INT)
 	{
-		if (node->tok->int_val > INT_MAX ||
-			node->tok->int_val < INT_MIN)
+		if (node->t->t == LONG)
 			out("movabsq $%lld, %%rax", node->tok->int_val);
 		else
 			out("movq $%lld, %%rax", node->tok->int_val);
@@ -255,19 +265,27 @@ void gen(Node *node)
 	{
 		if (node->t->t == ARRAY)
 		{
-			Type *type = new_type(PTR);
-			type->ptr_to = node->var->type->ptr_to;
-			out("movq %%rbp, %%rax");
-			out("subq $%d, %%rax", node->var->offset);
+			if (node->var->global)
+			{
+				out("movq _%s@GOTPCREL(%%rip), %%rax", node->var->name);
+			}
+			else
+			{
+				out("movq %%rbp, %%rax");
+				out("subq $%d, %%rax", node->var->offset);
+			}
 		}
 		else
 		{
 			if (node->var->global)
 			{
 				if (node->t->size < 8)
+				{
 					out("movs%sq _%s(%%rip), %%rax",
 						get_inst_suffix(node->t->size), 
 						node->var->name);
+
+				}
 				else
 					out("movq _%s(%%rip), %%rax", node->var->name);
 #if 0
@@ -277,12 +295,29 @@ void gen(Node *node)
 			}
 			else
 			{
-				if (node->t->size < 8)
-					out("movs%sq -%d(%%rbp), %%rax", 
-						get_inst_suffix(node->t->size), 
-					node->var->offset);
+				if (node->t->is_unsigned)
+				{
+					if (node->t->size < 4)
+						out("movz%sq -%d(%%rbp), %%rax",
+								get_inst_suffix(node->t->size),
+								node->var->offset);
+					else
+						out("mov%s -%d(%%rbp), %%%s",
+								get_inst_suffix(node->t->size),
+								node->var->offset,
+								get_register_by_size("rax", node->t->size));
+				}
 				else
-					out("movq -%d(%%rbp), %%rax", node->var->offset);
+				{
+					if (node->t->size < 8)
+					{
+						out("movs%sq -%d(%%rbp), %%rax", 
+							get_inst_suffix(node->t->size), 
+						node->var->offset);
+					}
+					else
+						out("movq -%d(%%rbp), %%rax", node->var->offset);
+				}
 			}
 		}
 	}
@@ -343,11 +378,9 @@ void gen(Node *node)
 		}
 		else if (node->left->type == NODE_VAR)
 		{
-			if (node->left->t->t == ARRAY)
+			if (node->left->var->global)
 			{
-				out("movq %%rbp, %%rax");
-				out("subq $%d, %%rax", node->left->var->offset);
-				//out("movq -%d(%%rbp), %%rax");
+				out("movq _%s@GOTPCREL(%%rip), %%rax", node->left->var->name);
 			}
 			else
 			{
@@ -386,26 +419,47 @@ void gen(Node *node)
 	else if (node->type == NODE_CAST)
 	{
 		gen(node->left);
-		int s1 = node->left->t->size;
-		int s2 = node->t->size;
+		Type *t1 = node->left->t;
+		Type *t2 = node->t;
 		
-		if (s2 < s1) 
+		// (t2)t1
+		if (!t1->is_unsigned && !t2->is_unsigned)
 		{
-			out("mov%s %%%s, %%%s", get_inst_suffix(s2), get_register_by_size("rax", s2),
-					get_register_by_size("r10", s2));
-			out("mov%s%sq %%%s, %%rax", 
-					(node->t->is_unsigned && !node->left->t->is_unsigned) ? "z" : "s",
-					get_inst_suffix(s2), get_register_by_size("r10", s2));
+			if (t2->size < t1->size)
+			{
+				out("movs%sq %%%s, %%r10",
+						get_inst_suffix(t2->size),
+						get_register_by_size("rax", t2->size));
+				out("movq %%r10, %%rax");
+			}
+			else
+				; // nothing??
+		}
+		else if (t2->is_unsigned)
+		{
+			out("xorq %%r10, %%r10");
+			out("mov%s %%%s, %%%s",
+					get_inst_suffix(t2->size),
+					get_register_by_size("rax", t2->size),
+					get_register_by_size("r10", t2->size));
+			out("movq %%r10, %%rax");
 		}
 		else
 		{
-			out("mov%s %%%s, %%%s", get_inst_suffix(s1),
-					get_register_by_size("rax", s1),
-					get_register_by_size("r10", s1));
-			out("xorq %%rax, %%rax");
-			out("mov%s %%%s, %%%s", get_inst_suffix(s1),
-					get_register_by_size("r10", s1),
-					get_register_by_size("rax", s1));
+			if (t2->size < 8)
+			{
+				out("xorq %%r10, %%r10");
+				out("mov%s %%%s, %%%s",
+						get_inst_suffix(t2->size),
+						get_register_by_size("rax", t2->size),
+						get_register_by_size("r10", t2->size));
+				out("movs%sq %%%s, %%rax", 
+						get_inst_suffix(t2->size),
+						get_register_by_size("r10", t2->size));
+			}
+
+			// unsigned to signed
+			//assert(0);
 		}
 	}
 	else if (node->type == NODE_BINARY)
@@ -450,8 +504,16 @@ void gen(Node *node)
 			{
 				// a / b
 				// rdx  = b, rax 
-				out("cqto");
-				out("idivq %%r10");
+				if (!node->t->is_unsigned)
+				{
+					out("cqto"); // sign extend rax to rdx (TODO: read a little bit more about this)
+					out("idivq %%r10");
+				}
+				else
+				{
+					out("xorq %%rdx, %%rdx");
+					out("divq %%r10");
+				}
 				if (node->tok->type == '%')
 					out("movq %%rdx, %%rax");
 			}
@@ -476,6 +538,12 @@ void gen(Node *node)
 				out("cmpq %%r10, %%rax");
 				out("set%s %%al", s);
 				out("movzbq %%al, %%rax");
+			}
+			if (node->left->t->ptr_to && node->right->t->ptr_to && node->tok->type == '-')
+			{
+				out("movq $%d, %%r10", node->left->t->ptr_to->size);
+				out("xorq %%rdx, %%rdx");
+				out("divq %%r10");
 			}
 		}
 	}
@@ -550,7 +618,7 @@ void gen(Node *node)
 		assign->right->tok = new_temp_token('+');
 		assign->right->left = node->left;
 		assign->right->right = one;
-		find_type(assign);
+		add_type(assign); // TODO: ??????
 		gen(assign);
 		out("popq %%rax");
 	}
