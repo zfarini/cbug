@@ -6,7 +6,7 @@
 /*   By: zfarini <zfarini@student.1337.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 02:52:30 by zfarini           #+#    #+#             */
-/*   Updated: 2023/04/15 02:40:40 by zfarini          ###   ########.fr       */
+/*   Updated: 2023/04/15 06:47:33 by zfarini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,7 +263,7 @@ void gen(Node *node)
 	}
 	else if (node->type == NODE_VAR)
 	{
-		if (node->t->t == ARRAY)
+		if (node->t->t == ARRAY || node->t->t == STRUCT)
 		{
 			if (node->var->global)
 			{
@@ -378,6 +378,7 @@ void gen(Node *node)
 		}
 		else if (node->left->type == NODE_VAR)
 		{
+
 			if (node->left->var->global)
 			{
 				out("movq _%s@GOTPCREL(%%rip), %%rax", node->left->var->name);
@@ -399,7 +400,9 @@ void gen(Node *node)
 	//	out("xorq %%r10, %%r10");
 	//	TODO: check if this ok
 		
-		if (node->t->size < 8)
+		if( node->t->t == STRUCT)
+			;
+		else if (node->t->size < 8)
 			out("movs%sq (%%rax), %%rax", get_inst_suffix(node->t->size));
 		else
 			out("movq (%%rax), %%rax");
@@ -489,10 +492,13 @@ void gen(Node *node)
 			assert(node->left->t);
 			assert(node->right->t);
 			// not handling *x + 1 where x is int **
-			if (node->left->t->ptr_to && !node->right->t->ptr_to)
-				out("imulq $%d, %%r10", node->left->t->ptr_to->size);
-			else if (node->right->t->ptr_to && !node->left->t->ptr_to)
-				out("imulq $%d, %%rax", node->right->t->ptr_to->size);
+			if (node->tok->type == '+' || node->tok->type == '-')
+			{
+				if (node->left->t->ptr_to && !node->right->t->ptr_to)
+					out("imulq $%d, %%r10", node->left->t->ptr_to->size);
+				else if (node->right->t->ptr_to && !node->left->t->ptr_to && node->tok->type == '+')
+					out("imulq $%d, %%rax", node->right->t->ptr_to->size);
+			}
 
 			if (node->tok->type == '+')
 				out("addq %%r10, %%rax");
@@ -537,6 +543,7 @@ void gen(Node *node)
 					assert(0);
 				out("cmpq %%r10, %%rax");
 				out("set%s %%al", s);
+				out("andb $1, %%al");
 				out("movzbq %%al, %%rax");
 			}
 			if (node->left->t->ptr_to && node->right->t->ptr_to && node->tok->type == '-')
@@ -552,18 +559,30 @@ void gen(Node *node)
 		if (node->left->type == NODE_DEREF)
 		{
 			gen(node->right);
-			out("pushq %%rax");
-			gen(node->left->left);
-			if (!node->left->left->t->ptr_to)
-			error_token(node->tok, "dereferencing a non-pointer lvalue");
+			if (node->t->t == STRUCT)
+			{
+				out("movq %%rax, %%rsi");
 
-			//check types here
-			out("popq %%r10");
-			out("mov%s %%%s, (%%rax)", get_inst_suffix(node->t->size),
-					get_register_by_size("r10", node->t->size));
-			//out("movq %%r10, (%%rax)");
+				gen(node->left);
+				out("movq %%rax, %%rdi");
+				out("movq $%d, %%rdx", node->t->size);
+				out("callq _memcpy");
+			}
+			else
+			{
+				out("pushq %%rax");
+				gen(node->left->left);
+				if (!node->left->left->t->ptr_to)
+				error_token(node->tok, "dereferencing a non-pointer lvalue");
+
+				//check types here
+				out("popq %%r10");
+				out("mov%s %%%s, (%%rax)", get_inst_suffix(node->t->size),
+						get_register_by_size("r10", node->t->size));
+				//out("movq %%r10, (%%rax)");
+			}
 		}
-		else
+		else if (node->left->type == NODE_VAR)
 		{
 			gen(node->right);
 			node->left->t = node->left->var->type;
@@ -580,11 +599,24 @@ void gen(Node *node)
 			}
 			else
 			{
-				out("mov%s %%%s, -%d(%%rbp)", get_inst_suffix(node->t->size), 
-					get_register_by_size("rax", node->t->size),
-					node->left->var->offset);
+				if (node->t->t == STRUCT)
+				{
+					out("movq %%rbp, %%rdi");
+					out("subq $%d, %%rdi", node->left->var->offset);
+					out("movq %%rax, %%rsi");
+					out("movq $%d, %%rdx", node->left->var->type->size);
+					out("callq _memcpy");
+				}
+				else
+				{
+					out("mov%s %%%s, -%d(%%rbp)", get_inst_suffix(node->t->size), 
+						get_register_by_size("rax", node->t->size),
+						node->left->var->offset);
+				}
 			}
 		}
+		else
+			assert(0);
 	}
 	else if (node->type == NODE_CONTINUE)
 	{
@@ -607,20 +639,46 @@ void gen(Node *node)
 	else if (node->type == NODE_UNARY)
 	{
 		gen(node->left);
-		out("pushq %%rax");
-		Node *one = new_node(NODE_INT);
-		one->tok = new_temp_token(TOKEN_INTEGER);
-		one->tok->int_val = (node->tok->type == TOKEN_INC ? 1 : -1);
-		Node *assign = new_node(NODE_ASSIGN);
-		assign->tok = new_temp_token('=');
-		assign->left = node->left;
-		assign->right = new_node(NODE_BINARY);
-		assign->right->tok = new_temp_token('+');
-		assign->right->left = node->left;
-		assign->right->right = one;
-		add_type(assign); // TODO: ??????
-		gen(assign);
-		out("popq %%rax");
+		if (node->tok->type == '!')
+		{
+			out("cmpq $0, %%rax");
+			out("setne %%al");
+			out("xorb $-1, %%al");
+			out("andb $1, %%al");
+			out("movzbq %%al, %%rax");
+		}
+		else if (node->tok->type == TOKEN_INC || node->tok->type == TOKEN_DEC)
+		{
+			out("pushq %%rax");
+			Node *one = new_node(NODE_INT);
+			one->tok = new_temp_token(TOKEN_INTEGER);
+			one->tok->int_val = (node->tok->type == TOKEN_INC ? 1 : -1);
+			Node *assign = new_node(NODE_ASSIGN);
+			assign->tok = new_temp_token('=');
+			assign->left = node->left;
+			assign->right = new_node(NODE_BINARY);
+			assign->right->tok = new_temp_token('+');
+			assign->right->left = node->left;
+			assign->right->right = one;
+			add_type(assign); // TODO: ??????
+			gen(assign);
+			out("popq %%rax");
+		}
+		else
+			assert(0);
+	}
+	else if (node->type == NODE_QUESTION)
+	{
+		int label = curr_label++;
+
+		gen(node->condition);
+		out("cmpq $0, %%rax");
+		out("je QUES%d", label);
+		gen(node->left);
+		out("jmp QUES_END%d", label);
+		fprintf(f, "QUES%d:\n", label);
+		gen(node->right);
+		fprintf(f, "QUES_END%d:\n", label);
 	}
 	else
 		assert(0);

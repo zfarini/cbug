@@ -1,3 +1,17 @@
+struct Scope  {int x; void *parent;};
+Scope scopes[5];
+int scope_count;
+Scope *curr_scope;
+struct Type { int t; int is_unsigned; int size; void *ptr_to;};
+Type *types[5];
+int type_count;
+int PTR, ARRAY, LONG, INT, SHORT, CHAR;
+struct Func {char *name; Type *ret_type;};
+Func funcs[5];
+int func_count;
+
+int strcmp();
+
 Scope *new_scope()
 {
 	Scope *scope = &scopes[scope_count++];
@@ -105,18 +119,15 @@ Var *new_var(Type *type, char *name)
 	curr_scope->vars[curr_scope->var_count++] = v;	
 	if (!type->size)
 		error_token(&tokens[ct], "type with size 0?");
-	if (curr_func)
+	if (type->t == ARRAY)
 	{
-		if (type->t == ARRAY)
-		{
-			curr_func->stack_size += type->ptr_to->size * type->array_size;
-		}
-		else
-			curr_func->stack_size += type->size;
-		curr_func->stack_size = align(curr_func->stack_size, v->type->size);
-		v->offset = curr_func->stack_size;
-		assert(v->offset % v->type->size == 0);
+		curr_func->stack_size += type->ptr_to->size * type->array_size;
 	}
+	else
+		curr_func->stack_size += type->size;
+	curr_func->stack_size = align(curr_func->stack_size, v->type->size);
+	v->offset = curr_func->stack_size;
+	assert(v->offset % v->type->size == 0);
 	return (v);
 }
 

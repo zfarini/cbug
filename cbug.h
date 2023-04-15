@@ -3,10 +3,13 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <assert.h>
+#include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
-#include <stdarg.h>
-#include <limits.h>
+// for print and malloc include it on another file and compile and link with it
+
+#define INT_MIN (-2147483648)
+#define INT_MAX (2147483647)
 
 #ifndef CBUG_H
 #define CBUG_H
@@ -44,6 +47,13 @@ enum Token_Type {
 	TOKEN_UNSIGNED,
 	TOKEN_SIGNED,
 	TOKEN_SIZEOF,
+	TOKEN_ADD_ASSIGN,
+	TOKEN_SUB_ASSIGN,
+	TOKEN_MUL_ASSIGN,
+	TOKEN_DIV_ASSIGN,
+	TOKEN_STRUCT,
+	TOKEN_UNION,
+	TOKEN_ARROW,
 };
 
 struct Token {
@@ -78,6 +88,8 @@ enum Node_Type {
 	NODE_CONTINUE,
 	NODE_BREAK,
 	NODE_CAST,
+	NODE_QUESTION,
+	NODE_MEMBER,
 };
 
 struct Node {
@@ -101,6 +113,7 @@ struct Node {
 	Node *else_;
 	Type *t;
 	Func *func;
+	int member_idx;
 	union {
 		Node *args[100];
 		Node *params[100];
@@ -111,11 +124,16 @@ struct Node {
 };
 
 struct Type {
-	enum {INT, PTR, VOID, ARRAY, SHORT, CHAR, LONG} t;
+	enum {INT, PTR, VOID, ARRAY, SHORT, CHAR, LONG, STRUCT} t;
 	struct Type *ptr_to;
 	int array_size;
 	int size;
 	int is_unsigned;
+	char *name;
+	Type *field_type[20];
+	char *field_name[20];
+	int   field_offset[20];
+	int  field_count;
 };
 
 typedef struct Scope Scope;
@@ -149,6 +167,7 @@ Node *decl();
 Node *statement();
 Node *expr();
 Node *assign();
+Node *conditional();
 Node *logical_or();
 Node *logical_and();
 Node *equality();
@@ -159,5 +178,6 @@ Node *cast();
 Node *unary();
 Node *postfix();
 Node *primary();
+
 
 #endif

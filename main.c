@@ -6,7 +6,7 @@
 /*   By: zfarini <zfarini@student.1337.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:57:56 by zfarini           #+#    #+#             */
-/*   Updated: 2023/04/14 21:16:15 by zfarini          ###   ########.fr       */
+/*   Updated: 2023/04/15 06:48:31 by zfarini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ FILE *f;
 
 Type types[10000];
 int type_count;
+Type *types_declared[1000];
+int types_declared_count;
 
 char *strings_literal[10000];
 int	strings_literal_count;

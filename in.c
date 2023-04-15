@@ -1,48 +1,78 @@
 int printf();
 void exit();
+void *malloc();
 
+int x;
+
+typedef struct pair pair;
+typedef struct S S;
+typedef struct p3 p3;
+
+struct S 
+{
+	int x;
+	char c;
+	int y;
+};
+
+
+
+struct pair
+{
+	int first, second;
+};
+
+struct p3
+{
+	pair p;
+	int z;
+};
+
+
+
+pair *new_pair(int x, int y)
+{
+	pair *p = malloc(sizeof(*p));
+	p->first = x;
+	p->second = y;
+	return p;
+}
 
 int main()
 {
-	for (int i = 0; ; i++)
 	{
-		for (int j = 0; ; j++)
-		{
-			if (j > i)
-				break ;
-			printf("*");
-		}
-		if (i == 5)
-			break ;
-		printf("\n");
 	}
-	//printf("%d %p %p\n", arr == &arr, arr, &arr);
-	//ASSERT(1, arr == &arr);
+	{
+		p3 p;
+		p.p.first = 1;
+		p.p.second = 2;
+		p.z = 6;
+		printf("%d %d %d\n", p.p.first, p.p.second, p.z);
+	}
+	pair p;
 
-	//ASSERT(9223372036854775758 * 2, x);
-	//x = x / 2;
-	//ASSERT(9223372036854775758, ((unsigned long)-100) / 2);
-	//ASSERT(-1, (unsigned long)-1);
-	//ASSERT(0, -1<(unsigned)1);
-	//ASSERT(1, -1<1);
-	//unsigned a = -1;
-	//unsigned b = 1;
-	//printf("%d\n", (unsigned)(-1) > b);
-	//printf("%d\n", (unsigned long)(-1));
+	p.first = 1, p.second = 2;
+	pair *ptr = &p;
+//printf("%d\n", &p == p);
+	//ASSERT(1, &p == p);
 
-	// (-128)
-	// 1000 0000
-	//[0 - 255]
-	//
-	/*
-	ASSERT(0, -1<(unsigned)1);
-
-	ASSERT(254, (char)127+(char)127);
-	ASSERT(65534, (short)32767+(short)32767);
-	ASSERT(-50, (-100)/2);
-
-	ASSERT(2147483598, ((unsigned)-100)/2);
-
+	pair p2 = *ptr;
+	printf("%d %d\n", p2.first, p2.second);
+	/*TODO:
+		struct:
+			init
+			comparing 
+			pass to functions
+			return value
+			non-named structs
+			declare inside of functions
+		fix globals (with struct and stuff)
+		evaluate compile time expression (globals init and arrays size)
+		typedefs + make declarations simple and more correct
+		enums
+		better errors
+		function prototype + type checking for args in calls
+		multi dimension array + their init
+		varags functions
 	*/
-
 }

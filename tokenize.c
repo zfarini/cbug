@@ -12,6 +12,11 @@ struct {
 	{"||", TOKEN_LOGICAL_OR},
 	{"++", TOKEN_INC},
 	{"--", TOKEN_DEC},
+	{"+=", TOKEN_ADD_ASSIGN},
+	{"-=", TOKEN_SUB_ASSIGN},
+	{"*=", TOKEN_MUL_ASSIGN},
+	{"/=", TOKEN_DIV_ASSIGN},
+	{"->", TOKEN_ARROW},
 	{0, 0},
 };
 
@@ -35,6 +40,8 @@ struct {
 	{"continue", TOKEN_CONTINUE},
 	{"sizeof", TOKEN_SIZEOF},
 	{"long", TOKEN_LONG},
+	{"struct", TOKEN_STRUCT},
+	{"union", TOKEN_UNION},
 	{0, 0},
 };
 
@@ -102,6 +109,7 @@ Token *tokenize(char *s)
 	int	i = 0, j = 0;
 	int line = 1;
 	int col = 1;
+	assert(s);
 	while (s[i])
 	{
 		Token *token = &tokens[j];
@@ -143,6 +151,7 @@ Token *tokenize(char *s)
 		int last = i;
 		if (isdigit(s[i]))
 		{
+			//todo: hex + be able to read MAX_UNSIGNED_LONG
 			token->type = TOKEN_INTEGER;
 			token->int_val = 0;
 			while (isdigit(s[i]))
@@ -172,8 +181,9 @@ Token *tokenize(char *s)
 			i++;
 			token->type = TOKEN_STRING;
 			int k = i;
-			while (s[i] && s[i] != '"')
+			while (s[i] && (s[i] != '"' || s[i - 1] == '\\'))
 				i++;
+
 			if (s[i] != '"')
 				error_token(token, "missing terminating \" character");
 			char *name = malloc(i - k + 1);
@@ -215,14 +225,14 @@ Token *tokenize(char *s)
 			}
 			if (!token->type)
 			{
-				if (strchr("+-*/%()=;,<>{}&[]", s[i]))
+				if (strchr("+-*/%()=;,<>{}&[]?:.!", s[i]))
 				{
 					token->type = s[i];
 					i++;
 				}
 				else
 				{
-					error_token(token, "unkown token `%c`", s[i]);
+					error_token(token, "unknown token `%c`", s[i]);
 				}
 			}
 		}

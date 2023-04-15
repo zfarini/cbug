@@ -1,8 +1,22 @@
-int f2()
+typedef struct S {
+
+	int x[100];
+	char c;
+	int y;
+} S;
+
+
+int f(S s)
 {
 
-	int x = 28;
+	s.y++;
 
-	x = x / 2;
-
+	return s.c * s.y;
 }
+
+int f2()
+{
+	S s;
+	f(s);
+}
+
