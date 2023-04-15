@@ -54,6 +54,7 @@ enum Token_Type {
 	TOKEN_STRUCT,
 	TOKEN_UNION,
 	TOKEN_ARROW,
+	TOKEN_ENUM,
 };
 
 struct Token {
@@ -159,6 +160,11 @@ struct Func {
 	Type *ret_type;
 	char *name;
 };
+
+typedef struct Enum {
+	char *name;
+	int value;
+} Enum;
 
 Type *parse_type();
 Node *parse();

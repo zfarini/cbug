@@ -408,8 +408,39 @@ Node *parse(char *s)
 	{
 		int save = ct;
 
-		if (tokens[ct].type == TOKEN_STRUCT)
+		if (tokens[ct].type == TOKEN_ENUM)
 		{
+			ct++;
+			if (tokens[ct].type == TOKEN_IDENTIFIER)
+				ct++;
+			skip('{');
+			int val = 0;
+			while (tokens[ct].type != '}')
+			{
+				enums[enum_count].name = tokens[ct].name;
+				skip(TOKEN_IDENTIFIER);
+				if (tokens[ct].type == '=')
+				{
+					ct++;
+					if (tokens[ct].type != TOKEN_INTEGER)
+						skip(TOKEN_INTEGER);
+					val = tokens[ct].int_val;
+					ct++;
+				}
+				if (tokens[ct].type == ',')
+					ct++;
+				else if (tokens[ct].type != '}')
+					skip('}');
+				enums[enum_count].value = val;
+				enum_count++;
+				val++;
+			}
+			skip('}');
+			skip(';');
+		}
+		else if (tokens[ct].type == TOKEN_STRUCT)
+		{
+			Token *st_token = &tokens[ct];
 			Type *type = new_type(STRUCT);
 
 			ct++;
@@ -437,7 +468,9 @@ Node *parse(char *s)
 				}
 				skip(';');
 			}
-			type->size = size;
+			if (!size)
+				error_token(st_token, "empty structs are not handled yet");
+			type->size = align(size, type->field_type[0]->size); // TODO: this is for array for structs check if its correct
 			type->field_count = i;
 			types_declared[types_declared_count++] = type;
 			skip('}');
@@ -447,11 +480,10 @@ Node *parse(char *s)
 				printf("\t%s %s\n", get_type_str(type->field_type[j]), type->field_name[j]);
 			continue;
 		}
-		if (!is_typename(&tokens[ct]))
-			error_token(&tokens[ct], "expected a function or variable declaration");
 		else
-
 		{
+			if (!is_typename(&tokens[ct]))
+				error_token(&tokens[ct], "expected a function or variable declaration");
 			parse_type();
 			skip(TOKEN_IDENTIFIER);
 			int globl = 0;
@@ -1173,7 +1205,20 @@ Node *primary()
 	{
 		Var *var = find_var(tokens[ct].name);
 		if (!var)
+		{
+			for (int i = 0; i < enum_count; i++)
+			{
+				if (!strcmp(tokens[ct].name, enums[i].name))
+				{
+					node = new_node(NODE_INT);
+					ct++;
+					node->tok = new_temp_token(TOKEN_INTEGER);
+					node->tok->int_val = enums[i].value;
+					return node;
+				}
+			}
 			error_token(&tokens[ct], "undeclared variable `%s`\n", tokens[ct].name);
+		}
 		node = new_node(NODE_VAR);
 		node->var = var;
 		ct++;

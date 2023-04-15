@@ -42,6 +42,7 @@ struct {
 	{"long", TOKEN_LONG},
 	{"struct", TOKEN_STRUCT},
 	{"union", TOKEN_UNION},
+	{"enum", TOKEN_ENUM},
 	{0, 0},
 };
 

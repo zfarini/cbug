@@ -1,73 +1,34 @@
-_new_pair:
-	pushq %rbp
-	movq %rsp, %rbp
-	subq $16, %rsp
-	movl %edi, -4(%rbp)
-	movl %esi, -8(%rbp)
-//begin block
-	movq $8, %rax
-	pushq %rax
-	popq %rdi
-	callq _malloc
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	movq %rax, -16(%rbp)
-	movslq -4(%rbp), %rax
-	pushq %rax
-	movq -16(%rbp), %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	pushq %rax
-	movq $0, %rax
-	movq %rax, %r10
-	popq %rax
-	imulq $1, %r10
-	addq %r10, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	popq %r10
-	movl %r10d, (%rax)
-	movslq -8(%rbp), %rax
-	pushq %rax
-	movq -16(%rbp), %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	pushq %rax
-	movq $4, %rax
-	movq %rax, %r10
-	popq %rax
-	imulq $1, %r10
-	addq %r10, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	popq %r10
-	movl %r10d, (%rax)
-	movq -16(%rbp), %rax
-	movq %rbp, %rsp
-	popq %rbp
-	ret
-//end block
-	movq $0, %rax
-	movq %rbp, %rsp
-	popq %rbp
-	ret
-
 .globl	_main
 _main:
 	pushq %rbp
 	movq %rsp, %rbp
-	subq $48, %rsp
+	subq $16, %rsp
 //begin block
+//for init
+	movq $0, %rax
+	movl %eax, -4(%rbp)
+FOR0:
+	movslq -4(%rbp), %rax
+	pushq %rax
+	movq $3, %rax
+	movq %rax, %r10
+	popq %rax
+	cmpq %r10, %rax
+	setl %al
+	andb $1, %al
+	movzbq %al, %rax
+	cmpq $0, %rax
+	je FOR_END0
 //begin block
-	movq $1, %rax
+	leaq L_.str.0(%rip), %rax
 	pushq %rax
-	movq %rbp, %rax
-	subq $12, %rax
+	movq _v@GOTPCREL(%rip), %rax
+	pushq %rax
+	movslq -4(%rbp), %rax
+	movq %rax, %r10
+	popq %rax
+	imulq $12, %r10
+	addq %r10, %rax
 	xorq %r10, %r10
 	movq %rax, %r10
 	movq %r10, %rax
@@ -80,36 +41,14 @@ _main:
 	xorq %r10, %r10
 	movq %rax, %r10
 	movq %r10, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
 	pushq %rax
-	movq $0, %rax
+	movq _v@GOTPCREL(%rip), %rax
+	pushq %rax
+	movslq -4(%rbp), %rax
 	movq %rax, %r10
 	popq %rax
-	imulq $1, %r10
+	imulq $12, %r10
 	addq %r10, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	popq %r10
-	movl %r10d, (%rax)
-	movq $2, %rax
-	pushq %rax
-	movq %rbp, %rax
-	subq $12, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	pushq %rax
-	movq $0, %rax
-	movq %rax, %r10
-	popq %rax
-	imulq $1, %r10
-	addq %r10, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
 	xorq %r10, %r10
 	movq %rax, %r10
 	movq %r10, %rax
@@ -119,15 +58,14 @@ _main:
 	popq %rax
 	imulq $1, %r10
 	addq %r10, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	popq %r10
-	movl %r10d, (%rax)
-	movq $6, %rax
 	pushq %rax
-	movq %rbp, %rax
-	subq $12, %rax
+	movq _v@GOTPCREL(%rip), %rax
+	pushq %rax
+	movslq -4(%rbp), %rax
+	movq %rax, %r10
+	popq %rax
+	imulq $12, %r10
+	addq %r10, %rax
 	xorq %r10, %r10
 	movq %rax, %r10
 	movq %r10, %rax
@@ -140,24 +78,50 @@ _main:
 	xorq %r10, %r10
 	movq %rax, %r10
 	movq %r10, %rax
-	popq %r10
-	movl %r10d, (%rax)
-	leaq L_.str.0(%rip), %rax
 	pushq %rax
-	movq %rbp, %rax
-	subq $12, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
+	popq %rcx
+	popq %rdx
+	popq %rsi
+	popq %rdi
+	callq _scanf
+//end block
+FOR_INC0:
+	movslq -4(%rbp), %rax
 	pushq %rax
-	movq $0, %rax
+	movslq -4(%rbp), %rax
+	pushq %rax
+	movq $1, %rax
 	movq %rax, %r10
 	popq %rax
-	imulq $1, %r10
 	addq %r10, %rax
-	xorq %r10, %r10
+	movl %eax, -4(%rbp)
+	popq %rax
+	jmp FOR0
+FOR_END0:
+//for init
+	movq $0, %rax
+	movl %eax, -8(%rbp)
+FOR1:
+	movslq -8(%rbp), %rax
+	pushq %rax
+	movq $3, %rax
 	movq %rax, %r10
-	movq %r10, %rax
+	popq %rax
+	cmpq %r10, %rax
+	setl %al
+	andb $1, %al
+	movzbq %al, %rax
+	cmpq $0, %rax
+	je FOR_END1
+	leaq L_.str.1(%rip), %rax
+	pushq %rax
+	movq _v@GOTPCREL(%rip), %rax
+	pushq %rax
+	movslq -8(%rbp), %rax
+	movq %rax, %r10
+	popq %rax
+	imulq $12, %r10
+	addq %r10, %rax
 	xorq %r10, %r10
 	movq %rax, %r10
 	movq %r10, %rax
@@ -172,20 +136,13 @@ _main:
 	movq %r10, %rax
 	movslq (%rax), %rax
 	pushq %rax
-	movq %rbp, %rax
-	subq $12, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
+	movq _v@GOTPCREL(%rip), %rax
 	pushq %rax
-	movq $0, %rax
+	movslq -8(%rbp), %rax
 	movq %rax, %r10
 	popq %rax
-	imulq $1, %r10
+	imulq $12, %r10
 	addq %r10, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
 	xorq %r10, %r10
 	movq %rax, %r10
 	movq %r10, %rax
@@ -195,13 +152,15 @@ _main:
 	popq %rax
 	imulq $1, %r10
 	addq %r10, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	movslq (%rax), %rax
+	movsbq (%rax), %rax
 	pushq %rax
-	movq %rbp, %rax
-	subq $12, %rax
+	movq _v@GOTPCREL(%rip), %rax
+	pushq %rax
+	movslq -8(%rbp), %rax
+	movq %rax, %r10
+	popq %rax
+	imulq $12, %r10
+	addq %r10, %rax
 	xorq %r10, %r10
 	movq %rax, %r10
 	movq %r10, %rax
@@ -221,90 +180,19 @@ _main:
 	popq %rsi
 	popq %rdi
 	callq _printf
-//end block
+FOR_INC1:
+	movslq -8(%rbp), %rax
+	pushq %rax
+	movslq -8(%rbp), %rax
+	pushq %rax
 	movq $1, %rax
-	pushq %rax
-	movq %rbp, %rax
-	subq $24, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	pushq %rax
-	movq $0, %rax
 	movq %rax, %r10
 	popq %rax
-	imulq $1, %r10
 	addq %r10, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	popq %r10
-	movl %r10d, (%rax)
-	movq $2, %rax
-	pushq %rax
-	movq %rbp, %rax
-	subq $24, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	pushq %rax
-	movq $4, %rax
-	movq %rax, %r10
+	movl %eax, -8(%rbp)
 	popq %rax
-	imulq $1, %r10
-	addq %r10, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	popq %r10
-	movl %r10d, (%rax)
-	movq %rbp, %rax
-	subq $24, %rax
-	movq %rax, -32(%rbp)
-	movq -32(%rbp), %rax
-	movq %rbp, %rdi
-	subq $40, %rdi
-	movq %rax, %rsi
-	movq $8, %rdx
-	callq _memcpy
-	leaq L_.str.1(%rip), %rax
-	pushq %rax
-	movq %rbp, %rax
-	subq $40, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	pushq %rax
-	movq $0, %rax
-	movq %rax, %r10
-	popq %rax
-	imulq $1, %r10
-	addq %r10, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	movslq (%rax), %rax
-	pushq %rax
-	movq %rbp, %rax
-	subq $40, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	pushq %rax
-	movq $4, %rax
-	movq %rax, %r10
-	popq %rax
-	imulq $1, %r10
-	addq %r10, %rax
-	xorq %r10, %r10
-	movq %rax, %r10
-	movq %r10, %rax
-	movslq (%rax), %rax
-	pushq %rax
-	popq %rdx
-	popq %rsi
-	popq %rdi
-	callq _printf
+	jmp FOR1
+FOR_END1:
 //end block
 	movq $0, %rax
 	movq %rbp, %rsp
@@ -312,12 +200,8 @@ _main:
 	ret
 
 	.section	__DATA,__data
-	.globl _x
-	.p2align 2
-_x:
-	.long 0
-
+	.comm _v,1200,12
 L_.str.0:
-	.asciz "%d %d %d\n"
+	.asciz "%d %c %d"
 L_.str.1:
-	.asciz "%d %d\n"
+	.asciz "%d %c %d\n"

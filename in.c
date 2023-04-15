@@ -1,16 +1,20 @@
 int printf();
 void exit();
 void *malloc();
+int scanf();
 
-int x;
 
+/*
 typedef struct pair pair;
 typedef struct S S;
 typedef struct p3 p3;
+*/
 
+/*
+ *
 struct S 
 {
-	int x;
+	int x, z;
 	char c;
 	int y;
 };
@@ -38,8 +42,26 @@ pair *new_pair(int x, int y)
 	return p;
 }
 
+int *pg;
+*/
+enum E {
+	INT = 7,
+	VOID,
+	CHAR,
+};
+
+struct X {
+	int x;
+	char c;
+	int y;
+};
+
+X v[100];
 int main()
 {
+
+	/*
+	return 0;
 	{
 	}
 	{
@@ -58,6 +80,7 @@ int main()
 
 	pair p2 = *ptr;
 	printf("%d %d\n", p2.first, p2.second);
+	*/
 	/*TODO:
 		struct:
 			init
@@ -75,4 +98,5 @@ int main()
 		multi dimension array + their init
 		varags functions
 	*/
+	
 }

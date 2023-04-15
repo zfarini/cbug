@@ -6,7 +6,7 @@
 /*   By: zfarini <zfarini@student.1337.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:57:56 by zfarini           #+#    #+#             */
-/*   Updated: 2023/04/15 06:48:31 by zfarini          ###   ########.fr       */
+/*   Updated: 2023/04/15 20:17:59 by zfarini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int types_declared_count;
 char *strings_literal[10000];
 int	strings_literal_count;
 
-Type *type_long = &(Type){.t = LONG, .size = 8};
-Type *type_int = &(Type){.t = INT, .size = 4};
-Type *type_short = &(Type){.t = SHORT, .size = 2};
-Type *type_char = &(Type){.t = CHAR, .size = 1};
-Type *type_void = &(Type){.t = VOID, .size = 0};
+Type *type_long;// = &(Type){.t = LONG, .size = 8};
+Type *type_int;
+Type *type_short;
+Type *type_char;
+Type *type_void;
 
 Func funcs[10000];
 int func_count = 0;
@@ -64,6 +64,9 @@ int	_curr_node;
 
 Var vars[10000];
 int	var_count = 0;
+
+Enum enums[10000];
+int enum_count;
 
 Node *curr_func = 0;
 
@@ -139,6 +142,13 @@ int main(int argc, char **argv)
 		filename = "in.c";
 	else
 		filename = argv[1];
+	
+	type_long = new_type(LONG);
+	type_int = new_type(INT);
+	type_short = new_type(SHORT);
+	type_char = new_type(CHAR);
+	type_void = new_type(VOID);
+
 	program_str = read_entire_file(filename);
 
 	Node *node = parse(program_str);
