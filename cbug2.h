@@ -1,21 +1,3 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <assert.h>
-#include <stdarg.h>
-#include <string.h>
-#include <ctype.h>
-
-typedef struct Token Token;
-typedef struct Node Node;
-typedef struct Var Var;
-typedef struct Type Type;
-typedef struct Func Func;
-typedef struct Scope Scope;
-typedef struct Enum Enum;
-typedef struct Token_Name Token_Name;
-
 #define INT_MIN (-2147483648)
 #define INT_MAX (2147483647)
 
@@ -56,6 +38,13 @@ enum Token_Type {
 	TOKEN_ENUM,
 };
 
+struct S {
+	char x;
+	short y;
+	long z;
+	char l;
+};
+
 struct Token {
 	int type;	
 	long long int_val;
@@ -65,7 +54,6 @@ struct Token {
 	char *str;
 };
 
-//!!TOOD: WTF commenting NODE_ARROW change something (gcc bug????)
 enum Node_Type {
 	NODE_NONE,
 	NODE_PROGRAM,
@@ -91,11 +79,11 @@ enum Node_Type {
 	NODE_CONTINUE,
 	NODE_BREAK,
 	NODE_CAST,
+
 	NODE_QUESTION,
 	NODE_MEMBER,
 };
 
-//baad.s file_bad.c
 struct Node {
 	int type;
 	Var *var;
@@ -140,9 +128,14 @@ enum {
 	UNKNOWN,
 };
 
+struct FILE {
+	int x;
+	int y;
+};
 struct Type {
 	int t;
 	Type *ptr_to;
+	Token *tok;
 	int array_size;
 	int size;
 	int is_unsigned;
@@ -151,7 +144,6 @@ struct Type {
 	char *field_name[100];
 	int   field_offset[100];
 	int  field_count;
-	Token *tok;
 };
 
 struct Scope {
@@ -188,7 +180,7 @@ struct Token_Name {
 
 };
 
-Node *binary(Node *(*func)(), ...);
+Node *binary();
 Type *parse_type();
 Node *parse();
 Node *function();
@@ -207,12 +199,38 @@ Node *cast();
 Node *unary();
 Node *postfix();
 Node *primary();
-void error(char *fmt, ...);
-void error_token(Token *token, char *fmt, ...);
-char *read_entire_file(char *name);
-void out(char *fmt, ...);
-int type_match(int type, ...);
-Node *new_node(int type);
-Var *new_var(Type *type, char *name);
-void dbg(char *fmt, ...);
+void error();
+void error_token();
+char *read_entire_file();
+void out();
+
+void *malloc();
+int assert();
+void *calloc();
+int isspace();
+int isdigit();
+int isalpha();
+int isalnum();
+void memcpy();
+int strcmp();
+char *strdup();
+int strlen();
+int strncmp();
+int strchr();
+int printf();
+int fprintf();
+FILE *fopen();
+Node *new_node();
+
+int type_match();
+void dbg();
+FILE *fopen();
+int fseek();
+long ftell();
+int fclose();
+long fread();
+void exit();
+int sprintf();
+
+
 

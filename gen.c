@@ -6,7 +6,7 @@
 /*   By: zfarini <zfarini@student.1337.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 02:52:30 by zfarini           #+#    #+#             */
-/*   Updated: 2023/04/15 06:47:33 by zfarini          ###   ########.fr       */
+/*   Updated: 2023/04/16 08:16:47 by zfarini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,37 @@ int log2_int(int x)
 
 char *get_register_by_size(char *reg, int size)
 {
+	char *rax[4] =	{"al", "ax", "eax", "rax"};
+	char *rdx[4] =	{"dh", "dx", "edx", "rdx"};
+	char *rcx[4] =	{"ch", "cx", "ecx", "rcx"};
+	char *rdi[4] =	{"dil", "di", "edi", "rdi"};
+	char *rsi[4] =	{"sil", "si", "esi", "rsi"};
+	char *r8 [4] =	{"r8b", "r8w", "r8d", "r8"};
+	char *r9 [4] =	{"r9b", "r9w", "r9d", "r9"};
+	char *r10[4] =	{"r10b", "r10w", "r10d", "r10"};
+	char *r11[4] =	{"r11b", "r11w", "r11d", "r11"};
+
+	size = log2_int(size);
+	if (!strcmp(reg, "rax"))
+		return rax[size];
+	if (!strcmp(reg, "rdx"))
+		return rdx[size];
+	if (!strcmp(reg, "rcx"))
+		return rcx[size];
+	if (!strcmp(reg, "rdi"))
+		return rdi[size];
+	if (!strcmp(reg, "rsi"))
+		return rsi[size];
+	if (!strcmp(reg, "r8"))
+		return r8[size];
+	if (!strcmp(reg, "r9"))
+		return r9[size];
+	if (!strcmp(reg, "r10"))
+		return r10[size];
+	if (!strcmp(reg, "r11"))
+		return r11[size];
+	assert(0);
+#if 0
 	char *arr[10][4] = {
 		{"al", "ax", "eax", "rax"},
 		{"dh", "dx", "edx", "rdx"},
@@ -61,12 +92,14 @@ char *get_register_by_size(char *reg, int size)
 		{"r11b", "r11w", "r11d", "r11"},
 		{0}
 	};
+
 	for (int i = 0; arr[i][0]; i++)
 	{
 		if (!strcmp(arr[i][3], reg))
 			return arr[i][log2_int(size)];
 	}
 	assert(0);
+#endif
 }
 
 int add_string_lit(char *s)
@@ -80,15 +113,6 @@ int add_string_lit(char *s)
 	return strings_literal_count++;
 }
 
-void out(char *fmt, ...)
-{
-	va_list ap;
-	va_start(ap, fmt);
-	fprintf(f, "\t");
-	vfprintf(f, fmt, ap);
-	fprintf(f, "\n");
-	va_end(ap);
-}
 
 int curr_label = 0;
 
@@ -96,7 +120,20 @@ int curr_label = 0;
 int loop_counter = 0;
 int curr_loop_label;
 int curr_loop_is_for;
+int stack_size = 0;
 
+void push(char *reg)
+{
+	stack_size += 8;
+	out("pushq %%%s // %d", reg, stack_size);
+}
+
+void pop(char *reg)
+{
+	stack_size -= 8;
+	out("popq %%%s // %d", reg, stack_size);
+	assert(stack_size >= 0);
+}
 
 void gen(Node *node)
 {
@@ -117,21 +154,33 @@ void gen(Node *node)
 			return ;
 		if (!strcmp(node->tok->name, "main"))
 			fprintf(f, ".globl\t_main\n");
+		stack_size = 0;
+		dbg("//%s %s(", get_type_str(node->func->ret_type), node->tok->name);
+		for (int i = 0; i < node->param_count; i++)
+		{
+			dbg("%s %s", get_type_str(node->params[i]->var->type), node->params[i]->var->name);
+			if (i < node->param_count - 1)
+				dbg(", ");
+		}
+		dbg(")\n");
 		fprintf(f, "_%s:\n", node->tok->name);
 		out("pushq %%rbp");
 		out("movq %%rsp, %%rbp");
-		node->stack_size = align(node->stack_size, 16);
 		// initially rbp point at return address of the caller function
 		// allocate space for all local variables we subtrace since the stack grows downward
-		out("subq $%d, %%rsp", node->stack_size);
 
-		char *reg[] = {"rdi", "rsi", "rdx", "rcx", "r8", "r9"};
+		stack_size = node->stack_size;
+		out("subq $%d, %%rsp // %d", node->stack_size, stack_size);
+
+
+		char *reg[6] = {"rdi", "rsi", "rdx", "rcx", "r8", "r9"};
 		for (int i = 0; i < node->param_count && i < 6; i++)
 		{
 			Var *v = node->params[i]->var;
-			out("mov%s %%%s, -%d(%%rbp)", get_inst_suffix(v->type->size),
+			out("mov%s %%%s, -%d(%%rbp) //%s", get_inst_suffix(v->type->size),
 					get_register_by_size(reg[i], v->type->size),
-					v->offset);
+
+					v->offset, v->name);
 			//out("movq %%%s, -%d(%%rbp)", reg[i], node->params[i]->var->offset);	
 		}
 		if (node->param_count > 6)
@@ -147,27 +196,39 @@ void gen(Node *node)
 					node->left->var->offset);
 #endif
 				out("movq %d(%%rbp), %%rax", offset2);
-				out("movq %%rax, -%d(%%rbp)", offset);
+				out("mov%s %%%s, -%d(%%rbp) // %s", 
+						get_inst_suffix(node->params[i]->var->type->size),
+						get_register_by_size("rax", node->params[i]->var->type->size),
+						node->params[i]->var->offset,
+						node->params[i]->var->name);
 				offset += 8;
 				offset2 += 8;
 			}
 		}
 		gen(node->body);
+		stack_size -= node->stack_size;
+		out("addq $%d, %%rsp // %d", node->stack_size, stack_size);
+
 		out("movq $0, %%rax");
 		out("movq %%rbp, %%rsp");
 		out("popq %%rbp");
+
 		out("ret\n");
 	}
 	else if (node->type == NODE_BLOCK)
 	{
 		Node *curr = node->first_stmt;
-		fprintf(f, "//begin block\n");
+		dbg("//{ (%d)\n", node->tok->line);
 		while (curr)
 		{
 			gen(curr);
 			curr = curr->next_in_block;
 		}
-		fprintf(f, "//end block\n");
+		dbg("//}\n");
+	}
+	else if (node->type == NODE_MEMBER)
+	{
+		gen(node->left);
 	}
 	else if (node->type == NODE_VAR_DECL)
 	{
@@ -176,7 +237,7 @@ void gen(Node *node)
 		{
 			if (curr->var->global)
 			{
-
+				
 			}
 			else if (!curr->var->global && curr->left)
 				gen(curr->left);
@@ -271,23 +332,44 @@ void gen(Node *node)
 			}
 			else
 			{
-				out("movq %%rbp, %%rax");
+				out("movq %%rbp, %%rax // %s", node->var->name);
 				out("subq $%d, %%rax", node->var->offset);
 			}
+		}
+		else if (node->t->t == FUNC)
+		{
+			out("leaq _%s(%%rip), %%rax", node->tok->name);
 		}
 		else
 		{
 			if (node->var->global)
 			{
-				if (node->t->size < 8)
+				if (node->t->is_unsigned)
 				{
-					out("movs%sq _%s(%%rip), %%rax",
-						get_inst_suffix(node->t->size), 
-						node->var->name);
-
+					if (node->t->size < 4)
+						out("movz%sq _%s(%%rip), %%rax // %s",
+								get_inst_suffix(node->t->size),
+								node->var->name,
+								node->var->name);
+					else
+						out("mov%s _%s(%%rip), %%%s // %s",
+								get_inst_suffix(node->t->size),
+								node->var->name,
+								get_register_by_size("rax", node->t->size),
+								node->var->name);
 				}
 				else
-					out("movq _%s(%%rip), %%rax", node->var->name);
+				{
+					if (node->t->size < 8)
+					{
+						out("movs%sq _%s(%%rip), %%rax",
+							get_inst_suffix(node->t->size), 
+							node->var->name);
+
+					}
+					else
+						out("movq _%s(%%rip), %%rax", node->var->name);
+				}
 #if 0
 				out("mov%s _%s(%%rip), %%%s", get_inst_suffix(node->t->size), 
 						node->var->name, get_register_by_size("rax", node->t->size));
@@ -298,25 +380,27 @@ void gen(Node *node)
 				if (node->t->is_unsigned)
 				{
 					if (node->t->size < 4)
-						out("movz%sq -%d(%%rbp), %%rax",
-								get_inst_suffix(node->t->size),
-								node->var->offset);
-					else
-						out("mov%s -%d(%%rbp), %%%s",
+						out("movz%sq -%d(%%rbp), %%rax // %s",
 								get_inst_suffix(node->t->size),
 								node->var->offset,
-								get_register_by_size("rax", node->t->size));
+								node->var->name);
+					else
+						out("mov%s -%d(%%rbp), %%%s // %s",
+								get_inst_suffix(node->t->size),
+								node->var->offset,
+								get_register_by_size("rax", node->t->size),
+								node->var->name);
 				}
 				else
 				{
 					if (node->t->size < 8)
 					{
-						out("movs%sq -%d(%%rbp), %%rax", 
+						out("movs%sq -%d(%%rbp), %%rax // %s", 
 							get_inst_suffix(node->t->size), 
-						node->var->offset);
+						node->var->offset, node->var->name);
 					}
 					else
-						out("movq -%d(%%rbp), %%rax", node->var->offset);
+						out("movq -%d(%%rbp), %%rax // %s", node->var->offset, node->var->name);
 				}
 			}
 		}
@@ -343,35 +427,51 @@ void gen(Node *node)
 		}
 		else
 		{
-			Func *fn = find_func(node->tok->name);
-			if (!fn)
-				error_token(node->tok, "underclared function");
-
-			char *reg[] = {"rdi", "rsi", "rdx", "rcx", "r8", "r9"};
+			char *reg[6] = {"rdi", "rsi", "rdx", "rcx", "r8", "r9"};
+			dbg("//call %s\n", node->tok->name);
 			for (int i = 0; i < node->arg_count && i < 6; i++)
 			{
 				gen(node->args[i]);
-				out("pushq %%rax");
+				push("rax");
 			}
 
-			assert(node->arg_count <= 6); // fix this loop 
 			for (int i = 0; i < node->arg_count && i < 6; i++)
 			{
-				out("popq %%%s", reg[node->arg_count - i - 1]);
+
+				int last = node->arg_count;
+				if (last > 6)
+					last = 6;
+				pop(reg[last - i - 1]);
 			}
+
+			int s = stack_size;
+			if (node->arg_count > 6)
+				s += (node->arg_count - 6) * 8;
+			int target = align(s, 16);
+			assert(target % 16 == 0);
+			out("subq $%d, %%rsp // %d", target - s, stack_size + target - s);
+			stack_size += target - s;
 			for (int i = node->arg_count - 1; i >= 6; i--)
 			{
 				gen(node->args[i]);	
-				out("pushq %%rax");
+				push("rax");
+				//out("movq %%rax, %d(%%rsp)", (i - 5) * 8);
 			}
-			//out("xorq %%rax, %%rax");
+			out("xorq %%rax, %%rax");
+			assert(stack_size % 16 == 0);
 			out("callq _%s", node->tok->name);
+			
+			int add = target - s;
 			if (node->arg_count > 6)
-				out("addq $%d, %%rsp", (node->arg_count - 6) * 8);
+				add += (node->arg_count - 6) * 8;
+			stack_size -= add;
+			out("addq $%d, %%rsp // %d", add, stack_size);
 		}
 	}
 	else if (node->type == NODE_ADDR)
 	{
+		if (node->left->type == NODE_MEMBER)
+			node->left = node->left->left;
 		if (node->left->type == NODE_DEREF)
 		{
 			gen(node->left->left);
@@ -385,9 +485,14 @@ void gen(Node *node)
 			}
 			else
 			{
-				out("movq %%rbp, %%rax");
+				out("movq %%rbp, %%rax // &%s", node->left->var->name);
 				out("subq $%d, %%rax", node->left->var->offset);
 			}
+		}
+		else if (node->left->type == NODE_CAST)
+		{
+			node->left = node->left->left;
+			gen(node);
 		}
 		else
 			assert(0);
@@ -421,9 +526,15 @@ void gen(Node *node)
 	}
 	else if (node->type == NODE_CAST)
 	{
+		dbg("//cast to (%s)\n", get_type_str(node->t));
 		gen(node->left);
 		Type *t1 = node->left->t;
 		Type *t2 = node->t;
+		if (node->t->t == ARRAY)
+		{
+			t2 = new_type(PTR);
+			t2->ptr_to = node->t->ptr_to;
+		}
 		
 		// (t2)t1
 		if (!t1->is_unsigned && !t2->is_unsigned)
@@ -483,11 +594,13 @@ void gen(Node *node)
 		}
 		else
 		{
-			out("pushq %%rax");
+
+			push("rax");
 			gen(node->right);
 			out("movq %%rax, %%r10");
-			out("popq %%rax");
-			// left = r10, right = rax
+			pop("rax");
+
+			// rax = left, r10 is right
 
 			assert(node->left->t);
 			assert(node->right->t);
@@ -556,27 +669,30 @@ void gen(Node *node)
 	}
 	else if (node->type == NODE_ASSIGN)
 	{
+		if (node->left->type == NODE_MEMBER)
+			node->left = node->left->left;
 		if (node->left->type == NODE_DEREF)
 		{
 			gen(node->right);
 			if (node->t->t == STRUCT)
 			{
-				out("movq %%rax, %%rsi");
-
+				assert(0);
+				push("rax");
 				gen(node->left);
+				pop("rsi");
 				out("movq %%rax, %%rdi");
 				out("movq $%d, %%rdx", node->t->size);
 				out("callq _memcpy");
 			}
 			else
 			{
-				out("pushq %%rax");
+				push("rax");
 				gen(node->left->left);
 				if (!node->left->left->t->ptr_to)
 				error_token(node->tok, "dereferencing a non-pointer lvalue");
 
 				//check types here
-				out("popq %%r10");
+				pop("r10");
 				out("mov%s %%%s, (%%rax)", get_inst_suffix(node->t->size),
 						get_register_by_size("r10", node->t->size));
 				//out("movq %%r10, (%%rax)");
@@ -593,6 +709,8 @@ void gen(Node *node)
 				error_token(node->tok, "array is constant");
 			if (node->left->var->global)
 			{
+				if (node->t->t == STRUCT)
+					assert(0);
 				out("mov%s %%%s, _%s(%%rip)", get_inst_suffix(node->t->size),
 						get_register_by_size("rax", node->t->size),
 						node->left->var->name);
@@ -601,6 +719,7 @@ void gen(Node *node)
 			{
 				if (node->t->t == STRUCT)
 				{
+					assert(0);
 					out("movq %%rbp, %%rdi");
 					out("subq $%d, %%rdi", node->left->var->offset);
 					out("movq %%rax, %%rsi");
@@ -609,9 +728,9 @@ void gen(Node *node)
 				}
 				else
 				{
-					out("mov%s %%%s, -%d(%%rbp)", get_inst_suffix(node->t->size), 
+					out("mov%s %%%s, -%d(%%rbp) // %s = rax", get_inst_suffix(node->t->size), 
 						get_register_by_size("rax", node->t->size),
-						node->left->var->offset);
+						node->left->var->offset, node->left->var->name);
 				}
 			}
 		}
@@ -649,7 +768,7 @@ void gen(Node *node)
 		}
 		else if (node->tok->type == TOKEN_INC || node->tok->type == TOKEN_DEC)
 		{
-			out("pushq %%rax");
+			push("rax");
 			Node *one = new_node(NODE_INT);
 			one->tok = new_temp_token(TOKEN_INTEGER);
 			one->tok->int_val = (node->tok->type == TOKEN_INC ? 1 : -1);
@@ -662,7 +781,7 @@ void gen(Node *node)
 			assign->right->right = one;
 			add_type(assign); // TODO: ??????
 			gen(assign);
-			out("popq %%rax");
+			pop("rax");
 		}
 		else
 			assert(0);
@@ -670,7 +789,6 @@ void gen(Node *node)
 	else if (node->type == NODE_QUESTION)
 	{
 		int label = curr_label++;
-
 		gen(node->condition);
 		out("cmpq $0, %%rax");
 		out("je QUES%d", label);
@@ -684,6 +802,17 @@ void gen(Node *node)
 		assert(0);
 	if (node->next_in_comma)
 		gen(node->next_in_comma);
+
 }
 
+/*
 
+
+   7
+   8
+   ret 
+   	  <-
+	5 <-
+    3 <-
+	ret address <- rbp
+*/

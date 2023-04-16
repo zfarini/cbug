@@ -92,7 +92,7 @@ int main()
 		fix globals (with struct and stuff)
 		evaluate compile time expression (globals init and arrays size)
 		typedefs + make declarations simple and more correct
-		enums
+		function pointers
 		better errors
 		function prototype + type checking for args in calls
 		multi dimension array + their init

@@ -15,3 +15,8 @@ int type_match(int type, ...)
 	va_end(ap);
 	return (0);
 }
+
+int main()
+{
+	printf("%d\n", type_match(3, 1, 2, 3, 4, 5, 6, 7, 8, -1));
+}

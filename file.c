@@ -7,7 +7,6 @@
 #include <string.h>
 #include <ctype.h>
 
-#if 0
 typedef struct Token Token;
 typedef struct Node Node;
 typedef struct Var Var;
@@ -15,9 +14,14 @@ typedef struct Type Type;
 typedef struct Func Func;
 typedef struct Scope Scope;
 typedef struct Enum Enum;
-#endif
 
 #include "cbug.h"
+
+extern Token tokens[100000];
+extern int ct;
+extern FILE *f;
+extern int _curr_node;
+extern Node _nodes[100000];
 
 int type_match(int type, ...)
 {
@@ -31,7 +35,16 @@ int type_match(int type, ...)
 		if (t == type)
 			return (1);
 	}
+	va_end(ap);
 	return (0);
+}
+
+Node *new_node(int type)
+{
+	Node *node = &_nodes[_curr_node++];
+	node->type = type;
+	node->tok = &tokens[ct];
+	return (node);
 }
 
 void error(char *fmt, ...)
@@ -57,9 +70,6 @@ void error_token(Token *token, char *fmt, ...)
 	exit(1);
 }
 
-extern Token tokens[100000];
-extern int ct;
-extern FILE *f;
 
 Node *new_node(int type);
 
@@ -70,6 +80,14 @@ void out(char *fmt, ...)
 	fprintf(f, "\t");
 	vfprintf(f, fmt, ap);
 	fprintf(f, "\n");
+	va_end(ap);
+}
+
+void dbg(char *fmt, ...)
+{
+	va_list ap;
+	va_start(ap, fmt);
+	vfprintf(f, fmt, ap);
 	va_end(ap);
 }
 
@@ -107,21 +125,4 @@ Node *binary(Node *(*func)(), ...)
 	return left;
 }
 
-char *read_entire_file(char *name)
-{
-	char *buffer = 0;
-	long length;
-	FILE *file = fopen(name, "r");
-	if (file)
-	{
-		fseek(file, 0, SEEK_END);
-	 	length = ftell(file);
-	 	fseek(file, 0, SEEK_SET);
-	 	buffer = malloc(length + 1);
-	 	if (buffer)
-	 	  fread(buffer, 1, length, file);
-		buffer[length] = 0;
-	 	fclose(file);
-	}
-	return buffer;
-}
+

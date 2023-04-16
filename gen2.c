@@ -6,7 +6,7 @@
 /*   By: zfarini <zfarini@student.1337.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 02:52:30 by zfarini           #+#    #+#             */
-/*   Updated: 2023/04/15 06:47:33 by zfarini          ###   ########.fr       */
+/*   Updated: 2023/04/15 23:35:22 by zfarini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,37 @@ int log2_int(int x)
 
 char *get_register_by_size(char *reg, int size)
 {
+	char *rax[4] =	{"al", "ax", "eax", "rax"};
+	char *rdx[4] =	{"dh", "dx", "edx", "rdx"};
+	char *rcx[4] =	{"ch", "cx", "ecx", "rcx"};
+	char *rdi[4] =	{"dil", "di", "edi", "rdi"};
+	char *rsi[4] =	{"sil", "si", "esi", "rsi"};
+	char *r8 [4] =	{"r8b", "r8w", "r8d", "r8"};
+	char *r9 [4] =	{"r9b", "r9w", "r9d", "r9"};
+	char *r10[4] =	{"r10b", "r10w", "r10d", "r10"};
+	char *r11[4] =	{"r11b", "r11w", "r11d", "r11"};
+
+	size = log2_int(size);
+	if (!strcmp(reg, "rax"))
+		return rax[size];
+	if (!strcmp(reg, "rdx"))
+		return rdx[size];
+	if (!strcmp(reg, "rcx"))
+		return rcx[size];
+	if (!strcmp(reg, "rdi"))
+		return rdi[size];
+	if (!strcmp(reg, "rsi"))
+		return rsi[size];
+	if (!strcmp(reg, "r8"))
+		return r8[size];
+	if (!strcmp(reg, "r9"))
+		return r9[size];
+	if (!strcmp(reg, "r10"))
+		return r10[size];
+	if (!strcmp(reg, "r11"))
+		return r11[size];
+	assert(0);
+#if 0
 	char *arr[10][4] = {
 		{"al", "ax", "eax", "rax"},
 		{"dh", "dx", "edx", "rdx"},
@@ -61,12 +92,14 @@ char *get_register_by_size(char *reg, int size)
 		{"r11b", "r11w", "r11d", "r11"},
 		{0}
 	};
+
 	for (int i = 0; arr[i][0]; i++)
 	{
 		if (!strcmp(arr[i][3], reg))
 			return arr[i][log2_int(size)];
 	}
 	assert(0);
+#endif
 }
 
 int add_string_lit(char *s)
@@ -80,15 +113,6 @@ int add_string_lit(char *s)
 	return strings_literal_count++;
 }
 
-void out(char *fmt, ...)
-{
-	va_list ap;
-	va_start(ap, fmt);
-	fprintf(f, "\t");
-	vfprintf(f, fmt, ap);
-	fprintf(f, "\n");
-	va_end(ap);
-}
 
 int curr_label = 0;
 
@@ -125,7 +149,7 @@ void gen(Node *node)
 		// allocate space for all local variables we subtrace since the stack grows downward
 		out("subq $%d, %%rsp", node->stack_size);
 
-		char *reg[] = {"rdi", "rsi", "rdx", "rcx", "r8", "r9"};
+		char *reg[6] = {"rdi", "rsi", "rdx", "rcx", "r8", "r9"};
 		for (int i = 0; i < node->param_count && i < 6; i++)
 		{
 			Var *v = node->params[i]->var;
@@ -275,6 +299,10 @@ void gen(Node *node)
 				out("subq $%d, %%rax", node->var->offset);
 			}
 		}
+		else if (node->t->t == FUNC)
+		{
+			out("leaq _%s(%%rip), %%rax", node->tok->name);
+		}
 		else
 		{
 			if (node->var->global)
@@ -347,17 +375,20 @@ void gen(Node *node)
 			if (!fn)
 				error_token(node->tok, "underclared function");
 
-			char *reg[] = {"rdi", "rsi", "rdx", "rcx", "r8", "r9"};
+			char *reg[6] = {"rdi", "rsi", "rdx", "rcx", "r8", "r9"};
 			for (int i = 0; i < node->arg_count && i < 6; i++)
 			{
 				gen(node->args[i]);
 				out("pushq %%rax");
 			}
 
-			assert(node->arg_count <= 6); // fix this loop 
 			for (int i = 0; i < node->arg_count && i < 6; i++)
 			{
-				out("popq %%%s", reg[node->arg_count - i - 1]);
+
+				int last = node->arg_count;
+				if (last > 6)
+					last = 6;
+				out("popq %%%s", reg[last - i - 1]);
 			}
 			for (int i = node->arg_count - 1; i >= 6; i--)
 			{
@@ -388,6 +419,11 @@ void gen(Node *node)
 				out("movq %%rbp, %%rax");
 				out("subq $%d, %%rax", node->left->var->offset);
 			}
+		}
+		else if (node->left->type == NODE_CAST)
+		{
+			node->left = node->left->left;
+			gen(node);
 		}
 		else
 			assert(0);
@@ -424,6 +460,11 @@ void gen(Node *node)
 		gen(node->left);
 		Type *t1 = node->left->t;
 		Type *t2 = node->t;
+		if (node->t->t == ARRAY)
+		{
+			t2 = new_type(PTR);
+			t2->ptr_to = node->t->ptr_to;
+		}
 		
 		// (t2)t1
 		if (!t1->is_unsigned && !t2->is_unsigned)
@@ -685,5 +726,3 @@ void gen(Node *node)
 	if (node->next_in_comma)
 		gen(node->next_in_comma);
 }
-
-

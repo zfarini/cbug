@@ -1,10 +1,3 @@
-
-typedef struct Token_Name {
-	char *name;
-	int type;
-
-} Token_Name;
-
 Token_Name multi_char_tokens_type[20];
 Token_Name keywords[30];
 char *token_type_name_c[255];
@@ -54,17 +47,14 @@ Token *new_temp_token(int type)
 
 char get_backspace_char(char c)
 {
-	switch (c)
-	{
-		case 'n': return '\n';
-		case 't': return '\t';
-		case 'r': return '\r';
-		case 'v': return '\v';
-		case 'f': return '\f';
-		case 'a': return '\a';
-		case 'b': return '\b';
-		default: return c;
-	}
+	if (c == 'n') return '\n';
+	if (c == 't') return '\t';
+	if (c == 'r') return '\r';
+	if (c == 'v') return '\v';
+	if (c == 'f') return '\f';
+	if (c == 'a') return '\a';
+	if (c == 'b') return '\b';
+	return c;
 }
 
 int multi_char_token_count = 0;
@@ -141,7 +131,13 @@ Token *tokenize(char *s)
 		}
 		if (!s[i])
 			break;
-		if (s[i] == '/' && s[i + 1] == '/')
+		if (s[i] == '#')
+		{
+			while (s[i] != '\n')
+				i++;
+			continue;
+		}
+		else if (s[i] == '/' && s[i + 1] == '/')
 		{
 			while (s[i] && s[i] != '\n')
 				i++;

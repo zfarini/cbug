@@ -1,33 +1,40 @@
 int printf();
 int scanf();
 
-struct pair {
-	int x, y;
+/*
+typedef struct Var Var;
+typedef struct X X;
+typedef struct Node Node;
+*/
+
+struct Node {
+	int type;
+	Var *v;
+	Node *node;
 };
 
-void swap(pair *x, pair *y)
-{
-	pair tmp = *y;
-	*y = *x;
-	*x = tmp;
-}
+struct Var {
+	char *name;
+	X *x[100];
+};
 
-void sort_by_sum(pair *x, int n)
-{
-	for (int i = 0; i < n; i++)
-		for (int j = 1; j < n; j++)
-			if (x[j].x + x[j].y < x[j-1].x + x[j-1].y)
-				swap(&x[j - 1], &x[j]);
-}
+
+struct X {
+	int x;
+};
 
 int main()
 {
-	pair a[100];
-	int n;
-	scanf("%d", &n);
-	for (int i = 0; i < n; i++)
-		scanf("%d%d", &a[i].x, &a[i].y);
-	sort_by_sum(a, n);
-	for (int i = 0; i < n; i++)
-		printf("%d %d\n", a[i].x, a[i].y);
+	Var v;
+	X x;
+	
+	printf("hello\n");
+	printf("%p\n", v.x);
+	return 0;
+	v.x[0] = &x;
+	printf("hello\n");
+	printf("%p\n", v.x[0]);
+	//v.x[0]->x = 5;
+	//printf("%d\n", x.x);
 }
+

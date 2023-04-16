@@ -20,9 +20,9 @@ Type *new_type(int t)
 {
 	Type *type = &types[type_count++];
 	type->t = t;
-	if (t == PTR || t == ARRAY)
+	if (t == PTR || t == ARRAY || t == FUNC)
 		type->is_unsigned = 1;
-	if (t == PTR || t == ARRAY || t == LONG)
+	if (t == PTR || t == ARRAY || t == LONG || t  == FUNC)
 		type->size = 8;
 	else if (type->t == INT)
 		type->size = 4;
@@ -66,14 +66,6 @@ Func *find_func(char *name)
 	return 0;
 }
 
-Node *new_node(int type)
-{
-	Node *node = &_nodes[_curr_node++];
-	node->type = type;
-	node->tok = &tokens[ct];
-	return (node);
-}
-
 Var *find_var(char *name)
 {
 	Scope *scope = curr_scope;
@@ -86,7 +78,16 @@ Var *find_var(char *name)
 		}
 		scope = scope->parent;
 	}
-	return (0);
+
+	Func *func = find_func(name);
+	if (!func)
+		return 0;
+	Type *type = new_type(FUNC);
+	Var *v = &vars[var_count++];
+	v->type = type;
+	v->name = name;
+	v->token = &tokens[ct];
+	return v;
 }
 
 Var *new_var(Type *type, char *name)
@@ -105,7 +106,7 @@ Var *new_var(Type *type, char *name)
 	curr_scope->vars[curr_scope->var_count++] = v;	
 	if (!type->size)
 		error_token(&tokens[ct], "type with size 0?");
-	if (curr_func)
+	if (curr_func && type->size)
 	{
 		if (type->t == ARRAY)
 		{
@@ -120,21 +121,7 @@ Var *new_var(Type *type, char *name)
 	return (v);
 }
 
-int type_match(int type, ...)
-{
-	va_list ap;
-	va_start(ap, type);
-	while (1)
-	{
-		int t = va_arg(ap, int);
-		if (t < 0)
-			break ;
-		if (t == type)
-			return (1);
-	}
-	return (0);
-}
-
+/*
 Node *binary(Node *(*func)(), ...)
 {
 	va_list ap;
@@ -168,6 +155,7 @@ Node *binary(Node *(*func)(), ...)
 	}
 	return left;
 }
+*/
 
 void skip(int type)
 {
@@ -178,8 +166,17 @@ void skip(int type)
 
 int is_typename(Token *tok)
 {
-	if (type_match(tok->type, TOKEN_INT, TOKEN_VOID, TOKEN_CHAR, TOKEN_SHORT, TOKEN_LONG, TOKEN_UNSIGNED, TOKEN_SIGNED, -1))
+	if (tok->type == TOKEN_INT || 
+		tok->type == TOKEN_VOID || 
+		tok->type == TOKEN_CHAR || 
+		tok->type == TOKEN_SHORT || 
+		tok->type == TOKEN_LONG || 
+		tok->type == TOKEN_SIGNED || 
+		tok->type == TOKEN_UNSIGNED || 
+		tok->type == TOKEN_VOID )
 		return 1;
+	//if (type_match(tok->type, TOKEN_INT, TOKEN_VOID, TOKEN_CHAR, TOKEN_SHORT, TOKEN_LONG, TOKEN_UNSIGNED, TOKEN_SIGNED, -1))
+	//	return 1;
 	if (tok->type == TOKEN_IDENTIFIER)
 	{
 		for (int i = 0; i < types_declared_count; i++)
@@ -216,7 +213,7 @@ char *get_type_str(Type *type)
 {
 	if (type->t == STRUCT)
 	{
-		return strjoin("struct ", type->name);
+		return type->name;
 	}
 	if (type->t == PTR)
 	{
@@ -224,18 +221,17 @@ char *get_type_str(Type *type)
 	}
 	else if (type->t == ARRAY)
 	{
-		return strjoin(get_type_str(type->ptr_to), "[]");
+		char s[42];
+		sprintf(s, "[%d]", type->array_size);
+		return strjoin(get_type_str(type->ptr_to), s);
 	}
-	switch(type->t)
-	{
-		case VOID: return "void";
-		case CHAR: return "char";
-		case INT:  return "int";
-		case SHORT: return "short";
-		case LONG: return "long";
-		default: assert(0);
-	}
-	return "";
+	if (type->t == VOID) return "void";
+	if (type->t == CHAR) return "char";
+	if (type->t == INT)  return "int";
+	if (type->t == SHORT) return "short";
+	if (type->t == LONG) return "long";
+	if (type->t == UNKNOWN) return "unknown";
+	assert(0);
 }
 
 Type *add_type(Node *node);
@@ -280,6 +276,10 @@ Type *add_type(Node *node)
 			t = type_long;
 		else
 			t = type_int;
+	}
+	else if (node->type == NODE_MEMBER)
+	{
+		t = add_type(node->left);
 	}
 	else if (node->type == NODE_UNARY)
 	{
@@ -410,33 +410,50 @@ Node *parse(char *s)
 
 		if (tokens[ct].type == TOKEN_ENUM)
 		{
+
 			ct++;
+
+
+			printf("enum ");
 			if (tokens[ct].type == TOKEN_IDENTIFIER)
+			{
+				printf("%s", tokens[ct].name);
 				ct++;
+			}
+			else
+				printf("non-name");
+			printf(":\n");
 			skip('{');
 			int val = 0;
 			while (tokens[ct].type != '}')
 			{
 				enums[enum_count].name = tokens[ct].name;
+				printf("\t%s", tokens[ct].name);
 				skip(TOKEN_IDENTIFIER);
 				if (tokens[ct].type == '=')
 				{
 					ct++;
+					printf(" = %lld", tokens[ct].int_val);
 					if (tokens[ct].type != TOKEN_INTEGER)
 						skip(TOKEN_INTEGER);
 					val = tokens[ct].int_val;
 					ct++;
 				}
 				if (tokens[ct].type == ',')
+				{
+					printf(",");
 					ct++;
+				}
 				else if (tokens[ct].type != '}')
 					skip('}');
 				enums[enum_count].value = val;
 				enum_count++;
 				val++;
+				printf("\n");
 			}
 			skip('}');
 			skip(';');
+			printf("\n");
 		}
 		else if (tokens[ct].type == TOKEN_STRUCT)
 		{
@@ -450,6 +467,7 @@ Node *parse(char *s)
 			skip('{');
 			int	i = 0;
 			int size = 0;
+			int max = 0;
 			while (tokens[ct].type && tokens[ct].type != '}')
 			{
 				Node *node = decl(1);
@@ -458,11 +476,16 @@ Node *parse(char *s)
 				{
 					type->field_name[i] = node->var->name;
 					type->field_type[i] = node->var->type;
+
+					assert(node->var->type->size);
 					size = align(size, node->var->type->size);
 					type->field_offset[i] = size;
+					if (node->var->type->size > max)
+						max = node->var->type->size;
 					if (node->var->type->t == ARRAY)
 						size += node->var->type->size * node->var->type->array_size;
-					size += node->var->type->size;
+					else
+						size += node->var->type->size;
 					i++;
 					node = node->next_in_decl;
 				}
@@ -470,14 +493,32 @@ Node *parse(char *s)
 			}
 			if (!size)
 				error_token(st_token, "empty structs are not handled yet");
-			type->size = align(size, type->field_type[0]->size); // TODO: this is for array for structs check if its correct
+			//printf("%d\n", size);
+
+			type->size = align(size, max); // TODO: this is for array for structs check if its correct
 			type->field_count = i;
 			types_declared[types_declared_count++] = type;
+			for (int j = 0; j < types_declared_count; j++)
+			{
+				Type *t = types_declared[j];
+				for (int k = 0; k < t->field_count; k++)
+				{
+					Type *cur = t->field_type[k];
+					while (cur->ptr_to)
+					{
+						if (cur->ptr_to->t == UNKNOWN &&
+							!strcmp(cur->ptr_to->tok->name, type->name))
+						{
+							cur->ptr_to = type;
+							break;
+						}
+						cur = cur->ptr_to;
+					}
+				}
+			}
 			skip('}');
 			skip(';');
-			printf("declared struct '%s': (size=%d)\n", type->name, type->size);
-			for( int j = 0; j < type->field_count; j++)
-				printf("\t%s %s\n", get_type_str(type->field_type[j]), type->field_name[j]);
+
 			continue;
 		}
 		else
@@ -501,6 +542,42 @@ Node *parse(char *s)
 				curr = curr->next_stmt;
 		}
 	}
+	for (int i = 0; i < types_declared_count; i++)
+	{
+		Type *t = types_declared[i];
+		int alignement = 0;
+		int space = 0;
+		for (int j = 0; j < t->field_count; j++)
+		{
+			if (t->field_type[j]->ptr_to && 
+				t->field_type[j]->ptr_to->t == UNKNOWN)
+				error_token(t->field_type[j]->ptr_to->tok, "unknown type");
+			if (t->field_type[j]->size > alignement)
+				alignement = t->field_type[j]->size;
+			if ((int)strlen(t->field_name[j]) > space)
+				space = strlen(t->field_name[j]);
+		}
+		printf("struct %s: (size=%d, align=%d)\n", t->name, t->size, alignement);
+		int size = 0;
+		for( int j = 0; j < t->field_count; j++)
+		{
+			int x = align(size, t->field_type[j]->size);
+			if (x != size)
+				printf("\t[%d padding]\n", x - size);
+			size = x;
+			if (t->field_type[j]->t == ARRAY)
+				size += t->field_type[j]->size * t->field_type[j]->array_size;
+			else
+				size += t->field_type[j]->size;
+			printf("\t%s: %*s%s\n", t->field_name[j], (int)(space - strlen(t->field_name[j])),
+					"", get_type_str(t->field_type[j]));
+		}
+		if (size != t->size)
+			printf("\t[%d padding]\n", t->size - size);
+
+	
+		printf("\n");
+	}
 	return prog;
 }
 
@@ -521,10 +598,12 @@ Type *parse_base_type()
 	Token *start = &tokens[ct];
 	if (start->type == TOKEN_IDENTIFIER)
 	{
-		ct++;
 		type = find_type(start->name);
 		if (type)
+		{
+			ct++;
 			return type;
+		}
 	}
 	while (1)
 	{
@@ -568,7 +647,11 @@ Type *parse_base_type()
 	else if (si || u)
 		type = new_type(INT);
 	else
-		err = 1;
+	{
+		type = new_type(UNKNOWN);
+		type->tok = &tokens[ct];
+		ct++;
+	}
 	if (type)
 		type->is_unsigned = u;
 	if (err)
@@ -598,6 +681,7 @@ Node *function()
 	Node *node = new_node(NODE_FUNC_DEF);
 	ct++;
 	curr_func = node;
+	curr_func->stack_size = 0;
 	skip('(');
 	int count = 0;
 	//TODO: don't declare vars or enter the scope if its just a declaraton
@@ -627,6 +711,7 @@ Node *function()
 		skip(';');
 
 	leave_scope();
+	curr_func = 0;
 	return node;
 }
 
@@ -645,9 +730,8 @@ Node *decl(int is_struct)
 {
 	// unsigned int long long 
 	Node *decl = new_node(NODE_VAR_DECL);
-	if (!is_typename(&tokens[ct]))
-		error_token(&tokens[ct], "invalid type");
 	Type *base = parse_base_type();
+	decl->decl_type = base;
 	Node *curr = decl;
 	while (1)
 	{
@@ -660,6 +744,8 @@ Node *decl(int is_struct)
 			type = new;
 			ct++;
 		}
+		if (!type->ptr_to && type->t == UNKNOWN)
+			error_token(&tokens[ct], "unknown type");
 		if (type->t == VOID && !type->ptr_to)
 			error_token(&tokens[ct], "variable type can't be void");
 		if (tokens[ct].type != TOKEN_IDENTIFIER)
@@ -916,7 +1002,10 @@ Node *assign()
 	if (type_match(tokens[ct].type, '=', TOKEN_ADD_ASSIGN,
 				TOKEN_SUB_ASSIGN, TOKEN_DIV_ASSIGN, TOKEN_MUL_ASSIGN, -1))
 	{
-		if (left->type != NODE_VAR && left->type != NODE_DEREF)
+
+		add_type(left);
+		if ((left->type != NODE_VAR && left->type != NODE_DEREF && left->type != NODE_MEMBER) || left->t->t == ARRAY 
+				|| left->t->t == VOID)
 			error_token(&tokens[ct], "expression is not assignable");
 		Node *node = new_node(NODE_ASSIGN);
 		ct++;
@@ -1104,9 +1193,13 @@ Node *postfix()
 		}
 		else if (tokens[ct].type == '.' || tokens[ct].type == TOKEN_ARROW)
 		{
+			Node *tmp = new_node(NODE_MEMBER);
+			tmp->right = left; // nice
 			Type *type = add_type(left);
 			if (tokens[ct].type == TOKEN_ARROW && !(type->t == PTR && type->ptr_to->t == STRUCT))
+			{
 				error_token(&tokens[ct], "expected struct pointer");
+			}
 			if (tokens[ct].type == TOKEN_ARROW)
 				type = type->ptr_to;
 			if (type->t != STRUCT)
@@ -1143,15 +1236,24 @@ Node *postfix()
 			add->right->tok = new_temp_token(TOKEN_INTEGER);
 			add->right->tok->int_val = type->field_offset[i];
 			Type *t = new_type(PTR);
-			t->ptr_to = type->field_type[i];
-			implicit_cast(&add, t);
-			Node *node = new_node(NODE_DEREF);
-			node->left = add;
-			
-			add_type(add);
-			add_type(node);
+			Node *node;
+			if (type->field_type[i]->t == ARRAY)
+			{
+				t = type->field_type[i];
+				//t->ptr_to = type->field_type[i]->ptr_to;
+				implicit_cast(&add, t);
+				node = add;
+			}
+			else
+			{
+				t->ptr_to = type->field_type[i];
+				implicit_cast(&add, t);
+				node = new_node(NODE_DEREF);
+				node->left = add;
+			}
+			tmp->left = node;
 			skip(TOKEN_IDENTIFIER);
-			left = node;
+			left = tmp;
 		}
 		else
 			break ;

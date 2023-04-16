@@ -1,9 +1,8 @@
-typedef struct S {
-	long x;
-	int y;
-} S;
-
+struct S{
+	int x;
+};
 int main()
 {
-	printf("%d\n", sizeof(S));
+	S s;
+	s.x = 5;
 }

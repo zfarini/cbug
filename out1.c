@@ -1,1567 +1,391 @@
-declared struct Token
-declared struct Node
-declared struct FILE
-declared struct Type
-declared struct Scope
-declared struct Var
-declared struct Func
-declared struct Enum
-declared struct Token_Name
-parse function binary
-parse function parse_type
-parse function parse
-parse function function
-parse function decl
-parse function statement
-parse function expr
-parse function assign
-parse function conditional
-parse function logical_or
-parse function logical_and
-parse function equality
-parse function relational
-parse function add
-parse function mul
-parse function cast
-parse function unary
-parse function postfix
-parse function primary
-parse function error
-parse function error_token
-parse function read_entire_file
-parse function out
-parse function malloc
-parse function assert
-parse function calloc
-parse function isspace
-parse function isdigit
-parse function isalpha
-parse function isalnum
-parse function memcpy
-parse function strcmp
-parse function strdup
-parse function strlen
-parse function strncmp
-parse function strchr
-parse function printf
-parse function fprintf
-parse function fopen
-parse function new_node
-parse function type_match
-parse function dbg
-parse function fopen
-parse function fseek
-parse function ftell
-parse function fclose
-parse function fread
-parse function exit
-char*
-int
-char*
-char*
-int
-char*
-parse function token_type_name
-int
-int
-int
-parse function new_temp_token
-parse function get_backspace_char
-char*
-int
-parse function add_multi_char_token
-char*
-int
-parse function add_keyword
-int
-char*
-int
-int
-int
-long
-long
-long
-int
-long
-long
-int
-char*
-int
-char*
-char*
-int
-int
-char*
-char*
-char*
-char*
-int
-int
-char*
-int
-int
-int
-int
-int
-char*
-int
-int
-parse function tokenize
-parse function align
-parse function find
-parse function new_scope
-struct Scope*
-parse function enter_scope
-struct Scope*
-parse function leave_scope
-int
-int
-int
-int
-int
-int
-int
-int
-int
-parse function new_type
-int
-int
-int
-int
-struct Type*
-struct Type*
-struct Type*
-struct Type*
-parse function types_are_equal
-char*
-struct Type*
-parse function add_func
-char*
-parse function find_func
-int
-struct Var*[]
-char*
-struct Var*[]
-struct Scope*
-struct Type*
-char*
-struct Token*
-parse function find_var
-int
-struct Var*[]
-char*
-char*
-struct Token*
-struct Type*
-int
-struct Var*[]
-int
-int
-int
-int
-struct Type*
-int
-int
-int
-int
-int
-int
-struct Type*
-int
-int
-int
-parse function new_var
-int
-parse function skip
-int
-int
-int
-int
-int
-int
-int
-int
-int
-char*
-char*
-parse function is_typename
-struct Type*
-struct Type*
-parse function find_binary_op_type
-parse function strjoin
-int
-char*
-int
-struct Type*
-int
-struct Type*
-int
-int
-int
-int
-int
-int
-parse function get_type_str
-parse function add_type
-struct Type*
-struct Node*
-struct Type*
-parse function implicit_cast
-struct Type*
-struct Type*
-int
-int
-int
-int
-int
-int
-int
-parse function find_common_type
-struct Type*
-struct Type*
-int
-struct Token*
-struct Token*
-long
-long
-int
-struct Node*
-int
-struct Token*
-struct Token*
-int
-int
-struct Node*
-int
-struct Token*
-struct Token*
-int
-struct Token*
-int
-struct Node*
-int
-struct Type*
-int
-struct Var*
-struct Type*
-int
-struct Func*
-struct Type*
-int
-struct Type*
-struct Node*
-struct Type*
-int
-struct Token*
-int
-struct Node*
-struct Type*
-struct Token*
-struct Type*
-int
-struct Token*
-struct Type*
-int
-struct Node*
-int
-struct Token*
-int
-struct Type*
-struct Node*
-int
-struct Token*
-int
-struct Node*
-struct Node*
-struct Node*
-struct Type*
-struct Node*
-struct Type*
-int
-int
-struct Type*
-struct Type*
-struct Type*
-struct Type*
-struct Type*
-struct Type*
-struct Type*
-struct Token*
-struct Type*
-struct Type*
-struct Type*
-struct Type*
-struct Node*
-struct Type*
-struct Node*
-struct Type*
-struct Node*
-struct Node*
-struct Token*
-int
-struct Node*
-struct Type*
-int
-struct Node*
-struct Node*
-struct Node*
-int
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-struct Type*
-struct Node*
-struct Type*
-struct Node*
-struct Node*
-struct Type*
-struct Node*
-parse function add_type
-struct Scope*
-int
-int
-int
-int
-char*
-char*
-int
-int
-long
-int
-int
-int
-int
-char*
-char*
-int
-int
-struct Node*
-char*[]
-struct Var*
-char*
-struct Type*[]
-struct Var*
-struct Type*
-struct Var*
-struct Type*
-int
-int[]
-struct Var*
-struct Type*
-int
-struct Var*
-struct Type*
-int
-struct Var*
-struct Type*
-int
-struct Var*
-struct Type*
-struct Var*
-struct Type*
-int
-int
-struct Var*
-struct Type*
-int
-struct Node*
-int
-int
-int
-struct Type*[]
-struct Type*
-struct Type*
-struct Type*
-struct Token*
-char*
-char*
-int
-struct Type*
-struct Type*
-char*
-int
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-int
-struct Type*[]
-struct Type*[]
-struct Type*
-struct Type*
-int
-struct Type*[]
-struct Type*
-struct Token*
-char*
-int
-int
-struct Type*[]
-char*[]
-parse function parse
-char*
-parse function find_type
-int
-char*
-int
-int
-int
-int
-int
-int
-int
-struct Token*
-int
-parse function parse_base_type
-int
-int
-struct Type*
-parse function parse_type
-int
-int
-struct Node*[]
-struct Node*[]
-struct Var*
-char*
-int
-int
-int
-struct Func*
-struct Token*
-char*
-int
-int
-struct Node*
-struct Token*
-char*
-parse function function
-parse function statement_or_decl
-struct Type*
-struct Node*
-int
-struct Type*
-struct Type*
-int
-int
-struct Type*
-int
-int
-struct Type*
-int
-struct Type*
-int
-int
-long
-char*
-char*
-struct Type*
-char*
-char*
-char*
-struct Type*
-char*
-struct Node*
-struct Node*
-struct Scope*
-int
-struct Node*
-struct Var*
-int
-int
-int
-struct Token*
-int
-int
-int
-int
-int
-struct Token*
-struct Token*
-long
-struct Token*
-struct Node*
-struct Node*
-struct Var*
-struct Node*
-struct Node*
-struct Token*
-struct Node*
-struct Token*
-long
-struct Token*
-struct Node*
-struct Token*
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-int
-int
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-int
-struct Node*
-parse function decl
-int
-int
-struct Node*
-struct Node*
-int
-int
-int
-struct Node*
-struct Node*
-int
-struct Node*
-int
-struct Node*
-struct Node*
-int
-int
-struct Node*
-struct Node*
-int
-struct Node*
-int
-struct Node*
-struct Node*
-int
-int
-int
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-int
-parse function statement
-int
-struct Node*
-struct Node*
-parse function expr
-int
-int
-int
-int
-struct Type*
-struct Type*
-int
-int
-struct Node*
-struct Node*
-struct Token*
-int
-struct Token*
-struct Token*
-char*
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-parse function assign
-int
-struct Node*
-struct Node*
-struct Node*
-parse function conditional
-parse function logical_or
-parse function logical_and
-parse function equality
-parse function relational
-parse function add
-parse function mul
-int
-struct Type*
-struct Node*
-parse function cast
-int
-int
-struct Node*
-int
-struct Node*
-int
-struct Node*
-int
-struct Node*
-int
-struct Token*
-int
-int
-struct Token*
-long
-int
-int
-struct Token*
-long
-int
-int
-int
-struct Token*
-int
-int
-struct Node*
-struct Node*
-struct Node*
-struct Token*
-struct Node*
-struct Token*
-long
-struct Token*
-struct Node*
-struct Node*
-struct Node*
-parse function unary
-int
-struct Token*
-struct Node*
-struct Node*
-struct Token*
-struct Node*
-int
-int
-struct Node*
-int
-int
-struct Node*
-struct Type*
-int
-int
-int
-int
-struct Type*
-int
-int
-char*[]
-char*
-int
-struct Type*
-int
-struct Node*
-struct Token*
-struct Node*
-struct Node*
-struct Node*
-struct Token*
-struct Node*
-struct Token*
-long
-int[]
-struct Type*[]
-int
-struct Type*[]
-struct Type*
-struct Type*[]
-struct Node*
-struct Node*
-parse function postfix
-int
-int
-int
-int
-int
-struct Func*
-char*
-struct Func*
-struct Token*
-char*
-int
-struct Token*
-char*
-int
-struct Node*[]
-struct Node*[]
-int
-int
-int
-int
-char*
-char*
-char*
-struct Token*
-struct Token*
-long
-int
-char*
-struct Var*
-parse function primary
-parse function get_inst_suffix
-parse function get_size_name
-parse function log2_int
-parse function get_register_by_size
-parse function add_string_lit
-parse function push
-parse function pop
-int
-int
-struct Node*
-struct Node*
-int
-struct Node*
-struct Token*
-char*
-struct Func*
-struct Type*
-struct Token*
-char*
-int
-struct Node*[]
-struct Var*
-struct Type*
-struct Node*[]
-struct Var*
-char*
-int
-struct Token*
-char*
-int
-int
-int
-struct Node*[]
-struct Var*
-struct Type*
-int
-struct Type*
-int
-int
-char*
-int
-struct Node*[]
-struct Var*
-int
-int
-struct Node*[]
-struct Var*
-struct Type*
-int
-struct Node*[]
-struct Var*
-struct Type*
-int
-struct Node*[]
-struct Var*
-int
-struct Node*[]
-struct Var*
-char*
-struct Node*
-int
-int
-int
-struct Node*
-struct Token*
-int
-struct Node*
-int
-struct Node*
-int
-struct Node*
-struct Var*
-int
-struct Var*
-int
-struct Node*
-struct Node*
-struct Node*
-int
-struct Node*
-int
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-int
-struct Node*
-struct Node*
-int
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-int
-struct Type*
-int
-struct Token*
-long
-struct Token*
-long
-int
-struct Token*
-char*
-int
-struct Type*
-struct Type*
-int
-int
-struct Var*
-int
-struct Var*
-char*
-struct Var*
-char*
-struct Var*
-int
-struct Type*
-int
-struct Token*
-char*
-struct Var*
-int
-struct Type*
-int
-struct Type*
-int
-struct Type*
-int
-struct Var*
-char*
-struct Var*
-char*
-struct Type*
-int
-struct Var*
-char*
-struct Type*
-int
-struct Var*
-char*
-struct Type*
-int
-struct Type*
-int
-struct Var*
-char*
-struct Var*
-char*
-struct Type*
-int
-struct Type*
-int
-struct Type*
-int
-struct Var*
-int
-struct Var*
-char*
-struct Type*
-int
-struct Var*
-int
-struct Type*
-int
-struct Var*
-char*
-struct Type*
-int
-struct Type*
-int
-struct Var*
-int
-struct Var*
-char*
-struct Var*
-int
-struct Var*
-char*
-int
-struct Token*
-char*
-struct Token*
-char*
-struct Token*
-char*
-struct Token*
-char*
-struct Node*[]
-struct Node*[]
-struct Token*
-int
-struct Token*
-int
-struct Token*
-int
-struct Token*
-char*
-int
-struct Node*[]
-int
-int
-int
-int
-int
-struct Node*[]
-struct Token*
-char*
-int
-int
-int
-struct Node*
-int
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-int
-struct Node*
-struct Node*
-struct Node*
-int
-struct Node*
-struct Var*
-int
-struct Node*
-struct Var*
-char*
-struct Node*
-struct Var*
-char*
-struct Node*
-struct Var*
-int
-struct Node*
-int
-struct Node*
-struct Node*
-struct Node*
-int
-struct Node*
-struct Node*
-struct Type*
-struct Type*
-struct Token*
-struct Type*
-int
-struct Type*
-int
-struct Type*
-int
-int
-struct Node*
-struct Node*
-struct Type*
-struct Type*
-struct Token*
-int
-struct Type*
-struct Node*
-struct Node*
-struct Type*
-struct Type*
-struct Type*
-int
-struct Type*
-struct Type*
-struct Type*
-int
-int
-int
-int
-int
-int
-int
-int
-int
-int
-int
-int
-int
-int
-int
-int
-int
-struct Node*
-struct Token*
-int
-struct Token*
-int
-struct Node*
-struct Node*
-struct Token*
-struct Token*
-int
-int
-struct Node*
-struct Type*
-struct Node*
-struct Type*
-struct Type*
-struct Type*
-struct Node*
-struct Type*
-struct Type*
-int
-struct Node*
-struct Type*
-struct Node*
-struct Type*
-struct Token*
-struct Type*
-struct Type*
-int
-struct Node*
-struct Type*
-struct Type*
-int
-struct Token*
-int
-struct Token*
-int
-struct Token*
-int
-struct Token*
-struct Token*
-int
-int
-struct Type*
-int
-struct Token*
-int
-struct Token*
-int
-struct Token*
-int
-struct Token*
-int
-struct Token*
-int
-struct Token*
-int
-struct Token*
-int
-struct Token*
-int
-struct Node*
-struct Type*
-struct Node*
-struct Type*
-struct Token*
-struct Type*
-struct Type*
-int
-struct Node*
-struct Type*
-struct Type*
-int
-int
-struct Node*
-int
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-int
-struct Node*
-struct Type*
-int
-struct Node*
-struct Type*
-int
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-struct Type*
-struct Type*
-struct Token*
-struct Type*
-int
-struct Type*
-int
-struct Node*
-int
-struct Node*
-struct Node*
-struct Type*
-struct Node*
-struct Var*
-struct Type*
-struct Type*
-int
-struct Token*
-struct Node*
-struct Var*
-int
-struct Type*
-int
-struct Type*
-int
-struct Type*
-int
-struct Node*
-struct Var*
-char*
-struct Type*
-int
-struct Node*
-struct Var*
-int
-struct Node*
-struct Var*
-struct Type*
-int
-struct Type*
-int
-struct Type*
-int
-struct Node*
-struct Var*
-int
-struct Node*
-struct Var*
-char*
-int
-struct Token*
-int
-struct Token*
-int
-struct Node*
-struct Token*
-int
-struct Token*
-struct Token*
-int
-int
-struct Token*
-struct Token*
-long
-struct Token*
-int
-struct Token*
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-struct Token*
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-int
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-parse function gen
-int
-int
-struct Node*
-struct Node*
-int
-struct Token*
-char*
-int
-struct Node*[]
-struct Var*
-struct Type*
-struct Node*[]
-struct Var*
-char*
-int
-struct Func*
-struct Type*
-struct Token*
-int
-struct Node*
-int
-struct Node*
-struct Node*
-int
-struct Node*
-struct Type*
-struct Var*
-struct Type*
-struct Type*
-struct Type*
-struct Node*
-struct Var*
-char*
-struct Node*
-struct Node*
-struct Var*
-int
-struct Node*
-int
-struct Node*
-struct Node*
-int
-int
-struct Token*
-int
-struct Node*
-struct Node*
-int
-struct Node*
-struct Node*
-int
-struct Node*
-struct Node*
-int
-struct Node*
-int
-struct Node*
-int
-struct Node*
-struct Node*
-struct Node*
-int
-struct Node*
-struct Node*
-struct Node*
-int
-struct Node*
-int
-struct Node*
-struct Token*
-int
-struct Token*
-char*
-int
-struct Token*
-long
-int
-struct Var*
-char*
-int
-struct Token*
-char*
-int
-struct Token*
-char*
-int
-struct Node*[]
-int
-int
-int
-int
-struct Token*
-int
-struct Node*
-int
-struct Type*
-struct Node*
-int
-struct Node*
-struct Token*
-int
-struct Node*
-int
-struct Node*
-struct Token*
-int
-struct Node*
-int
-int
-int
-struct Token*
-int
-struct Node*
-struct Node*
-int
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-parse function print
-parse function read_entire_file
-int
-struct Var*[]
-struct Node*
-struct Node*
-struct Node*
-struct Node*
-int
-struct Var*
-char*
-struct Node*
-struct Token*
-int
-struct Node*
-struct Token*
-struct Var*
-struct Type*
-int
-struct Var*
-char*
-struct Var*
-struct Type*
-struct Var*
-struct Type*
-int
-int
-struct Var*
-char*
-struct Var*
-struct Type*
-int
-struct Var*[]
-char*
-struct Var*[]
-struct Type*
-int
-struct Node*
-struct Node*
-struct Token*
-struct Node*
-long
-parse function main
-declared struct 'Token': (size=40)
-	int type
-	long int_val
-	char* name
-	int line
-	int col
-	char* str
-declared struct 'Node': (size=1784)
-	int type
-	struct Var* var
-	struct Token* tok
-	struct Node* left
-	struct Node* right
-	struct Node* next_stmt
-	struct Node* body
-	struct Node* condition
-	struct Node* init
-	struct Node* inc
-	struct Node* next_in_block
-	struct Node* next_in_decl
-	struct Node* first_stmt
-	struct Node* next_in_comma
-	struct Type* cast_type
-	struct Type* decl_type
-	struct Type* ret_type
-	struct Node* else_
-	struct Type* t
-	struct Func* func
-	int member_idx
-	struct Node*[] args
-	struct Node*[] params
-	int arg_count
-	int param_count
-	int stack_size
-declared struct 'FILE': (size=8)
-	int x
-	int y
-declared struct 'Type': (size=2056)
-	int t
-	struct Type* ptr_to
-	struct Token* tok
-	int array_size
-	int size
-	int is_unsigned
-	char* name
-	struct Type*[] field_type
-	char*[] field_name
-	int[] field_offset
-	int field_count
-declared struct 'Scope': (size=840)
-	struct Scope* parent
-	struct Scope* prev
-	struct Scope* child
-	struct Scope* next
-	struct Var*[] vars
-	int var_count
-declared struct 'Var': (size=48)
-	struct Type* type
-	char* name
-	int offset
-	struct Token* token
-	int global
-	struct Node* decl
-declared struct 'Func': (size=16)
-	struct Type* ret_type
-	char* name
-declared struct 'Enum': (size=16)
-	char* name
-	int value
-declared struct 'Token_Name': (size=16)
-	char* name
-	int type
-
-function binary() -> struct Node*  (185)
-
-
-function parse_type() -> struct Type*  (186)
-
-
-function parse() -> struct Node*  (187)
-
-
-function function() -> struct Node*  (188)
-
-
-function decl() -> struct Node*  (189)
-
-
-function statement() -> struct Node*  (190)
-
-
-function expr() -> struct Node*  (191)
-
-
-function assign() -> struct Node*  (192)
-
-
-function conditional() -> struct Node*  (193)
-
-
-function logical_or() -> struct Node*  (194)
-
-
-function logical_and() -> struct Node*  (195)
-
-
-function equality() -> struct Node*  (196)
-
-
-function relational() -> struct Node*  (197)
-
-
-function add() -> struct Node*  (198)
-
-
-function mul() -> struct Node*  (199)
-
-
-function cast() -> struct Node*  (200)
-
-
-function unary() -> struct Node*  (201)
-
-
-function postfix() -> struct Node*  (202)
-
-
-function primary() -> struct Node*  (203)
-
-
-function error() -> void  (204)
-
-
-function error_token() -> void  (205)
-
-
-function read_entire_file() -> char*  (206)
-
-
-function out() -> void  (207)
-
-
-function malloc() -> void*  (209)
-
-
-function assert() -> int  (210)
-
-
-function calloc() -> void*  (211)
-
-
-function isspace() -> int  (212)
-
-
-function isdigit() -> int  (213)
-
-
-function isalpha() -> int  (214)
-
-
-function isalnum() -> int  (215)
-
-
-function memcpy() -> void  (216)
-
-
-function strcmp() -> int  (217)
-
-
-function strdup() -> char*  (218)
-
-
-function strlen() -> int  (219)
-
-
-function strncmp() -> int  (220)
-
-
-function strchr() -> int  (221)
-
-
-function printf() -> int  (222)
-
-
-function fprintf() -> int  (223)
-
-
-function fopen() -> struct FILE*  (224)
-
-
-function new_node() -> struct Node*  (225)
-
-
-function type_match() -> int  (227)
-
-
-function dbg() -> void  (228)
-
-
-function fopen() -> struct FILE*  (229)
-
-
-function fseek() -> int  (230)
-
-
-function ftell() -> long  (231)
-
-
-function fclose() -> int  (232)
-
-
-function fread() -> long  (233)
-
-
-function exit() -> void  (234)
+enum Token_Type:
+	TOKEN_INTEGER = 256,
+	TOKEN_IDENTIFIER,
+	TOKEN_LOGICAL_AND,
+	TOKEN_LOGICAL_OR,
+	TOKEN_EQUAL,
+	TOKEN_NOT_EQUAL,
+	TOKEN_LESS_OR_EQUAL,
+	TOKEN_GREATER_OR_EQUAL,
+	TOKEN_RETURN,
+	TOKEN_IF,
+	TOKEN_ELSE,
+	TOKEN_WHILE,
+	TOKEN_FOR,
+	TOKEN_INT,
+	TOKEN_VOID,
+	TOKEN_CHAR,
+	TOKEN_SHORT,
+	TOKEN_LONG,
+	TOKEN_STRING,
+	TOKEN_INC,
+	TOKEN_DEC,
+	TOKEN_BREAK,
+	TOKEN_CONTINUE,
+	TOKEN_UNSIGNED,
+	TOKEN_SIGNED,
+	TOKEN_SIZEOF,
+	TOKEN_ADD_ASSIGN,
+	TOKEN_SUB_ASSIGN,
+	TOKEN_MUL_ASSIGN,
+	TOKEN_DIV_ASSIGN,
+	TOKEN_STRUCT,
+	TOKEN_UNION,
+	TOKEN_ARROW,
+	TOKEN_ENUM,
+
+enum Node_Type:
+	NODE_NONE,
+	NODE_PROGRAM,
+	NODE_VAR,
+	NODE_ARROW,
+	NODE_INT,
+	NODE_BINARY,
+	NODE_ASSIGN,
+	NODE_NEG,
+	NODE_RETURN,
+	NODE_IF,
+	NODE_WHILE,
+	NODE_FOR,
+	NODE_BLOCK,
+	NODE_FUNC_CALL,
+	NODE_UNARY,
+	NODE_FUNC_DEF,
+	NODE_DEREF,
+	NODE_ADDR,
+	NODE_VAR_DECL,
+	NODE_STRING,
+	NODE_CONTINUE,
+	NODE_BREAK,
+	NODE_CAST,
+	NODE_QUESTION,
+	NODE_MEMBER,
+
+enum non-name:
+	INT,
+	PTR,
+	VOID,
+	ARRAY,
+	SHORT,
+	CHAR,
+	LONG,
+	STRUCT,
+	FUNC,
+	UNKNOWN,
+
+struct S: (size=24, align=8)
+	x: char
+	[1 padding]
+	y: short
+	[4 padding]
+	z: long
+	l: char
+	[7 padding]
+
+struct Token: (size=40, align=8)
+	type:    int
+	[4 padding]
+	int_val: long
+	name:    char*
+	line:    int
+	col:     int
+	str:     char*
+
+struct Node: (size=1784, align=8)
+	type:          int
+	[4 padding]
+	var:           Var*
+	tok:           Token*
+	left:          Node*
+	right:         Node*
+	next_stmt:     Node*
+	body:          Node*
+	condition:     Node*
+	init:          Node*
+	inc:           Node*
+	next_in_block: Node*
+	next_in_decl:  Node*
+	first_stmt:    Node*
+	next_in_comma: Node*
+	cast_type:     Type*
+	decl_type:     Type*
+	ret_type:      Type*
+	else_:         Node*
+	t:             Type*
+	func:          Func*
+	member_idx:    int
+	[4 padding]
+	args:          Node*[100]
+	params:        Node*[100]
+	arg_count:     int
+	param_count:   int
+	stack_size:    int
+	[4 padding]
+
+struct FILE: (size=8, align=4)
+	x: int
+	y: int
+
+struct Type: (size=2056, align=8)
+	t:            int
+	[4 padding]
+	ptr_to:       Type*
+	tok:          Token*
+	array_size:   int
+	size:         int
+	is_unsigned:  int
+	[4 padding]
+	name:         char*
+	field_type:   Type*[100]
+	field_name:   char*[100]
+	field_offset: int[100]
+	field_count:  int
+	[4 padding]
+
+struct Scope: (size=840, align=8)
+	parent:    Scope*
+	prev:      Scope*
+	child:     Scope*
+	next:      Scope*
+	vars:      Var*[100]
+	var_count: int
+	[4 padding]
+
+struct Var: (size=48, align=8)
+	type:   Type*
+	name:   char*
+	offset: int
+	[4 padding]
+	token:  Token*
+	global: int
+	[4 padding]
+	decl:   Node*
+
+struct Func: (size=16, align=8)
+	ret_type: Type*
+	name:     char*
+
+struct Enum: (size=16, align=8)
+	name:  char*
+	value: int
+	[4 padding]
+
+struct Token_Name: (size=16, align=8)
+	name: char*
+	type: int
+	[4 padding]
+
+
+function binary() -> Node*  (192)
+
+
+function parse_type() -> Type*  (193)
+
+
+function parse() -> Node*  (194)
+
+
+function function() -> Node*  (195)
+
+
+function decl() -> Node*  (196)
+
+
+function statement() -> Node*  (197)
+
+
+function expr() -> Node*  (198)
+
+
+function assign() -> Node*  (199)
+
+
+function conditional() -> Node*  (200)
+
+
+function logical_or() -> Node*  (201)
+
+
+function logical_and() -> Node*  (202)
+
+
+function equality() -> Node*  (203)
+
+
+function relational() -> Node*  (204)
+
+
+function add() -> Node*  (205)
+
+
+function mul() -> Node*  (206)
+
+
+function cast() -> Node*  (207)
+
+
+function unary() -> Node*  (208)
+
+
+function postfix() -> Node*  (209)
+
+
+function primary() -> Node*  (210)
+
+
+function error() -> void  (211)
+
+
+function error_token() -> void  (212)
+
+
+function read_entire_file() -> char*  (213)
+
+
+function out() -> void  (214)
+
+
+function malloc() -> void*  (216)
+
+
+function assert() -> int  (217)
+
+
+function calloc() -> void*  (218)
+
+
+function isspace() -> int  (219)
+
+
+function isdigit() -> int  (220)
+
+
+function isalpha() -> int  (221)
+
+
+function isalnum() -> int  (222)
+
+
+function memcpy() -> void  (223)
+
+
+function strcmp() -> int  (224)
+
+
+function strdup() -> char*  (225)
+
+
+function strlen() -> int  (226)
+
+
+function strncmp() -> int  (227)
+
+
+function strchr() -> int  (228)
+
+
+function printf() -> int  (229)
+
+
+function fprintf() -> int  (230)
+
+
+function fopen() -> FILE*  (231)
+
+
+function new_node() -> Node*  (232)
+
+
+function type_match() -> int  (234)
+
+
+function dbg() -> void  (235)
+
+
+function fopen() -> FILE*  (236)
+
+
+function fseek() -> int  (237)
+
+
+function ftell() -> long  (238)
+
+
+function fclose() -> int  (239)
+
+
+function fread() -> long  (240)
+
+
+function exit() -> void  (241)
+
+
+function sprintf() -> int  (242)
+
 
 char *filename;
+
 char *program_str;
-struct FILE *f;
-struct Type *types;
+
+FILE *f;
+
+Type *types;
+
 int type_count;
-struct Type **types_declared;
+
+Type **types_declared;
+
 int types_declared_count;
+
 char **strings_literal;
+
 int strings_literal_count;
-struct Type *type_long;
-struct Type *type_int;
-struct Type *type_short;
-struct Type *type_char;
-struct Type *type_void;
-struct Func *funcs;
+
+Type *type_long;
+
+Type *type_int;
+
+Type *type_short;
+
+Type *type_char;
+
+Type *type_void;
+
+Func *funcs;
+
 int func_count;
-struct Scope *scopes;
+
+Scope *scopes;
+
 int scope_count = 0;
-struct Scope *curr_scope;
-struct Token *tokens;
+
+Scope *curr_scope;
+
+Token *tokens;
+
 int ct;
-struct Node *_nodes;
+
+Node *_nodes;
+
 int _curr_node;
-struct Var *vars;
+
+Var *vars;
+
 int var_count = 0;
-struct Enum *enums;
+
+Enum *enums;
+
 int enum_count;
-struct Node *curr_func;
-struct Token_Name *multi_char_tokens_type;
-struct Token_Name *keywords;
+
+Node *curr_func;
+
+Token_Name *multi_char_tokens_type;
+
+Token_Name *keywords;
+
 char **token_type_name_c;
 
-function token_type_name(int type) -> char*  (283)
+function token_type_name(int type) -> char*  (291)
 {
     if (type == 256)
         return "int";
@@ -1598,13 +422,13 @@ function token_type_name(int type) -> char*  (283)
 
     }
 
-    (NULL)
+    
 }
 
 
-function new_temp_token(int type) -> struct Token*  (317)
+function new_temp_token(int type) -> Token*  (325)
 {
-    struct Token *t = ((struct Token*)calloc(40, 1));
+    Token *t = ((Token*)calloc(40, 1));
     t->type = type
     t->line = -(1)
     t->col = -(1)
@@ -1612,7 +436,7 @@ function new_temp_token(int type) -> struct Token*  (317)
 }
 
 
-function get_backspace_char(char c) -> char  (326)
+function get_backspace_char(char c) -> char  (334)
 {
     if (((int)c) == 110)
         return 10;
@@ -1638,10 +462,12 @@ function get_backspace_char(char c) -> char  (326)
     return c;
 }
 
+
 int multi_char_token_count = 0;
+
 int keyword_count = 0;
 
-function add_multi_char_token(char* name, int type) -> void  (341)
+function add_multi_char_token(char* name, int type) -> void  (349)
 {
     *(multi_char_tokens_type + multi_char_token_count).name = name
     *(multi_char_tokens_type + multi_char_token_count).type = type
@@ -1649,7 +475,7 @@ function add_multi_char_token(char* name, int type) -> void  (341)
 }
 
 
-function add_keyword(char* name, int type) -> void  (348)
+function add_keyword(char* name, int type) -> void  (356)
 {
     *(keywords + keyword_count).name = name
     *(keywords + keyword_count).type = type
@@ -1657,7 +483,7 @@ function add_keyword(char* name, int type) -> void  (348)
 }
 
 
-function tokenize(char* s) -> struct Token*  (355)
+function tokenize(char* s) -> Token*  (363)
 {
     add_multi_char_token("==", 260)
     add_multi_char_token("!=", 261)
@@ -1695,10 +521,10 @@ function tokenize(char* s) -> struct Token*  (355)
     int i = 0, j = 0;
     int line = 1;
     int col = 1;
-    (NULL)
+    
     while (*(s + i))
     {
-        struct Token *token = &(*(tokens + j));
+        Token *token = &(*(tokens + j));
         token->type = 0
         while (isspace(*(s + i)))
         {
@@ -1857,13 +683,13 @@ function tokenize(char* s) -> struct Token*  (355)
 }
 
 
-function align(int n, int a) -> int  (540)
+function align(int n, int a) -> int  (548)
 {
     return n + a - 1 / a * a;
 }
 
 
-function find(char* s, char c) -> char*  (545)
+function find(char* s, char c) -> char*  (553)
 {
     int i;
     i = 0
@@ -1879,30 +705,30 @@ function find(char* s, char c) -> char*  (545)
 }
 
 
-function new_scope() -> struct Scope*  (561)
+function new_scope() -> Scope*  (569)
 {
-    struct Scope *scope = &(*(scopes + scope_count++));
+    Scope *scope = &(*(scopes + scope_count++));
     return scope;
 }
 
 
-function enter_scope() -> void  (567)
+function enter_scope() -> void  (575)
 {
-    struct Scope *scope = new_scope();
+    Scope *scope = new_scope();
     scope->parent = curr_scope
     curr_scope = scope
 }
 
 
-function leave_scope() -> void  (574)
+function leave_scope() -> void  (582)
 {
     curr_scope = curr_scope->parent
 }
 
 
-function new_type(int t) -> struct Type*  (579)
+function new_type(int t) -> Type*  (587)
 {
-    struct Type *type = &(*(types + type_count++));
+    Type *type = &(*(types + type_count++));
     type->t = t
     if (t == 1 || t == 3 || t == 8)
         type->is_unsigned = 1
@@ -1920,7 +746,7 @@ function new_type(int t) -> struct Type*  (579)
 }
 
 
-function types_are_equal(struct Type* t1, struct Type* t2) -> int  (596)
+function types_are_equal(Type* t1, Type* t2) -> int  (604)
 {
     if (!(t1) || !(t2))
         return 0;
@@ -1941,16 +767,16 @@ function types_are_equal(struct Type* t1, struct Type* t2) -> int  (596)
 }
 
 
-function add_func(char* name, struct Type* ret_type) -> struct Func*  (611)
+function add_func(char* name, Type* ret_type) -> Func*  (619)
 {
-    struct Func *fn = &(*(funcs + func_count++));
+    Func *fn = &(*(funcs + func_count++));
     fn->name = name
     fn->ret_type = ret_type
     return fn;
 }
 
 
-function find_func(char* name) -> struct Func*  (619)
+function find_func(char* name) -> Func*  (627)
 {
     for (int i = 0; i < func_count ;i++)
     {
@@ -1963,9 +789,9 @@ function find_func(char* name) -> struct Func*  (619)
 }
 
 
-function find_var(char* name) -> struct Var*  (629)
+function find_var(char* name) -> Var*  (637)
 {
-    struct Scope *scope = curr_scope;
+    Scope *scope = curr_scope;
     while (scope)
     {
         for (int i = 0; i < scope->var_count ;i++)
@@ -1978,12 +804,12 @@ function find_var(char* name) -> struct Var*  (629)
         scope = scope->parent
     }
 
-    struct Func *func = find_func(name);
+    Func *func = find_func(name);
     if (!(func))
         return 0;
 
-    struct Type *type = new_type(8);
-    struct Var *v = &(*(vars + var_count++));
+    Type *type = new_type(8);
+    Var *v = &(*(vars + var_count++));
     v->type = type
     v->name = name
     v->token = &(*(tokens + ct))
@@ -1991,7 +817,7 @@ function find_var(char* name) -> struct Var*  (629)
 }
 
 
-function new_var(struct Type* type, char* name) -> struct Var*  (653)
+function new_var(Type* type, char* name) -> Var*  (661)
 {
     for (int i = 0; i < curr_scope->var_count ;i++)
     {
@@ -2000,10 +826,10 @@ function new_var(struct Type* type, char* name) -> struct Var*  (653)
 
     }
 
-    struct Var *v = &(*(vars + var_count++));
+    Var *v = &(*(vars + var_count++));
     v->name = name
     v->token = &(*(tokens + ct))
-    (NULL)
+    
     v->type = type
     *(curr_scope->vars + curr_scope->var_count++) = v
     if (!(type->size))
@@ -2019,14 +845,14 @@ function new_var(struct Type* type, char* name) -> struct Var*  (653)
             curr_func->stack_size += curr_func->stack_size + type->size
         curr_func->stack_size = align(curr_func->stack_size, v->type->size)
         v->offset = curr_func->stack_size
-        (NULL)
+        
     }
 
     return v;
 }
 
 
-function skip(int type) -> void  (684)
+function skip(int type) -> void  (692)
 {
     if (*(tokens + ct).type != type)
         error_token(&(*(tokens + ct)), "expected `%s`", token_type_name(type))
@@ -2035,7 +861,7 @@ function skip(int type) -> void  (684)
 }
 
 
-function is_typename(struct Token* tok) -> int  (691)
+function is_typename(Token* tok) -> int  (699)
 {
     if (tok->type == 269 || tok->type == 270 || tok->type == 271 || tok->type == 272 || tok->type == 273 || tok->type == 280 || tok->type == 279 || tok->type == 270)
         return 1;
@@ -2055,19 +881,19 @@ function is_typename(struct Token* tok) -> int  (691)
 }
 
 
-function find_binary_op_type(struct Type* t1, struct Type* t2) -> struct Type*  (715)
+function find_binary_op_type(Type* t1, Type* t2) -> Type*  (723)
 {
     if (types_are_equal(t1, t2))
         return t1;
 
     if (t1->ptr_to && !(t2->ptr_to))
-        (NULL)
+        
 
     return 0;
 }
 
 
-function strjoin(char* s1, char* s2) -> char*  (725)
+function strjoin(char* s1, char* s2) -> char*  (733)
 {
     int l1 = strlen(s1);
     int l2 = strlen(s2);
@@ -2079,11 +905,11 @@ function strjoin(char* s1, char* s2) -> char*  (725)
 }
 
 
-function get_type_str(struct Type* type) -> char*  (736)
+function get_type_str(Type* type) -> char*  (744)
 {
     if (type->t == 7)
     {
-        return strjoin("struct ", type->name);
+        return type->name;
     }
 
     if (type->t == 1)
@@ -2092,7 +918,9 @@ function get_type_str(struct Type* type) -> char*  (736)
     }
     else if (type->t == 3)
     {
-        return strjoin(get_type_str(type->ptr_to), "[]");
+        char *s;
+        sprintf(s, "[%d]", type->array_size)
+        return strjoin(get_type_str(type->ptr_to), s);
     }
 
     if (type->t == 2)
@@ -2113,27 +941,27 @@ function get_type_str(struct Type* type) -> char*  (736)
     if (type->t == 9)
         return "unknown";
 
-    (NULL)
+    
 }
 
 
-function add_type(struct Node* node) -> struct Type*  (759)
+function add_type(Node* node) -> Type*  (769)
 
 
-function implicit_cast(struct Node** node, struct Type* type) -> void  (761)
+function implicit_cast(Node** node, Type* type) -> void  (771)
 {
     add_type(*(node))
     if (types_are_equal(type, *(node)->t))
-        return (NULL);
+        return ;
 
-    struct Node *cast = new_node(22);
+    Node *cast = new_node(22);
     cast->left = *(node)
     cast->t = type
     *(node) = cast
 }
 
 
-function find_common_type(struct Type* t1, struct Type* t2) -> struct Type*  (772)
+function find_common_type(Type* t1, Type* t2) -> Type*  (782)
 {
     if (t1->ptr_to)
         return t1;
@@ -2154,9 +982,9 @@ function find_common_type(struct Type* t1, struct Type* t2) -> struct Type*  (77
 }
 
 
-function add_type(struct Node* node) -> struct Type*  (787)
+function add_type(Node* node) -> Type*  (797)
 {
-    struct Type *t = type_void;
+    Type *t = type_void;
     if (!(node))
         return t;
 
@@ -2172,7 +1000,6 @@ function add_type(struct Node* node) -> struct Type*  (787)
     else if (node->type == 24)
     {
         t = add_type(node->left)
-        printf("%s\n", get_type_str(t))
     }
     else if (node->type == 14)
     {
@@ -2189,7 +1016,7 @@ function add_type(struct Node* node) -> struct Type*  (787)
             t = type_int
         }
         else 
-            (NULL)
+            
     }
     else if (node->type == 19)
     {
@@ -2210,7 +1037,7 @@ function add_type(struct Node* node) -> struct Type*  (787)
     }
     else if (node->type == 16)
     {
-        struct Type *tt = add_type(node->left);
+        Type *tt = add_type(node->left);
         if (!(tt->ptr_to))
             error_token(node->tok, "derefrencing a non-pointer")
 
@@ -2236,10 +1063,10 @@ function add_type(struct Node* node) -> struct Type*  (787)
         int tok = node->tok->type;
         add_type(node->left)
         add_type(node->right)
-        struct Type *t1 = node->left->t;
-        struct Type *t2 = node->right->t;
+        Type *t1 = node->left->t;
+        Type *t2 = node->right->t;
         if (t1->t == 2 || t2->t == 2)
-            (NULL)
+            
 
         if (t1->ptr_to || t2->ptr_to)
         {
@@ -2255,7 +1082,7 @@ function add_type(struct Node* node) -> struct Type*  (787)
         }
         else 
         {
-            struct Type *tt = find_common_type(node->left->t, node->right->t);
+            Type *tt = find_common_type(node->left->t, node->right->t);
             implicit_cast(&(node->left), tt)
             implicit_cast(&(node->right), tt)
             if (type_match(node->tok->type, 43, 45, 42, 47, 37, -(1)))
@@ -2268,7 +1095,7 @@ function add_type(struct Node* node) -> struct Type*  (787)
     else if (node->type == 6)
     {
         t = add_type(node->left)
-        (NULL)
+        
         add_type(node->right)
         implicit_cast(&(node->right), t)
     }
@@ -2277,46 +1104,54 @@ function add_type(struct Node* node) -> struct Type*  (787)
         add_type(node->condition)
         add_type(node->left)
         add_type(node->right)
-        struct Type *tt = find_common_type(node->left->t, node->right->t);
+        Type *tt = find_common_type(node->left->t, node->right->t);
         implicit_cast(&(node->left), tt)
         implicit_cast(&(node->right), tt)
         t = tt
     }
     else 
-        (NULL)
+        
     node->t = t
     add_type(node->next_in_comma)
     return t;
 }
 
 
-function parse(char* s) -> struct Node*  (919)
+function parse(char* s) -> Node*  (928)
 {
     add_func("ASSERT", type_void)
     tokenize(s)
     ct = 0
-    struct Node *prog = new_node(1);
+    Node *prog = new_node(1);
     curr_scope = new_scope()
-    curr_scope->parent = ((struct Scope*)0)
-    struct Node *curr = prog;
+    curr_scope->parent = ((Scope*)0)
+    Node *curr = prog;
     while (*(tokens + ct).type)
     {
         int save = ct;
         if (*(tokens + ct).type == 289)
         {
             ct++
+            printf("enum ")
             if (*(tokens + ct).type == 257)
+            {
+                printf("%s", *(tokens + ct).name)
                 ct++
-
+            }
+            else 
+                printf("non-name")
+            printf(":\n")
             skip(123)
             int val = 0;
             while (*(tokens + ct).type != 125)
             {
                 *(enums + enum_count).name = *(tokens + ct).name
+                printf("\t%s", *(tokens + ct).name)
                 skip(257)
                 if (*(tokens + ct).type == 61)
                 {
                     ct++
+                    printf(" = %lld", *(tokens + ct).int_val)
                     if (*(tokens + ct).type != 256)
                         skip(256)
 
@@ -2325,22 +1160,27 @@ function parse(char* s) -> struct Node*  (919)
                 }
 
                 if (*(tokens + ct).type == 44)
+                {
+                    printf(",")
                     ct++
+                }
                 else if (*(tokens + ct).type != 125)
                     skip(125)
 
                 *(enums + enum_count).value = val
                 enum_count++
                 val++
+                printf("\n")
             }
 
             skip(125)
             skip(59)
+            printf("\n")
         }
         else if (*(tokens + ct).type == 286)
         {
-            struct Token *st_token = &(*(tokens + ct));
-            struct Type *type = new_type(7);
+            Token *st_token = &(*(tokens + ct));
+            Type *type = new_type(7);
             ct++
             type->name = *(tokens + ct).name
             skip(257)
@@ -2350,13 +1190,13 @@ function parse(char* s) -> struct Node*  (919)
             int max = 0;
             while (*(tokens + ct).type && *(tokens + ct).type != 125)
             {
-                struct Node *node = decl(1);
+                Node *node = decl(1);
                 node = node->next_in_decl
                 while (node)
                 {
                     *(type->field_name + i) = node->var->name
                     *(type->field_type + i) = node->var->type
-                    (NULL)
+                    
                     size = align(size, node->var->type->size)
                     *(type->field_offset + i) = size
                     if (node->var->type->size > max)
@@ -2381,10 +1221,10 @@ function parse(char* s) -> struct Node*  (919)
             *(types_declared + types_declared_count++) = type
             for (int j = 0; j < types_declared_count ;j++)
             {
-                struct Type *t = *(types_declared + j);
+                Type *t = *(types_declared + j);
                 for (int k = 0; k < t->field_count ;k++)
                 {
-                    struct Type *cur = *(t->field_type + k);
+                    Type *cur = *(t->field_type + k);
                     while (cur->ptr_to)
                     {
                         if (cur->ptr_to->t == 9 && !(strcmp(cur->ptr_to->tok->name, type->name)))
@@ -2402,7 +1242,6 @@ function parse(char* s) -> struct Node*  (919)
 
             skip(125)
             skip(59)
-            printf("declared struct %s\n", type->name)
             continue ;
         }
         else 
@@ -2433,24 +1272,49 @@ function parse(char* s) -> struct Node*  (919)
 
     for (int i = 0; i < types_declared_count ;i++)
     {
-        struct Type *t = *(types_declared + i);
+        Type *t = *(types_declared + i);
+        int alignement = 0;
+        int space = 0;
         for (int j = 0; j < t->field_count ;j++)
         {
             if (*(t->field_type + j)->ptr_to && *(t->field_type + j)->ptr_to->t == 9)
                 error_token(*(t->field_type + j)->ptr_to->tok, "unknown type")
 
+            if (*(t->field_type + j)->size > alignement)
+                alignement = *(t->field_type + j)->size
+
+            if (((int)strlen(*(t->field_name + j))) > space)
+                space = strlen(*(t->field_name + j))
+
         }
 
-        printf("declared struct '%s': (size=%d)\n", t->name, t->size)
+        printf("struct %s: (size=%d, align=%d)\n", t->name, t->size, alignement)
+        int size = 0;
         for (int j = 0; j < t->field_count ;j++)
-            printf("\t%s %s\n", get_type_str(*(t->field_type + j)), *(t->field_name + j))
+        {
+            int x = align(size, *(t->field_type + j)->size);
+            if (x != size)
+                printf("\t[%d padding]\n", x - size)
+
+            size = x
+            if (*(t->field_type + j)->t == 3)
+                size += size + *(t->field_type + j)->size * *(t->field_type + j)->array_size
+            else 
+                size += size + *(t->field_type + j)->size
+            printf("\t%s: %*s%s\n", *(t->field_name + j), ((int)space - strlen(*(t->field_name + j))), "", get_type_str(*(t->field_type + j)))
+        }
+
+        if (size != t->size)
+            printf("\t[%d padding]\n", t->size - size)
+
+        printf("\n")
     }
 
     return prog;
 }
 
 
-function find_type(char* name) -> struct Type*  (1070)
+function find_type(char* name) -> Type*  (1116)
 {
     for (int i = 0; i < types_declared_count ;i++)
     {
@@ -2463,11 +1327,11 @@ function find_type(char* name) -> struct Type*  (1070)
 }
 
 
-function parse_base_type() -> struct Type*  (1080)
+function parse_base_type() -> Type*  (1126)
 {
     int i = 0, s = 0, c = 0, l = 0, v = 0, u = 0, si = 0;
-    struct Type *type = ((struct Type*)0);
-    struct Token *start = &(*(tokens + ct));
+    Type *type = ((Type*)0);
+    Token *start = &(*(tokens + ct));
     if (start->type == 257)
     {
         type = find_type(start->name)
@@ -2542,12 +1406,12 @@ function parse_base_type() -> struct Type*  (1080)
 }
 
 
-function parse_type() -> struct Type*  (1148)
+function parse_type() -> Type*  (1194)
 {
-    struct Type *type = parse_base_type();
+    Type *type = parse_base_type();
     while (*(tokens + ct).type == 42)
     {
-        struct Type *new = new_type(1);
+        Type *new = new_type(1);
         new->t = 1
         new->ptr_to = type
         type = new
@@ -2558,11 +1422,11 @@ function parse_type() -> struct Type*  (1148)
 }
 
 
-function function() -> struct Node*  (1162)
+function function() -> Node*  (1208)
 {
     enter_scope()
-    struct Type *ret_type = parse_type();
-    struct Node *node = new_node(15);
+    Type *ret_type = parse_type();
+    Node *node = new_node(15);
     ct++
     curr_func = node
     curr_func->stack_size = 0
@@ -2571,7 +1435,7 @@ function function() -> struct Node*  (1162)
     while (*(tokens + ct).type != 41)
     {
         *(node->params + count) = new_node(18)
-        struct Type *type = parse_type();
+        Type *type = parse_type();
         *(node->params + count)->var = new_var(type, *(tokens + ct).name)
         skip(257)
         count++
@@ -2594,18 +1458,17 @@ function function() -> struct Node*  (1162)
     }
     else 
         skip(59)
-    printf("parse function %s\n", node->tok->name)
     leave_scope()
-    curr_func = ((struct Node*)0)
+    curr_func = ((Node*)0)
     return node;
 }
 
 
-function statement_or_decl() -> struct Node*  (1205)
+function statement_or_decl() -> Node*  (1250)
 {
     if (is_typename(&(*(tokens + ct))))
     {
-        struct Node *node = decl(0);
+        Node *node = decl(0);
         skip(59)
         return node;
     }
@@ -2614,19 +1477,19 @@ function statement_or_decl() -> struct Node*  (1205)
 }
 
 
-function decl(int is_struct) -> struct Node*  (1216)
+function decl(int is_struct) -> Node*  (1261)
 {
-    struct Node *decl = new_node(18);
-    struct Type *base = parse_base_type();
+    Node *decl = new_node(18);
+    Type *base = parse_base_type();
     decl->decl_type = base
-    struct Node *curr = decl;
+    Node *curr = decl;
     while (1)
     {
         curr->next_in_decl = new_node(18)
-        struct Type *type = base;
+        Type *type = base;
         while (*(tokens + ct).type == 42)
         {
-            struct Type *new = new_type(1);
+            Type *new = new_type(1);
             new->ptr_to = type
             type = new
             ct++
@@ -2641,10 +1504,10 @@ function decl(int is_struct) -> struct Node*  (1216)
         if (*(tokens + ct).type != 257)
             skip(257)
 
-        struct Var *var;
+        Var *var;
         if (*(tokens + ct + 1).type == 91)
         {
-            struct Type *arr = new_type(3);
+            Type *arr = new_type(3);
             arr->ptr_to = type
             arr->size = arr->ptr_to->size
             arr->array_size = ((int)*(tokens + ct + 2).int_val)
@@ -2688,8 +1551,8 @@ function decl(int is_struct) -> struct Node*  (1216)
 
                 ct += ct + 2
                 int end = 0;
-                struct Node *init = ((struct Node*)0);
-                struct Node *c = ((struct Node*)0);
+                Node *init = ((Node*)0);
+                Node *c = ((Node*)0);
                 for (int i = 0;  ;i++)
                 {
                     if (*(tokens + ct).type == 125)
@@ -2709,7 +1572,7 @@ function decl(int is_struct) -> struct Node*  (1216)
                         continue ;
                     }
 
-                    struct Node *value;
+                    Node *value;
                     if (end)
                     {
                         value = new_node(4)
@@ -2721,17 +1584,17 @@ function decl(int is_struct) -> struct Node*  (1216)
                         value = assign()
                     }
 
-                    struct Node *add = new_node(5);
+                    Node *add = new_node(5);
                     add->tok = new_temp_token(43)
                     add->left = new_node(2)
                     add->left->var = var
                     add->right = new_node(4)
                     add->right->tok = new_temp_token(269)
                     add->right->tok->int_val = ((long)i)
-                    struct Node *deref = new_node(16);
+                    Node *deref = new_node(16);
                     deref->tok = new_temp_token(42)
                     deref->left = add
-                    struct Node *a = new_node(6);
+                    Node *a = new_node(6);
                     a->tok = new_temp_token(61)
                     a->left = deref
                     a->right = value
@@ -2776,9 +1639,9 @@ function decl(int is_struct) -> struct Node*  (1216)
 }
 
 
-function statement() -> struct Node*  (1369)
+function statement() -> Node*  (1414)
 {
-    struct Node *node = ((struct Node*)0);
+    Node *node = ((Node*)0);
     if (*(tokens + ct).type == 264)
     {
         node = new_node(8)
@@ -2855,20 +1718,20 @@ function statement() -> struct Node*  (1369)
     {
         node = new_node(12)
         ct++
-        struct Node *curr = node;
+        Node *curr = node;
         enter_scope()
         while (*(tokens + ct).type != 125 && *(tokens + ct).type)
         {
             curr->next_in_block = statement_or_decl()
-            (NULL)
+            
             curr = curr->next_in_block
-            (NULL)
+            
         }
 
         node->first_stmt = node->next_in_block
-        node->next_in_block = ((struct Node*)0)
+        node->next_in_block = ((Node*)0)
         leave_scope()
-        curr->next_in_block = ((struct Node*)0)
+        curr->next_in_block = ((Node*)0)
         skip(125)
     }
     else 
@@ -2884,10 +1747,10 @@ function statement() -> struct Node*  (1369)
 }
 
 
-function expr() -> struct Node*  (1472)
+function expr() -> Node*  (1517)
 {
-    struct Node *node = assign();
-    struct Node *curr = node;
+    Node *node = assign();
+    Node *curr = node;
     while (*(tokens + ct).type == 44)
     {
         ct++
@@ -2899,22 +1762,22 @@ function expr() -> struct Node*  (1472)
 }
 
 
-function assign() -> struct Node*  (1485)
+function assign() -> Node*  (1530)
 {
-    struct Node *left = conditional();
+    Node *left = conditional();
     if (type_match(*(tokens + ct).type, 61, 282, 283, 285, 284, -(1)))
     {
         add_type(left)
         if (left->type != 2 && left->type != 16 && left->type != 24 || left->t->t == 3 || left->t->t == 2)
             error_token(&(*(tokens + ct)), "expression is not assignable")
 
-        struct Node *node = new_node(6);
+        Node *node = new_node(6);
         ct++
         node->left = left
         node->right = assign()
         if (node->tok->type != 61)
         {
-            struct Node *right = new_node(5);
+            Node *right = new_node(5);
             right->tok = new_temp_token(*(node->tok->str + 0))
             right->left = left
             right->right = node->right
@@ -2930,12 +1793,12 @@ function assign() -> struct Node*  (1485)
 }
 
 
-function conditional() -> struct Node*  (1516)
+function conditional() -> Node*  (1561)
 {
-    struct Node *left = logical_or();
+    Node *left = logical_or();
     if (*(tokens + ct).type == 63)
     {
-        struct Node *node = new_node(23);
+        Node *node = new_node(23);
         ct++
         node->condition = left
         node->left = expr()
@@ -2948,47 +1811,47 @@ function conditional() -> struct Node*  (1516)
 }
 
 
-function logical_or() -> struct Node*  (1532)
+function logical_or() -> Node*  (1577)
 {
     return binary(logical_and, 259, -(1));
 }
 
 
-function logical_and() -> struct Node*  (1537)
+function logical_and() -> Node*  (1582)
 {
     return binary(equality, 258, -(1));
 }
 
 
-function equality() -> struct Node*  (1542)
+function equality() -> Node*  (1587)
 {
     return binary(relational, 260, 261, -(1));
 }
 
 
-function relational() -> struct Node*  (1547)
+function relational() -> Node*  (1592)
 {
     return binary(add, 60, 62, 262, 263, -(1));
 }
 
 
-function add() -> struct Node*  (1552)
+function add() -> Node*  (1597)
 {
     return binary(mul, 43, 45, -(1));
 }
 
 
-function mul() -> struct Node*  (1557)
+function mul() -> Node*  (1602)
 {
     return binary(cast, 42, 47, 37, -(1));
 }
 
 
-function cast() -> struct Node*  (1562)
+function cast() -> Node*  (1607)
 {
     if (*(tokens + ct).type == 40 && is_typename(&(*(tokens + ct + 1))))
     {
-        struct Node *node = new_node(22);
+        Node *node = new_node(22);
         ct++
         node->cast_type = parse_type()
         skip(41)
@@ -3000,7 +1863,7 @@ function cast() -> struct Node*  (1562)
 }
 
 
-function unary() -> struct Node*  (1576)
+function unary() -> Node*  (1621)
 {
     if (*(tokens + ct).type == 43)
     {
@@ -3009,38 +1872,38 @@ function unary() -> struct Node*  (1576)
     }
     else if (*(tokens + ct).type == 45)
     {
-        struct Node *node = new_node(7);
+        Node *node = new_node(7);
         ct++
         node->left = cast()
         return node;
     }
     else if (*(tokens + ct).type == 38)
     {
-        struct Node *node = new_node(17);
+        Node *node = new_node(17);
         ct++
         node->left = cast()
         return node;
     }
     else if (*(tokens + ct).type == 42)
     {
-        struct Node *node = new_node(16);
+        Node *node = new_node(16);
         ct++
         node->left = cast()
         return node;
     }
     else if (*(tokens + ct).type == 33)
     {
-        struct Node *node = new_node(14);
+        Node *node = new_node(14);
         ct++
         node->left = cast()
         return node;
     }
     else if (*(tokens + ct).type == 281)
     {
-        struct Node *node = new_node(4);
+        Node *node = new_node(4);
         node->tok = new_temp_token(256)
         ct++
-        struct Type *t = ((struct Type*)0);
+        Type *t = ((Type*)0);
         if (*(tokens + ct).type == 40 && is_typename(&(*(tokens + ct + 1))))
         {
             ct++
@@ -3049,11 +1912,11 @@ function unary() -> struct Node*  (1576)
         }
         else 
         {
-            struct Node *left = unary();
+            Node *left = unary();
             t = add_type(left)
         }
 
-        (NULL)
+        
         if (t->t == 3)
             node->tok->int_val = ((long)t->size * t->array_size)
         else 
@@ -3062,14 +1925,14 @@ function unary() -> struct Node*  (1576)
     }
     else if (*(tokens + ct).type == 275 || *(tokens + ct).type == 276)
     {
-        struct Node *node = new_node(5);
+        Node *node = new_node(5);
         node->tok->type = ((*(tokens + ct).type == 275) ? (43) : (45)
         ct++
         node->left = unary()
         node->right = new_node(4)
         node->right->tok = new_temp_token(256)
         node->right->tok->int_val = ((long)1)
-        struct Node *assign = new_node(6);
+        Node *assign = new_node(6);
         assign->tok = new_temp_token(61)
         assign->left = node->left
         assign->right = node
@@ -3080,37 +1943,37 @@ function unary() -> struct Node*  (1576)
 }
 
 
-function postfix() -> struct Node*  (1654)
+function postfix() -> Node*  (1699)
 {
-    struct Node *left = primary();
+    Node *left = primary();
     while (1)
     {
         if (*(tokens + ct).type == 91)
         {
             ct++
-            struct Node *index = expr();
+            Node *index = expr();
             skip(93)
-            struct Node *node = new_node(5);
+            Node *node = new_node(5);
             node->tok = new_temp_token(43)
             node->left = left
             node->right = index
-            struct Node *deref = new_node(16);
+            Node *deref = new_node(16);
             deref->tok = new_temp_token(42)
             deref->left = node
             left = deref
         }
         else if (*(tokens + ct).type == 275 || *(tokens + ct).type == 276)
         {
-            struct Node *node = new_node(14);
+            Node *node = new_node(14);
             node->left = left
             left = node
             ct++
         }
         else if (*(tokens + ct).type == 46 || *(tokens + ct).type == 288)
         {
-            struct Node *tmp = new_node(24);
+            Node *tmp = new_node(24);
             tmp->right = left
-            struct Type *type = add_type(left);
+            Type *type = add_type(left);
             if (*(tokens + ct).type == 288 && !(type->t == 1 && type->ptr_to->t == 7))
             {
                 error_token(&(*(tokens + ct)), "expected struct pointer")
@@ -3134,9 +1997,9 @@ function postfix() -> struct Node*  (1654)
             if (i == type->field_count)
                 error_token(&(*(tokens + ct)), "undeclared struct member")
 
-            struct Type *char_ptr = new_type(1);
+            Type *char_ptr = new_type(1);
             char_ptr->ptr_to = type_char
-            struct Node *addr = left;
+            Node *addr = left;
             if (*(tokens + ct - 1).type == 46)
             {
                 addr = new_node(17)
@@ -3144,14 +2007,14 @@ function postfix() -> struct Node*  (1654)
             }
 
             implicit_cast(&(addr), char_ptr)
-            struct Node *add = new_node(5);
+            Node *add = new_node(5);
             add->tok = new_temp_token(43)
             add->left = addr
             add->right = new_node(4)
             add->right->tok = new_temp_token(256)
             add->right->tok->int_val = ((long)*(type->field_offset + i))
-            struct Type *t = new_type(1);
-            struct Node *node;
+            Type *t = new_type(1);
+            Node *node;
             if (*(type->field_type + i)->t == 3)
             {
                 t = *(type->field_type + i)
@@ -3178,9 +2041,9 @@ function postfix() -> struct Node*  (1654)
 }
 
 
-function primary() -> struct Node*  (1751)
+function primary() -> Node*  (1796)
 {
-    struct Node *node = ((struct Node*)0);
+    Node *node = ((Node*)0);
     if (*(tokens + ct).type == 256)
     {
         node = new_node(4)
@@ -3225,7 +2088,7 @@ function primary() -> struct Node*  (1751)
     }
     else if (*(tokens + ct).type == 257)
     {
-        struct Var *var = find_var(*(tokens + ct).name);
+        Var *var = find_var(*(tokens + ct).name);
         if (!(var))
         {
             for (int i = 0; i < enum_count ;i++)
@@ -3254,7 +2117,7 @@ function primary() -> struct Node*  (1751)
 }
 
 
-function get_inst_suffix(int size) -> char*  (1822)
+function get_inst_suffix(int size) -> char*  (1867)
 {
     if (size == 1)
         return "b";
@@ -3265,11 +2128,11 @@ function get_inst_suffix(int size) -> char*  (1822)
     else if (size == 8)
         return "q";
 
-    (NULL)
+    
 }
 
 
-function get_size_name(int size) -> char*  (1835)
+function get_size_name(int size) -> char*  (1880)
 {
     if (size == 1)
         return "byte";
@@ -3280,11 +2143,11 @@ function get_size_name(int size) -> char*  (1835)
     else if (size == 8)
         return "quad";
 
-    (NULL)
+    
 }
 
 
-function log2_int(int x) -> int  (1848)
+function log2_int(int x) -> int  (1893)
 {
     int y = 0;
     while (x > 1)
@@ -3297,7 +2160,7 @@ function log2_int(int x) -> int  (1848)
 }
 
 
-function get_register_by_size(char* reg, int size) -> char*  (1859)
+function get_register_by_size(char* reg, int size) -> char*  (1904)
 {
     char ***(rax + 0) = "al", *(rax + 1) = "ax", *(rax + 2) = "eax", *(rax + 3) = "rax";
     char ***(rdx + 0) = "dh", *(rdx + 1) = "dx", *(rdx + 2) = "edx", *(rdx + 3) = "rdx";
@@ -3336,11 +2199,11 @@ function get_register_by_size(char* reg, int size) -> char*  (1859)
     if (!(strcmp(reg, "r11")))
         return *(r11 + size);
 
-    (NULL)
+    
 }
 
 
-function add_string_lit(char* s) -> int  (1894)
+function add_string_lit(char* s) -> int  (1939)
 {
     for (int i = 0; i < strings_literal_count ;i++)
     {
@@ -3353,35 +2216,40 @@ function add_string_lit(char* s) -> int  (1894)
     return strings_literal_count++;
 }
 
+
 int curr_label = 0;
+
 int loop_counter = 0;
+
 int curr_loop_label;
+
 int curr_loop_is_for;
+
 int stack_size = 0;
 
-function push(char* reg) -> void  (1914)
+function push(char* reg) -> void  (1959)
 {
     stack_size += stack_size + 8
     out("pushq %%%s // %d", reg, stack_size)
 }
 
 
-function pop(char* reg) -> void  (1920)
+function pop(char* reg) -> void  (1965)
 {
     stack_size -= stack_size - 8
     out("popq %%%s // %d", reg, stack_size)
-    (NULL)
+    
 }
 
 
-function gen(struct Node* node) -> void  (1927)
+function gen(Node* node) -> void  (1972)
 {
     if (!(node) || node->type == 0)
-        return (NULL);
+        return ;
 
     if (node->type == 1)
     {
-        struct Node *curr = node->next_stmt;
+        Node *curr = node->next_stmt;
         while (curr)
         {
             gen(curr)
@@ -3392,7 +2260,7 @@ function gen(struct Node* node) -> void  (1927)
     else if (node->type == 15)
     {
         if (!(node->body))
-            return (NULL);
+            return ;
 
         if (!(strcmp(node->tok->name, "main")))
             fprintf(f, ".globl\t_main\n")
@@ -3416,7 +2284,7 @@ function gen(struct Node* node) -> void  (1927)
         char ***(reg + 0) = "rdi", *(reg + 1) = "rsi", *(reg + 2) = "rdx", *(reg + 3) = "rcx", *(reg + 4) = "r8", *(reg + 5) = "r9";
         for (int i = 0; i < node->param_count && i < 6 ;i++)
         {
-            struct Var *v = *(node->params + i)->var;
+            Var *v = *(node->params + i)->var;
             out("mov%s %%%s, -%d(%%rbp) //%s", get_inst_suffix(v->type->size), get_register_by_size(*(reg + i), v->type->size), v->offset, v->name)
         }
 
@@ -3444,7 +2312,7 @@ function gen(struct Node* node) -> void  (1927)
     }
     else if (node->type == 12)
     {
-        struct Node *curr = node->first_stmt;
+        Node *curr = node->first_stmt;
         dbg("//{ (%d)\n", node->tok->line)
         while (curr)
         {
@@ -3460,7 +2328,7 @@ function gen(struct Node* node) -> void  (1927)
     }
     else if (node->type == 18)
     {
-        struct Node *curr = node->next_in_decl;
+        Node *curr = node->next_in_decl;
         while (curr)
         {
             if (curr->var->global)
@@ -3663,7 +2531,7 @@ function gen(struct Node* node) -> void  (1927)
                 s += s + node->arg_count - 6 * 8
 
             int target = align(s, 16);
-            (NULL)
+            
             out("subq $%d, %%rsp // %d", target - s, stack_size + target - s)
             stack_size += stack_size + target - s
             for (int i = node->arg_count - 1; i >= 6 ;i++)
@@ -3673,7 +2541,7 @@ function gen(struct Node* node) -> void  (1927)
             }
 
             out("xorq %%rax, %%rax")
-            (NULL)
+            
             out("callq _%s", node->tok->name)
             int add = target - s;
             if (node->arg_count > 6)
@@ -3712,7 +2580,7 @@ function gen(struct Node* node) -> void  (1927)
             gen(node)
         }
         else 
-            (NULL)
+            
     }
     else if (node->type == 16)
     {
@@ -3721,7 +2589,7 @@ function gen(struct Node* node) -> void  (1927)
             error_token(node->tok, "dereferencing a non-pointer lvalue")
 
         if (node->t->t == 7)
-            (NULL)
+            
         else if (node->t->size < 8)
             out("movs%sq (%%rax), %%rax", get_inst_suffix(node->t->size))
         else 
@@ -3741,8 +2609,8 @@ function gen(struct Node* node) -> void  (1927)
     {
         dbg("//cast to (%s)\n", get_type_str(node->t))
         gen(node->left)
-        struct Type *t1 = node->left->t;
-        struct Type *t2 = node->t;
+        Type *t1 = node->left->t;
+        Type *t2 = node->t;
         if (node->t->t == 3)
         {
             t2 = new_type(1)
@@ -3757,7 +2625,7 @@ function gen(struct Node* node) -> void  (1927)
                 out("movq %%r10, %%rax")
             }
             else 
-                (NULL)
+                
         }
         else if (t2->is_unsigned)
         {
@@ -3799,8 +2667,8 @@ function gen(struct Node* node) -> void  (1927)
             gen(node->right)
             out("movq %%rax, %%r10")
             pop("rax")
-            (NULL)
-            (NULL)
+            
+            
             if (node->tok->type == 43 || node->tok->type == 45)
             {
                 if (node->left->t->ptr_to && !(node->right->t->ptr_to))
@@ -3849,7 +2717,7 @@ function gen(struct Node* node) -> void  (1927)
                 else if (node->tok->type == 263)
                     s = "ge"
                 else 
-                    (NULL)
+                    
                 out("cmpq %%r10, %%rax")
                 out("set%s %%al", s)
                 out("andb $1, %%al")
@@ -3876,7 +2744,7 @@ function gen(struct Node* node) -> void  (1927)
             gen(node->right)
             if (node->t->t == 7)
             {
-                (NULL)
+                
                 push("rax")
                 gen(node->left)
                 pop("rsi")
@@ -3900,14 +2768,14 @@ function gen(struct Node* node) -> void  (1927)
         {
             gen(node->right)
             node->left->t = node->left->var->type
-            (NULL)
+            
             if (node->t->t == 3)
                 error_token(node->tok, "array is constant")
 
             if (node->left->var->global)
             {
                 if (node->t->t == 7)
-                    (NULL)
+                    
 
                 out("mov%s %%%s, _%s(%%rip)", get_inst_suffix(node->t->size), get_register_by_size("rax", node->t->size), node->left->var->name)
             }
@@ -3915,7 +2783,7 @@ function gen(struct Node* node) -> void  (1927)
             {
                 if (node->t->t == 7)
                 {
-                    (NULL)
+                    
                     out("movq %%rbp, %%rdi")
                     out("subq $%d, %%rdi", node->left->var->offset)
                     out("movq %%rax, %%rsi")
@@ -3931,7 +2799,7 @@ function gen(struct Node* node) -> void  (1927)
 
         }
         else 
-            (NULL)
+            
     }
     else if (node->type == 20)
     {
@@ -3967,10 +2835,10 @@ function gen(struct Node* node) -> void  (1927)
         else if (node->tok->type == 275 || node->tok->type == 276)
         {
             push("rax")
-            struct Node *one = new_node(4);
+            Node *one = new_node(4);
             one->tok = new_temp_token(256)
             one->tok->int_val = ((long)((node->tok->type == 275) ? (1) : (-(1)))
-            struct Node *assign = new_node(6);
+            Node *assign = new_node(6);
             assign->tok = new_temp_token(61)
             assign->left = node->left
             assign->right = new_node(5)
@@ -3982,7 +2850,7 @@ function gen(struct Node* node) -> void  (1927)
             pop("rax")
         }
         else 
-            (NULL)
+            
     }
     else if (node->type == 23)
     {
@@ -3997,24 +2865,25 @@ function gen(struct Node* node) -> void  (1927)
         fprintf(f, "QUES_END%d:\n", label)
     }
     else 
-        (NULL)
+        
     if (node->next_in_comma)
         gen(node->next_in_comma)
 
 }
 
+
 int tab;
 
-function print(struct Node* node) -> void  (2602)
+function print(Node* node) -> void  (2647)
 {
     if (!(node))
-        return (NULL);
+        return ;
 
     if (!(node) || node->type == 0)
-        printf("(NULL)")
+        return ;
     else if (node->type == 1)
     {
-        struct Node *curr = node->next_stmt;
+        Node *curr = node->next_stmt;
         while (curr)
         {
             print(curr)
@@ -4041,7 +2910,7 @@ function print(struct Node* node) -> void  (2602)
     {
         printf("%*s{\n", tab, "")
         tab += tab + 4
-        struct Node *curr = node->first_stmt;
+        Node *curr = node->first_stmt;
         while (curr)
         {
             printf("%*s", tab, "")
@@ -4055,11 +2924,14 @@ function print(struct Node* node) -> void  (2602)
     }
     else if (node->type == 18)
     {
-        struct Node *curr = node->next_in_decl;
+        Node *curr = node->next_in_decl;
+        if (curr->var->global)
+            printf("\n")
+
         printf("%s ", get_type_str(node->decl_type))
         while (curr)
         {
-            struct Type *t = curr->var->type;
+            Type *t = curr->var->type;
             while (t != node->decl_type)
             {
                 t = t->ptr_to
@@ -4221,11 +3093,11 @@ function print(struct Node* node) -> void  (2602)
 }
 
 
-function read_entire_file(char* name) -> char*  (2799)
+function read_entire_file(char* name) -> char*  (2847)
 {
     char *buffer = ((char*)0);
     long length;
-    struct FILE *file = fopen(name, "r");
+    FILE *file = fopen(name, "r");
     if (file)
     {
         fseek(file, 0, 2)
@@ -4243,7 +3115,7 @@ function read_entire_file(char* name) -> char*  (2799)
 }
 
 
-function main() -> int  (2818)
+function main() -> int  (2866)
 {
     filename = "final.c"
     type_long = new_type(6)
@@ -4252,17 +3124,17 @@ function main() -> int  (2818)
     type_char = new_type(5)
     type_void = new_type(2)
     program_str = read_entire_file(filename)
-    struct Node *node = parse(program_str);
+    Node *node = parse(program_str);
     char *out_name = strdup(filename);
     *(out_name + strlen(out_name) - 1) = ((char)115)
     f = fopen(out_name, "w")
-    (NULL)
+    
     print(node)
     gen(node)
     out(".section	__DATA,__data")
     for (int i = 0; i < curr_scope->var_count ;i++)
     {
-        struct Node *decl = *(curr_scope->vars + i)->decl;
+        Node *decl = *(curr_scope->vars + i)->decl;
         if (decl->left && decl->left->right->type != 4)
         {
             printf("error name: %s %c\n", decl->var->name, decl->left->tok->type)

@@ -1,16 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zfarini <zfarini@student.1337.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:57:56 by zfarini           #+#    #+#             */
-/*   Updated: 2023/04/15 20:17:59 by zfarini          ###   ########.fr       */
+/*   Updated: 2023/04/16 08:26:12 by zfarini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cbug.h"
+#include "cbug2.h"
+
+//#define assert(expr) {if (!(expr)) { printf("assertion failed : (%d), file %s, line %d.\n", (expr), __FILE__, __LINE__); exit(1);}} 
+#define assert(...)
 /*
  
 long long x = 8590066177;
@@ -50,11 +53,11 @@ Type *type_char;
 Type *type_void;
 
 Func funcs[10000];
-int func_count = 0;
+int func_count;
 
 Scope scopes[100000];
 int scope_count = 0;
-Scope *curr_scope = 0;
+Scope *curr_scope;
 
 Token tokens[100000];
 int ct;
@@ -68,30 +71,8 @@ int	var_count = 0;
 Enum enums[10000];
 int enum_count;
 
-Node *curr_func = 0;
+Node *curr_func;
 
-void error(char *fmt, ...)
-{
-	va_list ap;
-	va_start(ap, fmt);
-	fprintf(stderr, "\033[1;31merror:\033[1m ");
-	vfprintf(stderr, fmt, ap);
-	fprintf(stderr, "\033[0m\n");
-	va_end(ap);
-	exit(1);
-}
-
-void error_token(Token *token, char *fmt, ...)
-{
-	va_list ap;
-	va_start(ap, fmt);
-	fprintf(stderr, "\033[1m%s:%d:%d: \033[1;31merror: \033[0m\033[1m",
-			filename, token->line, token->col);
-	vfprintf(stderr, fmt, ap);
-	fprintf(stderr, "\033[0m\n");
-	va_end(ap);
-	exit(1);
-}
 
 #include "tokenize.c"
 
@@ -117,6 +98,9 @@ char *find(char *s, char c)
 #include "parse.c"
 #include "gen.c"
 
+
+#include "print.c"
+
 char *read_entire_file(char *name)
 {
 	char *buffer = 0;
@@ -124,9 +108,9 @@ char *read_entire_file(char *name)
 	FILE *file = fopen(name, "r");
 	if (file)
 	{
-		fseek(file, 0, SEEK_END);
+		fseek(file, 0, 2);
 	 	length = ftell(file);
-	 	fseek(file, 0, SEEK_SET);
+	 	fseek(file, 0, 0);
 	 	buffer = malloc(length + 1);
 	 	if (buffer)
 	 	  fread(buffer, 1, length, file);
@@ -136,12 +120,13 @@ char *read_entire_file(char *name)
 	return buffer;
 }
 
-int main(int argc, char **argv)
+int main()
 {
-	if (argc < 2)
-		filename = "in.c";
-	else
-		filename = argv[1];
+#if 1
+	filename = "final.c";
+#else
+	filename = "test.c";
+#endif
 	
 	type_long = new_type(LONG);
 	type_int = new_type(INT);
@@ -163,17 +148,22 @@ int main(int argc, char **argv)
 	//fprintf(f, "\tmovq %%rsp, %%rbp\n");
 	//stack_size = ((stack_size + 15) / 16) * 16;
 	//fprintf(f, "\tsubq $%d, %%rsp\n", stack_size);
+	print(node);
 	gen(node);
 	out(".section	__DATA,__data");
 	for (int i = 0; i < curr_scope->var_count; i++)
 	{
 		Node *decl = curr_scope->vars[i]->decl;
+		//TODO: check also casting
 		if (decl->left && decl->left->right->type != NODE_INT)
+		{
+			printf("error name: %s %c\n", decl->var->name, decl->left->tok->type);
 			error_token(decl->left->tok, "todo: evaluate constant expressions\n");
+		}
 		if (decl->var->type->t == ARRAY)
 		{
-			out(".comm _%s,%d,%d", decl->var->name, decl->var->type->array_size * decl->var->type->size,
-							(decl->var->type->size)); // TODO: check the alignement
+			out(".comm _%s,%d,%d\n", decl->var->name, decl->var->type->array_size * decl->var->type->size,
+							4); // TODO: check the alignement
 		}
 		else
 		{
