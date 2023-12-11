@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void error(int line, unsigned long expected, unsigned long found)
 {

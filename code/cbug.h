@@ -57,7 +57,7 @@ enum Token_Type {
 };
 
 struct Token {
-	int type;	
+	int type;
 	long long int_val;
 	char *name;
 	int line;
@@ -190,9 +190,9 @@ struct Token_Name {
 
 Node *binary(Node *(*func)(), ...);
 Type *parse_type();
-Node *parse();
+Node *parse(char *s);
 Node *function();
-Node *decl();
+Node *decl(int p);
 Node *statement();
 Node *expr();
 Node *assign();

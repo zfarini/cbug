@@ -181,28 +181,26 @@ void gen(Node *node)
 					get_register_by_size(reg[i], v->type->size),
 
 					v->offset, v->name);
-			//out("movq %%%s, -%d(%%rbp)", reg[i], node->params[i]->var->offset);	
+			//out("movq %%%s, -%d(%%rbp)", reg[i], node->params[i]->var->offset);
 		}
 		if (node->param_count > 6)
 		{
 			//todo: recheck this
-			int offset = node->params[5]->var->offset + 8;
-			int offset2 = 16;
+			int offset = 16;
 			for (int i = 6; i < node->param_count; i++)
 			{
 #if 0
-				out("mov%s %%%s, -%d(%%rbp)", get_inst_suffix(node->t->size), 
+				out("mov%s %%%s, -%d(%%rbp)", get_inst_suffix(node->t->size),
 					get_register_by_size("rax", node->t->size),
 					node->left->var->offset);
 #endif
-				out("movq %d(%%rbp), %%rax", offset2);
-				out("mov%s %%%s, -%d(%%rbp) // %s", 
+				out("movq %d(%%rbp), %%rax", offset);
+				out("mov%s %%%s, -%d(%%rbp) // %s",
 						get_inst_suffix(node->params[i]->var->type->size),
 						get_register_by_size("rax", node->params[i]->var->type->size),
 						node->params[i]->var->offset,
 						node->params[i]->var->name);
 				offset += 8;
-				offset2 += 8;
 			}
 		}
 		gen(node->body);
@@ -237,7 +235,7 @@ void gen(Node *node)
 		{
 			if (curr->var->global)
 			{
-				
+
 			}
 			else if (!curr->var->global && curr->left)
 				gen(curr->left);
@@ -363,7 +361,7 @@ void gen(Node *node)
 					if (node->t->size < 8)
 					{
 						out("movs%sq _%s(%%rip), %%rax",
-							get_inst_suffix(node->t->size), 
+							get_inst_suffix(node->t->size),
 							node->var->name);
 
 					}
@@ -371,7 +369,7 @@ void gen(Node *node)
 						out("movq _%s(%%rip), %%rax", node->var->name);
 				}
 #if 0
-				out("mov%s _%s(%%rip), %%%s", get_inst_suffix(node->t->size), 
+				out("mov%s _%s(%%rip), %%%s", get_inst_suffix(node->t->size),
 						node->var->name, get_register_by_size("rax", node->t->size));
 #endif
 			}
@@ -395,8 +393,8 @@ void gen(Node *node)
 				{
 					if (node->t->size < 8)
 					{
-						out("movs%sq -%d(%%rbp), %%rax // %s", 
-							get_inst_suffix(node->t->size), 
+						out("movs%sq -%d(%%rbp), %%rax // %s",
+							get_inst_suffix(node->t->size),
 						node->var->offset, node->var->name);
 					}
 					else
@@ -453,14 +451,14 @@ void gen(Node *node)
 			stack_size += target - s;
 			for (int i = node->arg_count - 1; i >= 6; i--)
 			{
-				gen(node->args[i]);	
+				gen(node->args[i]);
 				push("rax");
 				//out("movq %%rax, %d(%%rsp)", (i - 5) * 8);
 			}
 			out("xorq %%rax, %%rax");
 			assert(stack_size % 16 == 0);
 			out("callq _%s", node->tok->name);
-			
+
 			int add = target - s;
 			if (node->arg_count > 6)
 				add += (node->arg_count - 6) * 8;
@@ -504,7 +502,7 @@ void gen(Node *node)
 			error_token(node->tok, "dereferencing a non-pointer lvalue");
 	//	out("xorq %%r10, %%r10");
 	//	TODO: check if this ok
-		
+
 		if( node->t->t == STRUCT)
 			;
 		else if (node->t->size < 8)
@@ -535,7 +533,7 @@ void gen(Node *node)
 			t2 = new_type(PTR);
 			t2->ptr_to = node->t->ptr_to;
 		}
-		
+
 		// (t2)t1
 		if (!t1->is_unsigned && !t2->is_unsigned)
 		{
@@ -567,7 +565,7 @@ void gen(Node *node)
 						get_inst_suffix(t2->size),
 						get_register_by_size("rax", t2->size),
 						get_register_by_size("r10", t2->size));
-				out("movs%sq %%%s, %%rax", 
+				out("movs%sq %%%s, %%rax",
 						get_inst_suffix(t2->size),
 						get_register_by_size("r10", t2->size));
 			}
@@ -622,7 +620,7 @@ void gen(Node *node)
 			else if (node->tok->type == '/' || node->tok->type == '%')
 			{
 				// a / b
-				// rdx  = b, rax 
+				// rdx  = b, rax
 				if (!node->t->is_unsigned)
 				{
 					out("cqto"); // sign extend rax to rdx (TODO: read a little bit more about this)
@@ -728,7 +726,7 @@ void gen(Node *node)
 				}
 				else
 				{
-					out("mov%s %%%s, -%d(%%rbp) // %s = rax", get_inst_suffix(node->t->size), 
+					out("mov%s %%%s, -%d(%%rbp) // %s = rax", get_inst_suffix(node->t->size),
 						get_register_by_size("rax", node->t->size),
 						node->left->var->offset, node->left->var->name);
 				}
@@ -810,7 +808,7 @@ void gen(Node *node)
 
    7
    8
-   ret 
+   ret
    	  <-
 	5 <-
     3 <-

@@ -103,7 +103,7 @@ Var *new_var(Type *type, char *name)
 	assert(v->token->type == TOKEN_IDENTIFIER &&
 			v->token->name == v->name);
 	v->type = type;
-	curr_scope->vars[curr_scope->var_count++] = v;	
+	curr_scope->vars[curr_scope->var_count++] = v;
 	if (!type->size)
 		error_token(&tokens[ct], "type with size 0?");
 	if (curr_func && type->size)
@@ -166,13 +166,13 @@ void skip(int type)
 
 int is_typename(Token *tok)
 {
-	if (tok->type == TOKEN_INT || 
-		tok->type == TOKEN_VOID || 
-		tok->type == TOKEN_CHAR || 
-		tok->type == TOKEN_SHORT || 
-		tok->type == TOKEN_LONG || 
-		tok->type == TOKEN_SIGNED || 
-		tok->type == TOKEN_UNSIGNED || 
+	if (tok->type == TOKEN_INT ||
+		tok->type == TOKEN_VOID ||
+		tok->type == TOKEN_CHAR ||
+		tok->type == TOKEN_SHORT ||
+		tok->type == TOKEN_LONG ||
+		tok->type == TOKEN_SIGNED ||
+		tok->type == TOKEN_UNSIGNED ||
 		tok->type == TOKEN_VOID )
 		return 1;
 	//if (type_match(tok->type, TOKEN_INT, TOKEN_VOID, TOKEN_CHAR, TOKEN_SHORT, TOKEN_LONG, TOKEN_UNSIGNED, TOKEN_SIGNED, -1))
@@ -222,7 +222,7 @@ char *get_type_str(Type *type)
 	else if (type->t == ARRAY)
 	{
 		char s[42];
-		sprintf(s, "[%d]", type->array_size);
+		snprintf(s, sizeof(s), "[%d]", type->array_size);
 		return strjoin(get_type_str(type->ptr_to), s);
 	}
 	if (type->t == VOID) return "void";
@@ -347,8 +347,8 @@ Type *add_type(Node *node)
 
 		if (t1->ptr_to || t2->ptr_to)
 		{
-			if (type_match(tok, '*', '/', '%', -1) || (!t1->ptr_to && tok == '-') 
-				|| (t1->ptr_to && t2->ptr_to && tok == '+') 
+			if (type_match(tok, '*', '/', '%', -1) || (!t1->ptr_to && tok == '-')
+				|| (t1->ptr_to && t2->ptr_to && tok == '+')
 				|| (t1->ptr_to && t2->ptr_to && tok == '-' && !types_are_equal(t1, t2)))
 				error_token(node->tok, "invalid operands to binary expression ('%s' and '%s')", get_type_str(t1), get_type_str(t2));
 			if (t1->ptr_to && !t2->ptr_to && (tok == '+' || tok == '-'))
@@ -383,7 +383,7 @@ Type *add_type(Node *node)
 		add_type(node->right);
 		Type *tt = find_common_type(node->left->t, node->right->t);
 		implicit_cast(&node->left, tt);
-		implicit_cast(&node->right, tt);	
+		implicit_cast(&node->right, tt);
 		t = tt;
 	}
 	else
@@ -399,7 +399,7 @@ Node *parse(char *s)
 	tokenize(s);
 	ct = 0;
 	Node *prog = new_node(NODE_PROGRAM);
-	
+
 	curr_scope = new_scope();
 	curr_scope->parent = 0;
 
@@ -463,7 +463,7 @@ Node *parse(char *s)
 			ct++;
 			type->name = tokens[ct].name;
 			skip(TOKEN_IDENTIFIER);
-			
+
 			skip('{');
 			int	i = 0;
 			int size = 0;
@@ -549,7 +549,7 @@ Node *parse(char *s)
 		int space = 0;
 		for (int j = 0; j < t->field_count; j++)
 		{
-			if (t->field_type[j]->ptr_to && 
+			if (t->field_type[j]->ptr_to &&
 				t->field_type[j]->ptr_to->t == UNKNOWN)
 				error_token(t->field_type[j]->ptr_to->tok, "unknown type");
 			if (t->field_type[j]->size > alignement)
@@ -575,7 +575,7 @@ Node *parse(char *s)
 		if (size != t->size)
 			printf("\t[%d padding]\n", t->size - size);
 
-	
+
 		printf("\n");
 	}
 	return prog;
@@ -634,7 +634,7 @@ Type *parse_base_type()
 		err = 1;
 	if (l && (v || c || s))
 		err = 1;
-	if (l) 
+	if (l)
 		type = new_type(LONG);
 	else if (i)
 		type = new_type(INT);
@@ -728,7 +728,7 @@ Node *statement_or_decl()
 
 Node *decl(int is_struct)
 {
-	// unsigned int long long 
+	// unsigned int long long
 	Node *decl = new_node(NODE_VAR_DECL);
 	Type *base = parse_base_type();
 	decl->decl_type = base;
@@ -844,7 +844,7 @@ Node *decl(int is_struct)
 					a->left = deref;
 					a->right = value;
 
-					
+
 					if (!c)
 					{
 						c = a;
@@ -1004,7 +1004,7 @@ Node *assign()
 	{
 
 		add_type(left);
-		if ((left->type != NODE_VAR && left->type != NODE_DEREF && left->type != NODE_MEMBER) || left->t->t == ARRAY 
+		if ((left->type != NODE_VAR && left->type != NODE_DEREF && left->type != NODE_MEMBER) || left->t->t == ARRAY
 				|| left->t->t == VOID)
 			error_token(&tokens[ct], "expression is not assignable");
 		Node *node = new_node(NODE_ASSIGN);
@@ -1221,7 +1221,7 @@ Node *postfix()
 			char_ptr->ptr_to = type_char;
 
 			//(X).y = *((typeof(y) *)((char *)&(X) + offsetof(y)))
-			
+
 			Node *addr = left;
 			if (tokens[ct - 1].type == '.')
 			{

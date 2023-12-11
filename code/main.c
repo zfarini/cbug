@@ -12,13 +12,13 @@
 
 #include "cbug.h"
 /*
- 
+
 long long x = 8590066177;
 why gcc output movabsq $859.., %rax instead of just movq?
 
 maybe for evalutaing compile-time expressions we can generate the assembly
 code then simulate it?
-maybe we should do this in general like just be able to simulate the 
+maybe we should do this in general like just be able to simulate the
 assembly genrated by us like a vm
 
 
@@ -118,9 +118,11 @@ char *read_entire_file(char *name)
 
 int main(int argc, char **argv)
 {
-	filename = argv[1];
+	if (argc <= 1)
+		filename = "in.c";
+	else
+		filename = argv[1];
 
-	
 	type_long = new_type(LONG);
 	type_int = new_type(INT);
 	type_short = new_type(SHORT);
@@ -141,7 +143,7 @@ int main(int argc, char **argv)
 	//fprintf(f, "\tmovq %%rsp, %%rbp\n");
 	//stack_size = ((stack_size + 15) / 16) * 16;
 	//fprintf(f, "\tsubq $%d, %%rsp\n", stack_size);
-	
+
 	print(node);
 	gen(node);
 	out(".section	__DATA,__data");
@@ -163,7 +165,7 @@ int main(int argc, char **argv)
 		{
 			out(".globl _%s", decl->var->name);
 
-			int	align = log2_int(decl->var->type->size); 
+			int	align = log2_int(decl->var->type->size);
 			if (align)
 				out(".p2align %d", align); // todo: understand this
 
